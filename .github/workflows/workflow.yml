@@ -36,17 +36,10 @@ jobs:
       - name: Run the build
         run: npm run build
 
-      - name: "check is ACTIONS_DEPLOY_ACCESS_TOKEN exists"
-        env: 
-            super_secret: ${{ secrets.ACTIONS_DEPLOY_ACCESS_TOKEN }}
-        if: ${{ env.super_secret == '' }} 
-        run: 'echo "echo the secret \"ACTIONS_DEPLOY_ACCESS_TOKEN\" has not been made; echo please go to \"settings \> secrets \> actions\" to create it"'
-
       - name: Deploy
         run: |
           git config --global user.name $user_name
           git config --global user.email $user_email
-          git remote -v
           git remote set-url origin https://${github_token}@github.com/${repository}
           npm run deploy
         env:
