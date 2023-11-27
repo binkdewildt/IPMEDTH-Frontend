@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/ipmedth-frontend/static/css/main.354a1b0e.css",
+    "main.js": "/ipmedth-frontend/static/js/main.6b932c1b.js",
+    "index.html": "/ipmedth-frontend/index.html",
+    "main.354a1b0e.css.map": "/ipmedth-frontend/static/css/main.354a1b0e.css.map",
+    "main.6b932c1b.js.map": "/ipmedth-frontend/static/js/main.6b932c1b.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.354a1b0e.css",
+    "static/js/main.6b932c1b.js"
+  ]
+}
