@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/IPMEDTH-Frontend/static/css/main.354a1b0e.css",
-    "main.js": "/IPMEDTH-Frontend/static/js/main.6b932c1b.js",
+    "main.js": "/IPMEDTH-Frontend/static/js/main.64925055.js",
     "index.html": "/IPMEDTH-Frontend/index.html",
     "main.354a1b0e.css.map": "/IPMEDTH-Frontend/static/css/main.354a1b0e.css.map",
-    "main.6b932c1b.js.map": "/IPMEDTH-Frontend/static/js/main.6b932c1b.js.map"
+    "main.64925055.js.map": "/IPMEDTH-Frontend/static/js/main.64925055.js.map"
   },
   "entrypoints": [
     "static/css/main.354a1b0e.css",
-    "static/js/main.6b932c1b.js"
+    "static/js/main.64925055.js"
   ]
 }
