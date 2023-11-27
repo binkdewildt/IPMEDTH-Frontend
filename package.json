@@ -1,6 +1,6 @@
 {
-  "name": "sint-doolhof",
-  "homepage": "https://binkdewildt.github.io/IPMEDTH-Frontend",
+  "name": "ipmedth-frontend",
+  "homepage": "https://binkdewildt.github.io/ipmedth-frontend",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
