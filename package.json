@@ -1,7 +1,8 @@
 {
   "name": "sint-doolhof",
+  "homepage": "https://binkdewildt.github.io/IPMEDTH-Frontend",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -9,6 +10,7 @@
     "@types/node": "^16.18.61",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
+    "gh-pages": "^6.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.20.0",
@@ -22,7 +24,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "jest",
-    "eject": "react-scripts eject"
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
