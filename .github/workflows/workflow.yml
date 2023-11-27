@@ -39,7 +39,7 @@ jobs:
       - name: "check is ACTIONS_DEPLOY_ACCESS_TOKEN exists"
         env: 
             super_secret: ${{ secrets.ACTIONS_DEPLOY_ACCESS_TOKEN }}
-        if: ${{ env.super_secret == '' }}
+        if: ${{ env.super_secret == '' }} 
         run: 'echo "echo the secret \"ACTIONS_DEPLOY_ACCESS_TOKEN\" has not been made; echo please go to \"settings \> secrets \> actions\" to create it"'
 
       - name: Deploy
