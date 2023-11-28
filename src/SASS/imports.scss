@@ -1,7 +1,7 @@
-
 // Hierin staan alle files die geïmporteerd moeten worden.
 // Met uitzondering van variables.scss
 @import "index";
 
-
+@import "Screens/game";
+@import "Screens/score";
 @import "Screens/start";
