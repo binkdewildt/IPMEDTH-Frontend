@@ -1,5 +1,4 @@
 import React from "react";
-import "../SASS/imports.scss";
 
 const HighScore: React.FC<{}> = () => {
   return (
