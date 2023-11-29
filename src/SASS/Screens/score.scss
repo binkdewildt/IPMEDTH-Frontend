@@ -1,0 +1,51 @@
+body{
+    background-image: url("../../Assets/background.jpg");
+}
+
+//RESPONSIVE FOR IPAD PRO
+h1{
+    color: #F41111;
+    font-size: 96px;
+    text-align: center;
+    margin-top: 10%;
+}
+
+section{
+    box-shadow: 0 8px 12px 0 rgba(0,0,0,0.4);
+    width: 80%;
+    margin: 10%;
+    list-style-position: inside;
+    padding: 20px;
+    background-color: white;
+}
+
+li{
+    font-size: 64px;
+    padding: 10px;
+    color: #0D50B5;
+}
+
+button{
+    box-shadow: 0 6px 10px 0 rgba(0,0,0,0.4);
+    border: none;
+    padding: 15px 48px;
+    text-align: center;
+    display: flex;
+    font-size: 48px;
+    color: #0D50B5; 
+    border-radius: 8px;
+    cursor: pointer;
+    float: left;
+    margin-top: 10%;
+}
+
+.play{
+    margin-left: 10%;
+}
+
+.prev{
+    margin-left: 37%;
+}
+
+
+
