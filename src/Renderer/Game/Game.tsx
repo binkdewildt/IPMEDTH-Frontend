@@ -1,4 +1,5 @@
 import React from "react";
+import '../../SASS/Screens/game.scss'
 
 export default function Game() {
     return (
@@ -7,9 +8,9 @@ export default function Game() {
             <image>hier komt het level</image>
         </section>
         <section className="mazeContainer">
-            <canvas id={"mazeCanvas"}>
+            {/*<canvas id={"mazeCanvas"}>*/}
 				hier komt het doolhof
-            </canvas>
+            {/*</canvas>*/}
         </section>
         </body>
     );
