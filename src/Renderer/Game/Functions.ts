@@ -5,19 +5,19 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
             difficulty = 10;
             break;
         case 2:
-            difficulty = 12;
+            difficulty = 11;
             break;
         case 3:
-            difficulty = 14;
+            difficulty = 12;
             break;
         case 4:
-            difficulty = 16;
+            difficulty = 13;
             break;
         case 5:
-            difficulty = 18;
+            difficulty = 14;
             break;
         default:
-            difficulty = 20;
+            difficulty = 15;
             break;
     }
 
@@ -461,7 +461,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
         }
 
         this.bindKeyDown = function () {
-            window.addEventListener("keydown", check, true);
+            window.addEventListener("keydown", check, false);
         };
 
         this.unbindKeyDown = function () {

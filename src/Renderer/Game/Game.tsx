@@ -26,7 +26,9 @@ export default function Game() {
     }
 
     useEffect(() => {
-        run(canvasRef)
+        if(level<=5){
+            run(canvasRef)
+        }
 
     }, [canvasRef, level])
 
