@@ -8,6 +8,7 @@
 .game {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   width: 100vw;
   height: 100vh;
   background-image: url("../../Assets/background.jpg");
@@ -25,13 +26,13 @@
 
 .mazeContainer {
   margin: 0 auto;
-  width: 50%;
   height: 90%;
+  aspect-ratio: 1/1;
   border-radius: 20px;
   padding: 0;
 }
 #mazeCanvas{
-  width: 100%;
+  //width: 100%;
   height: 100%;
   border-radius: 20px;
 }
@@ -75,8 +76,3 @@ img{
 
 }
 
-//.buttonDown{
-//  width: 42px;
-//  //he
-//  background-image: url("../../Assets/Arrows/arrow_down.png");
-//}
