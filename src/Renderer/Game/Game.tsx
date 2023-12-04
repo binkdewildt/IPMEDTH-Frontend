@@ -47,18 +47,18 @@ export default function Game() {
             </section>
             <section className={"buttonContainer"}>
                 <button className={"buttonLeft"}>
-                    <img className={"buttonLeftImg"} src={arrowLeft} alt={"Arrow Left"}/>
+                    <img className={"buttonLeftImg"} src={arrowLeft} alt={"Arrow Left"} draggable={false}/>
                 </button>
                 <section className={"arrowUpDown"}>
                     <button className={"buttonUp"}>
-                        <img className={"buttonUpImg"} src={arrowUp} alt={"Arrow Up"}/>
+                        <img className={"buttonUpImg"} src={arrowUp} alt={"Arrow Up"} draggable={false}/>
                     </button>
                     <button className={"buttonDown"}>
-                        <img className={"buttonDownImg"} src={arrowDown} alt={"Arrow Down"}/>
+                        <img className={"buttonDownImg"} src={arrowDown} alt={"Arrow Down"} draggable={false}/>
                     </button>
                 </section>
                 <button className={"buttonRight"}>
-                    <img className={"buttonRightImg"} src={arrowRight} alt={"Arrow Right"}/>
+                    <img className={"buttonRightImg"} src={arrowRight} alt={"Arrow Right"} draggable={false}/>
                 </button>
                 {/*<button className={"load"} onClick={makeMaze}>*/}
                 {/*    load*/}
