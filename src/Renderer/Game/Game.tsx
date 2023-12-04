@@ -11,36 +11,28 @@ import MazeGeneration from "./Functions";
 export default function Game() {
 
     const [level, setLevel] = useState(1)
-    const canvasRef = useRef(null);
+    const canvasRef =useRef<HTMLCanvasElement | null>(null);
     const navigate = useNavigate();
 
     const updateLevel = (newValue:number) =>{
         console.log("newValue: ", newValue)
         setLevel(newValue);
     }
-    const run = async (canvas: any) => {
-        if (canvas.current != null) {
-            let mazeCanvas = canvas.current
-            let ctx = mazeCanvas.getContext('2d')
-            // @ts-ignore
-            MazeGeneration(ctx, mazeCanvas, level, updateLevel)
-        }
-    }
-
-    const toEnd = () =>{
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        navigate('/end')
-
-    }
 
     useEffect(() => {
         if(level<=5){
-            run(canvasRef)
+            if (canvasRef.current != null) {
+                let mazeCanvas = canvasRef.current
+                let ctx = mazeCanvas.getContext('2d')
+                // @ts-ignore
+                MazeGeneration(ctx, mazeCanvas, level, updateLevel)
+            }
+            // run(canvasRef)
         }else{
-            toEnd();
+            navigate('/end')
         }
 
-    }, [canvasRef, level])
+    }, [canvasRef, level, navigate])
 
     return (
         <div className={"game"}>

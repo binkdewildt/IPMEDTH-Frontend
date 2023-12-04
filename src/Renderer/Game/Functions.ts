@@ -29,11 +29,6 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
     let player: any;
     let sprite: HTMLImageElement;
     let finishSprite: HTMLImageElement;
-
-    // const up = document.getElementsByClassName("buttonUpImg");
-    // const down = document.getElementsByClassName("buttonDownImg");
-    // const left = document.getElementsByClassName("buttonLeftImg");
-    // const right = document.getElementsByClassName("buttonRightImg");
     let buttons = document.querySelectorAll('button');
 
     function rand(max: number) {
@@ -218,7 +213,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
 
     function DrawMaze(this: any, Maze: any, ctx: any, cellsize: any, endSprite = null) {
         let map = Maze.mapGen();
-        let draw = this
+        // let draw = this
         // let drawEndMethod: () => void;
         ctx.lineWidth = 1;
 
@@ -491,29 +486,29 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
         this.bindKeyDown();
     }
 
-    function loadSprites() {
-        let complete1 = false;
-        let complete2 = false;
-
-        sprite = new Image();
-        sprite.src =
-            "../../Assets/Arrows/arrow_down.png"
-        sprite.setAttribute("crossOrigin", " ");
-        sprite.onload = function () {
-            complete1 = true;
-            // console.log("complete1: ", complete1);
-        };
-
-        finishSprite = new Image();
-        finishSprite.src = "../../Assets/Arrows/arrow_up.png"
-        finishSprite.setAttribute("crossOrigin", " ");
-        finishSprite.onload = function () {
-            // finishSprite = changeBrightness(1.1, finishSprite);
-            complete2 = true;
-            // console.log("complete2", complete2);
-        };
-        return complete1 && complete2;
-    }
+    // function loadSprites() {
+    //     let complete1 = false;
+    //     let complete2 = false;
+    //
+    //     sprite = new Image();
+    //     sprite.src =
+    //         "../../Assets/Arrows/arrow_down.png"
+    //     sprite.setAttribute("crossOrigin", " ");
+    //     sprite.onload = function () {
+    //         complete1 = true;
+    //         // console.log("complete1: ", complete1);
+    //     };
+    //
+    //     finishSprite = new Image();
+    //     finishSprite.src = "../../Assets/Arrows/arrow_up.png"
+    //     finishSprite.setAttribute("crossOrigin", " ");
+    //     finishSprite.onload = function () {
+    //         // finishSprite = changeBrightness(1.1, finishSprite);
+    //         complete2 = true;
+    //         // console.log("complete2", complete2);
+    //     };
+    //     return complete1 && complete2;
+    // }
 
     function makeMaze() {
         if (player !== undefined) {
@@ -521,7 +516,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
             player = null;
         }
         // let ctx = ctx;
-        let spritesLoaded = loadSprites()
+        // let spritesLoaded = loadSprites()
         // @ts-ignore
         maze = new Maze(difficulty, difficulty);
         // @ts-ignore
