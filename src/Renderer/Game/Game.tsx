@@ -1,4 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
+import { useNavigate } from "react-router-dom";
 import '../../SASS/Screens/game.scss';
 import arrowDown from '../../Assets/Arrows/arrow_down.png';
 import arrowUp from '../../Assets/Arrows/arrow_up.png';
@@ -11,6 +12,7 @@ export default function Game() {
 
     const [level, setLevel] = useState(1)
     const canvasRef = useRef(null);
+    const navigate = useNavigate();
 
     const updateLevel = (newValue:number) =>{
         console.log("newValue: ", newValue)
@@ -25,9 +27,17 @@ export default function Game() {
         }
     }
 
+    const toEnd = () =>{
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        navigate('/end')
+
+    }
+
     useEffect(() => {
         if(level<=5){
             run(canvasRef)
+        }else{
+            toEnd();
         }
 
     }, [canvasRef, level])
