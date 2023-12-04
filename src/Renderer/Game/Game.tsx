@@ -43,25 +43,25 @@ export default function Game() {
                     hier komt het doolhof
                 </canvas>
             </section>
-            {/*<section className={"buttonContainer"}>*/}
-            {/*    <button className={"buttonLeft"}>*/}
-            {/*        <img src={arrowLeft} alt={"Arrow Left"}/>*/}
-            {/*    </button>*/}
-            {/*    <section className={"arrowUpDown"}>*/}
-            {/*        <button className={"buttonUp"}>*/}
-            {/*            <img src={arrowUp} alt={"Arrow Up"}/>*/}
-            {/*        </button>*/}
-            {/*        <button className={"buttonDown"}>*/}
-            {/*            <img src={arrowDown} alt={"Arrow Down"}/>*/}
-            {/*        </button>*/}
-            {/*    </section>*/}
-            {/*    <button className={"buttonRight"}>*/}
-            {/*        <img src={arrowRight} alt={"Arrow Right"}/>*/}
-            {/*    </button>*/}
-            {/*    /!*<button className={"load"} onClick={makeMaze}>*!/*/}
-            {/*    /!*    load*!/*/}
-            {/*    /!*</button>*!/*/}
-            {/*</section>*/}
+            <section className={"buttonContainer"}>
+                <button className={"buttonLeft"}>
+                    <img className={"buttonLeftImg"} src={arrowLeft} alt={"Arrow Left"}/>
+                </button>
+                <section className={"arrowUpDown"}>
+                    <button className={"buttonUp"}>
+                        <img className={"buttonUpImg"} src={arrowUp} alt={"Arrow Up"}/>
+                    </button>
+                    <button className={"buttonDown"}>
+                        <img className={"buttonDownImg"} src={arrowDown} alt={"Arrow Down"}/>
+                    </button>
+                </section>
+                <button className={"buttonRight"}>
+                    <img className={"buttonRightImg"} src={arrowRight} alt={"Arrow Right"}/>
+                </button>
+                {/*<button className={"load"} onClick={makeMaze}>*/}
+                {/*    load*/}
+                {/*</button>*/}
+            </section>
 
         </div>
     );

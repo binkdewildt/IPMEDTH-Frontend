@@ -30,6 +30,12 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
     let sprite: HTMLImageElement;
     let finishSprite: HTMLImageElement;
 
+    // const up = document.getElementsByClassName("buttonUpImg");
+    // const down = document.getElementsByClassName("buttonDownImg");
+    // const left = document.getElementsByClassName("buttonLeftImg");
+    // const right = document.getElementsByClassName("buttonRightImg");
+    let buttons = document.querySelectorAll('button');
+
     function rand(max: number) {
         return Math.floor(Math.random() * max);
     }
@@ -398,25 +404,10 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
 
         }
 
-        function check(e: { keyCode: any; }) {
+        function move(dir: string) {
             let cell = map[cellCoords.x][cellCoords.y];
-            switch (e.keyCode) {
-                case 65:
-                case 37: // west
-                    if (cell.w) {
-                        removeSprite(cellCoords);
-                        cellCoords = {
-                            x: cellCoords.x - 1,
-                            y: cellCoords.y
-                        };
-                        // @ts-ignore
-                        new DrawMaze(maze, ctx, cellSize, finishSprite);
-                        drawSprite(cellCoords);
-
-                    }
-                    break;
-                case 87:
-                case 38: // north
+            switch(dir){
+                case "Up":
                     if (cell.n) {
                         removeSprite(cellCoords);
                         cellCoords = {
@@ -426,25 +417,9 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
                         // @ts-ignore
                         new DrawMaze(maze, ctx, cellSize, finishSprite);
                         drawSprite(cellCoords);
-
                     }
                     break;
-                case 68:
-                case 39: // east
-                    if (cell.e) {
-                        removeSprite(cellCoords);
-                        cellCoords = {
-                            x: cellCoords.x + 1,
-                            y: cellCoords.y
-                        };
-                        // @ts-ignore
-                        new DrawMaze(maze, ctx, cellSize, finishSprite);
-                        drawSprite(cellCoords);
-
-                    }
-                    break;
-                case 83:
-                case 40: // south
+                case "Down":
                     if (cell.s) {
                         removeSprite(cellCoords);
                         cellCoords = {
@@ -454,18 +429,61 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
                         // @ts-ignore
                         new DrawMaze(maze, ctx, cellSize, finishSprite);
                         drawSprite(cellCoords);
-
+                    }
+                    break;
+                case "Left":
+                    if (cell.w) {
+                        removeSprite(cellCoords);
+                        cellCoords = {
+                            x: cellCoords.x - 1,
+                            y: cellCoords.y
+                        };
+                        // @ts-ignore
+                        new DrawMaze(maze, ctx, cellSize, finishSprite);
+                        drawSprite(cellCoords);
+                    }
+                    break;
+                case"Right":
+                    if (cell.e) {
+                        removeSprite(cellCoords);
+                        cellCoords = {
+                            x: cellCoords.x + 1,
+                            y: cellCoords.y
+                        };
+                        // @ts-ignore
+                        new DrawMaze(maze, ctx, cellSize, finishSprite);
+                        drawSprite(cellCoords);
                     }
                     break;
             }
+
+        }
+
+        function checkClick(e: any) {
+            // console.log("click: ", e.target.className.includes("button"))
+            const dirs = ["Up", "Down", "Left", "Right"]
+            dirs.forEach((dir) => {
+                if (e.target.className.includes(dir)) {
+                    move(dir);
+                }
+            })
         }
 
         this.bindKeyDown = function () {
-            window.addEventListener("keydown", check, false);
+            if (buttons) {
+                buttons.forEach((button) => {
+                    button.addEventListener("click", checkClick, false);
+                })
+            }
+            // console.log("up", up)
         };
 
         this.unbindKeyDown = function () {
-            window.removeEventListener("keydown", check, false);
+            if (buttons) {
+                buttons.forEach((button) => {
+                    button.removeEventListener("click", checkClick, false);
+                })
+            }
         };
 
         drawSprite(maze.startCoord());
