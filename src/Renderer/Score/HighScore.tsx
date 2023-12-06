@@ -1,5 +1,6 @@
 import React from "react";
 import { useLocalStorage } from "../../Hooks/useLocalStorage";
+import { Link } from "react-router-dom";
 
 const HighScore: React.FC<{}> = () => {
   const [state, setState] = useLocalStorage('test', 1000);
@@ -13,8 +14,12 @@ const HighScore: React.FC<{}> = () => {
           <li>test score 3</li>
         </ol>
       </section>
-      <button onClick={() => setState(Math.floor(Math.random() * 10000))} className="play-button">Speel</button>  {/*now button change the value state*/}
-      <button onClick={() => console.log("previous button pressed")} className="prev-button">Terug</button>
+      <Link className="button-highScore button-highScore--play" to={"/game"}> Speel </Link>
+      <Link className="button-highScore button-highScore--prev" to={"/"}> Terug </Link>
+
+      {/*play-button changes the value state*/}
+      {/* <button onClick={() => setState(Math.floor(Math.random() * 10000))} className="play-button">Speel</button> */}
+      {/* <button onClick={() => console.log("previous button pressed")} className="prev-button">Terug</button> */}
     </div>
   );
 };
