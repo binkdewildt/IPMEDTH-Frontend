@@ -3,7 +3,8 @@ import { useLocalStorage } from "../../Hooks/useLocalStorage";
 import { Link } from "react-router-dom";
 
 const HighScore: React.FC<{}> = () => {
-  const [state, _] = useLocalStorage('test', 1000);
+  const [state] = useLocalStorage('test', 1000);
+
   return (
     <div className="grid-container">
       <h1>Scores</h1>
