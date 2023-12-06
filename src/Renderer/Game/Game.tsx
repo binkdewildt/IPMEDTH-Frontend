@@ -37,7 +37,7 @@ export default function Game() {
     return (
         <div className={"game"}>
             <section className={"stage"}>
-                <p>level: {level}</p>
+                <h1>level: {level}</h1>
                 {/*<image>hier komt de progressbar</image>*/}
             </section>
             <section className="mazeContainer">
@@ -47,18 +47,18 @@ export default function Game() {
             </section>
             <section className={"buttonContainer"}>
                 <button className={"buttonLeft"}>
-                    <img className={"buttonLeftImg"} src={arrowLeft} alt={"Arrow Left"} draggable={false}/>
+                    <img className={"buttonLeftImg buttonImg"} src={arrowLeft} alt={"Arrow Left"} draggable={false}/>
                 </button>
                 <section className={"arrowUpDown"}>
                     <button className={"buttonUp"}>
-                        <img className={"buttonUpImg"} src={arrowUp} alt={"Arrow Up"} draggable={false}/>
+                        <img className={"buttonUpImg buttonImg"} src={arrowUp} alt={"Arrow Up"} draggable={false}/>
                     </button>
                     <button className={"buttonDown"}>
-                        <img className={"buttonDownImg"} src={arrowDown} alt={"Arrow Down"} draggable={false}/>
+                        <img className={"buttonDownImg buttonImg"} src={arrowDown} alt={"Arrow Down"} draggable={false}/>
                     </button>
                 </section>
                 <button className={"buttonRight"}>
-                    <img className={"buttonRightImg"} src={arrowRight} alt={"Arrow Right"} draggable={false}/>
+                    <img className={"buttonRightImg buttonImg"} src={arrowRight} alt={"Arrow Right"} draggable={false}/>
                 </button>
                 {/*<button className={"load"} onClick={makeMaze}>*/}
                 {/*    load*/}
