@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocalStorage } from "../useLocalStorage";
+import { useLocalStorage } from "../../Hooks/useLocalStorage";
 
 const HighScore: React.FC<{}> = () => {
   const [state, setState] = useLocalStorage('test', 1000);
