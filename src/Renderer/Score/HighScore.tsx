@@ -8,7 +8,7 @@ const HighScore: React.FC<{}> = () => {
   return (
     <div className="grid-container">
       <h1>Scores</h1>
-      <section>
+      <section className="score-section">
         <ol>
           <li>{state}</li>
           <li>test score 2</li>
