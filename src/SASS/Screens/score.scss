@@ -16,7 +16,7 @@ h1{
     grid-column: 2;
 }
 
-section{
+.score-section{
     grid-row-start: 2;
     grid-column: 1 / span 3;
     box-shadow: 0 8px 12px 0 rgba(0,0,0,0.4);
@@ -64,7 +64,7 @@ li{
     h1{
         font-size: 36px;
     }
-    section{
+    .score-section{
         box-shadow: 0 6px 10px 0 rgba(0,0,0,0.4);
         padding: 10px;
     }
@@ -85,7 +85,7 @@ li{
     h1{
         margin-top: 5%;
     }
-    section{
+    .score-section{
         margin: 5%;
     }
     li{
@@ -102,7 +102,7 @@ li{
         font-size: 48px;
         margin-top: 5%;
     }
-    section{
+    .score-section{
         grid-row-start: 2;
         margin: 3% 10%;
     }
@@ -137,7 +137,7 @@ li{
         font-size: 64px;
         margin-top: 20%;
     }
-    section{
+    .score-section{
         grid-row-start: 2;
         margin: 5% 20%;
     }
