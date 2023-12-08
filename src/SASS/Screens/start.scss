@@ -1,2 +1,25 @@
-section.startScreen {
+.startScreen {
+    height: 100vh;
+    width: 100%;
+}
+
+.gameLink {
+    height: 20vh;
+    position: absolute;
+    left: 50%;
+    top: 60%;
+    transform: translate(-50%, -50%);
+}
+.startImg {
+    height: 100%;
+    width: auto;
+}
+
+.sinterklaasjournaalBanner {
+    height: 20vh;
+    width: auto;
+    position: absolute;
+    left: 50%;
+    top: 35%;
+    transform: translate(-50%, -50%);
 }
