@@ -16,7 +16,7 @@ h1{
     grid-column: 2;
 }
 
-section{
+.score-section{
     grid-row-start: 2;
     grid-column: 1 / span 3;
     box-shadow: 0 8px 12px 0 rgba(0,0,0,0.4);
@@ -32,43 +32,66 @@ li{
     color: #0D50B5;
 }
 
-button{
+.button-highScore{
     box-shadow: 0 6px 10px 0 rgba(0,0,0,0.4);
     border: none;
     padding: 25px;
     text-align: center;
     font-size: 48px;
     color: #0D50B5;
+    background-color: white;
+    text-decoration: none;
     border-radius: 8px;
     cursor: pointer;
     margin: 3% 7% 0% 7%;
 }
 
-.play-button{
+.button-highScore--play{
     grid-row-start: 3;
     grid-column: 1 / span 3;
 }
 
-.prev-button{
+.button-highScore--prev{
     grid-row-start: 4;
     grid-column: 1 / span 3;
     margin-top: 10%;
 }
 
 
-//RESPONSIVE RESOLUTIONS (ADD MIN-HEIGHT??)
+//RESPONSIVE RESOLUTIONS
+//IPHONE XR
+@media screen and (max-width: 500px){
+    h1{
+        font-size: 36px;
+    }
+    .score-section{
+        box-shadow: 0 6px 10px 0 rgba(0,0,0,0.4);
+        padding: 10px;
+    }
+    li{
+        font-size: 24px;
+        padding: 15px 5px;
+    }
+    .button-highScore{
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
+        padding: 15px;
+        font-size: 24px;
+        margin: 5% 10% 3% 10%;
+    }
+}
+
 //BETWEEN TABLET AND LAPTOP
 @media screen and (min-width: 1150px) {
     h1{
         margin-top: 5%;
     }
-    section{
+    .score-section{
         margin: 5%;
     }
     li{
         padding: 10px;
     }
-    button{
+    .button-highScore{
         margin: 3% 15% 0% 15%;
     }
 }
@@ -79,7 +102,7 @@ button{
         font-size: 48px;
         margin-top: 5%;
     }
-    section{
+    .score-section{
         grid-row-start: 2;
         margin: 3% 10%;
     }
@@ -87,23 +110,58 @@ button{
         font-size: 36px;
         padding: 10px;
     }
-    button{
+    .button-highScore{
         padding: 20px;
         font-size: 24px;
         border-radius: 8px;
     }
-    .play-button{
+    .button-highScore--play{
         grid-column: 1;
         justify-self: start;
         padding: 20px 100px;
         margin: 10% 30%;
     }
 
-    .prev-button{
+    .button-highScore--prev{
         grid-row-start: 3;
         grid-column: 3;
         justify-self: end;
         padding: 20px 100px;
         margin: 10% 30%;
+    }
+}
+
+//LAPTOP
+@media screen and (min-width: 1700px) {
+    h1{
+        font-size: 64px;
+        margin-top: 20%;
+    }
+    .score-section{
+        grid-row-start: 2;
+        margin: 5% 20%;
+    }
+    li{
+        font-size: 48px;
+        padding: 30px;
+    }
+    .button-highScore{
+        padding: 25px;
+        font-size: 36px;
+        border-radius: 8px;
+    }
+    .button-highScore--play{
+        grid-column: 1;
+        justify-self: start;
+        padding: 30px 110px;
+        margin: 10% 58%;
+    }
+
+    .button-highScore--prev{
+        grid-row-start: 3;
+        grid-column: 3;
+        justify-self: end;
+        padding: 30px 110px;
+        margin: 10% 58%;
     }
 }
