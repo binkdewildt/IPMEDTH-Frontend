@@ -12,6 +12,7 @@ export default function Game() {
 
     const [level, setLevel] = useState(1)
     const canvasRef =useRef<HTMLCanvasElement | null>(null);
+    const containerRef =useRef<HTMLElement | null>(null);
     const navigate = useNavigate();
 
     const updateLevel = (newValue:number) =>{
@@ -21,18 +22,18 @@ export default function Game() {
 
     useEffect(() => {
         if(level<=5){
-            if (canvasRef.current != null) {
+            if (canvasRef.current != null && containerRef.current != null) {
                 let mazeCanvas = canvasRef.current
                 let ctx = mazeCanvas.getContext('2d')
                 // @ts-ignore
-                MazeGeneration(ctx, mazeCanvas, level, updateLevel)
+                MazeGeneration(ctx, mazeCanvas, level, updateLevel, containerRef.current)
             }
             // run(canvasRef)
         }else{
             navigate('/end')
         }
 
-    }, [canvasRef, level, navigate])
+    }, [containerRef.current, level, navigate])
 
     return (
         <div className={"game"}>
@@ -40,9 +41,9 @@ export default function Game() {
                 <h1>level: {level}</h1>
                 {/*<image>hier komt de progressbar</image>*/}
             </section>
-            <section className="mazeContainer">
+            <section className="mazeContainer" ref={containerRef}>
                 <canvas id={"mazeCanvas"} ref={canvasRef}>
-                    hier komt het doolhof
+                    {/*hier komt het doolhof*/}
                 </canvas>
             </section>
             <section className={"buttonContainer"}>

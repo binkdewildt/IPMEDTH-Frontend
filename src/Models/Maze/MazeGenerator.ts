@@ -1,4 +1,4 @@
-export default class MazeGeneration(ctx: any, mazeCanvas: any, level: any, updateLevel: any) {
+export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, updateLevel: any, containerRef:any){
     let difficulty: number;
     switch (level) {
         case 1:
@@ -21,9 +21,14 @@ export default class MazeGeneration(ctx: any, mazeCanvas: any, level: any, updat
             break;
     }
 
+    console.log(containerRef.offsetWidth, containerRef.offsetHeight)
+    mazeCanvas.border = "none";
+    mazeCanvas.width= containerRef.offsetWidth;
+    mazeCanvas.height = containerRef.offsetHeight;
+
 
     // console.log(mazeCanvas.width, mazeCanvas.height)
-    let cellSize = mazeCanvas.height / difficulty;
+    let cellSize = mazeCanvas.width / difficulty;
     let maze: null | undefined;
     let draw: null | undefined;
     let player: any;
@@ -215,12 +220,12 @@ export default class MazeGeneration(ctx: any, mazeCanvas: any, level: any, updat
         let map = Maze.mapGen();
         // let draw = this
         // let drawEndMethod: () => void;
-        ctx.lineWidth = cellSize / 40;
+        ctx.lineWidth =  cellsize / 40;
 
 
         this.redrawMaze = function (size: number) {
             cellSize = size;
-            ctx.lineWidth = cellSize / 40;
+            ctx.lineWidth = cellsize / 40;
             drawMap();
             drawEndFlag();
         };
