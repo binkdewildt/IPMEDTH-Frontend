@@ -4,7 +4,7 @@ import { useLocalStorage } from "../../Hooks/useLocalStorage";
 const HighScore: React.FC<{}> = () => {
   const [state, setState] = useLocalStorage('test', 1000);
   return (
-    <div className="grid-container">
+    <div className="grid-container score-container">
       <h1>Scores</h1>
       <section>
         <ol>
