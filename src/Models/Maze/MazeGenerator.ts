@@ -21,7 +21,6 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
             break;
     }
 
-    console.log(containerRef.offsetWidth, containerRef.offsetHeight)
     mazeCanvas.border = "none";
     mazeCanvas.width= containerRef.offsetWidth;
     mazeCanvas.height = containerRef.offsetHeight;

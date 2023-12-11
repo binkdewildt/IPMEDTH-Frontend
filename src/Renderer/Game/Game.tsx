@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import { useNavigate } from "react-router-dom";
-import '../../SASS/Screens/game.scss';
+// import '../../SASS/Screens/game.scss';
 import arrowDown from '../../Assets/Arrows/arrow_down.png';
 import arrowUp from '../../Assets/Arrows/arrow_up.png';
 import arrowLeft from '../../Assets/Arrows/arrow_left.png';
@@ -33,7 +33,7 @@ export default function Game() {
             navigate('/end')
         }
 
-    }, [containerRef.current, level, navigate])
+    }, [canvasRef, containerRef.current, level, navigate])
 
     return (
         <div className={"game"}>
@@ -47,18 +47,18 @@ export default function Game() {
                 </canvas>
             </section>
             <section className={"buttonContainer"}>
-                <button className={"buttonLeft"}>
+                <button className={"buttonLeft buttonGame"}>
                     <img className={"buttonLeftImg buttonImg"} src={arrowLeft} alt={"Arrow Left"} draggable={false}/>
                 </button>
                 <section className={"arrowUpDown"}>
-                    <button className={"buttonUp"}>
+                    <button className={"buttonUp buttonGame"}>
                         <img className={"buttonUpImg buttonImg"} src={arrowUp} alt={"Arrow Up"} draggable={false}/>
                     </button>
-                    <button className={"buttonDown"}>
+                    <button className={"buttonDown buttonGame"}>
                         <img className={"buttonDownImg buttonImg"} src={arrowDown} alt={"Arrow Down"} draggable={false}/>
                     </button>
                 </section>
-                <button className={"buttonRight"}>
+                <button className={"buttonRight buttonGame"}>
                     <img className={"buttonRightImg buttonImg"} src={arrowRight} alt={"Arrow Right"} draggable={false}/>
                 </button>
                 {/*<button className={"load"} onClick={makeMaze}>*/}
