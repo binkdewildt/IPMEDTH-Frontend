@@ -28,28 +28,31 @@
 		color: #0d50b5;
 	}
 
-	button {
+	.button-highScore {
 		box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.4);
 		border: none;
 		padding: 25px;
 		text-align: center;
 		font-size: 48px;
 		color: #0d50b5;
+		background: white;
+		text-decoration: none;
 		border-radius: 8px;
 		cursor: pointer;
 		margin: 3% 7% 0% 7%;
+
+
+		&.button-highScore--play {
+			grid-row-start: 3;
+			grid-column: 1 / span 3;
+		}
+	
+		&.button-highScore--prev {
+			grid-row-start: 4;
+			grid-column: 1 / span 3;
+		}
 	}
 
-	.play-button {
-		grid-row-start: 3;
-		grid-column: 1 / span 3;
-	}
-
-	.prev-button {
-		grid-row-start: 4;
-		grid-column: 1 / span 3;
-		margin-top: 10%;
-	}
 
 	//RESPONSIVE RESOLUTIONS (ADD MIN-HEIGHT??)
 	//BETWEEN TABLET AND LAPTOP
