@@ -1,6 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
 import { useNavigate } from "react-router-dom";
-// import '../../SASS/Screens/game.scss';
 import arrowDown from '../../Assets/Arrows/arrow_down.png';
 import arrowUp from '../../Assets/Arrows/arrow_up.png';
 import arrowLeft from '../../Assets/Arrows/arrow_left.png';
@@ -16,7 +15,6 @@ export default function Game() {
     const navigate = useNavigate();
 
     const updateLevel = (newValue:number) =>{
-        console.log("newValue: ", newValue)
         setLevel(newValue);
     }
 
@@ -28,22 +26,19 @@ export default function Game() {
                 // @ts-ignore
                 MazeGeneration(ctx, mazeCanvas, level, updateLevel, containerRef.current)
             }
-            // run(canvasRef)
         }else{
             navigate('/end')
         }
 
-    }, [canvasRef, containerRef.current, level, navigate])
+    }, [canvasRef, containerRef, level, navigate])
 
     return (
         <div className={"game"}>
             <section className={"stage"}>
                 <h1>level: {level}</h1>
-                {/*<image>hier komt de progressbar</image>*/}
             </section>
             <section className="mazeContainer" ref={containerRef}>
                 <canvas id={"mazeCanvas"} ref={canvasRef}>
-                    {/*hier komt het doolhof*/}
                 </canvas>
             </section>
             <section className={"buttonContainer"}>
@@ -61,9 +56,6 @@ export default function Game() {
                 <button className={"buttonRight buttonGame"}>
                     <img className={"buttonRightImg buttonImg"} src={arrowRight} alt={"Arrow Right"} draggable={false}/>
                 </button>
-                {/*<button className={"load"} onClick={makeMaze}>*/}
-                {/*    load*/}
-                {/*</button>*/}
             </section>
 
         </div>
