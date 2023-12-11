@@ -1,29 +1,33 @@
-export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, updateLevel: any) {
+export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, updateLevel: any, containerRef:any){
     let difficulty: number;
     switch (level) {
         case 1:
-            difficulty = 10;
+            difficulty = 5;
             break;
         case 2:
-            difficulty = 11;
+            difficulty = 6;
             break;
         case 3:
-            difficulty = 12;
+            difficulty = 7;
             break;
         case 4:
-            difficulty = 13;
+            difficulty = 8;
             break;
         case 5:
-            difficulty = 14;
+            difficulty = 9;
             break;
         default:
-            difficulty = 15;
+            difficulty = 10;
             break;
     }
 
+    mazeCanvas.border = "none";
+    mazeCanvas.width= containerRef.offsetWidth;
+    mazeCanvas.height = containerRef.offsetHeight;
+
 
     // console.log(mazeCanvas.width, mazeCanvas.height)
-    let cellSize = mazeCanvas.height / difficulty;
+    let cellSize = mazeCanvas.width / difficulty;
     let maze: null | undefined;
     let draw: null | undefined;
     let player: any;
@@ -215,12 +219,12 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
         let map = Maze.mapGen();
         // let draw = this
         // let drawEndMethod: () => void;
-        ctx.lineWidth = 1;
+        ctx.lineWidth =  cellsize / 40;
 
 
         this.redrawMaze = function (size: number) {
             cellSize = size;
-            ctx.lineWidth = 1;
+            ctx.lineWidth = cellsize / 40;
             drawMap();
             drawEndFlag();
         };
