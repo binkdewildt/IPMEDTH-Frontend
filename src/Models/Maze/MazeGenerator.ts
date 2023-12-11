@@ -1,4 +1,4 @@
-export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, updateLevel: any, containerRef:any){
+export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, updateLevel: any, containerRef: any) {
     let difficulty: number;
     switch (level) {
         case 1:
@@ -22,11 +22,9 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
     }
 
     mazeCanvas.border = "none";
-    mazeCanvas.width= containerRef.offsetWidth;
+    mazeCanvas.width = containerRef.offsetWidth;
     mazeCanvas.height = containerRef.offsetHeight;
 
-
-    // console.log(mazeCanvas.width, mazeCanvas.height)
     let cellSize = mazeCanvas.width / difficulty;
     let maze: null | undefined;
     let draw: null | undefined;
@@ -219,7 +217,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
         let map = Maze.mapGen();
         // let draw = this
         // let drawEndMethod: () => void;
-        ctx.lineWidth =  cellsize / 40;
+        ctx.lineWidth = cellsize / 40;
 
 
         this.redrawMaze = function (size: number) {
@@ -405,7 +403,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
 
         function move(dir: string) {
             let cell = map[cellCoords.x][cellCoords.y];
-            switch(dir){
+            switch (dir) {
                 case "Up":
                     if (cell.n) {
                         removeSprite(cellCoords);
@@ -442,7 +440,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
                         drawSprite(cellCoords);
                     }
                     break;
-                case"Right":
+                case "Right":
                     if (cell.e) {
                         removeSprite(cellCoords);
                         cellCoords = {
