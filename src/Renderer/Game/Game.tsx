@@ -32,12 +32,26 @@ export default function Game() {
 
     }, [canvasRef, containerRef, level, navigate])
 
+    //todo: get the real stuff for cropping and moving
+    let coordinates = [0,0]
+    let mazeBorder = 45;
+    let clipSize = 70;
+    let cellSize = clipSize + 20;
+
+    let clipLeft = mazeBorder + cellSize * coordinates[0];
+    let clipRight = mazeBorder + cellSize * coordinates[1];
+    let canvasStyle = {clipPath: `circle(${clipSize}px at ${clipLeft}px ${clipRight}px)`}
+
+    /* move and resize crop
+    */
+
+
     return (
         <div className="game">
             <section className={"stage"}>
                 <h1>level: {level}</h1>
             </section>
-            <section className="mazeContainer" ref={containerRef}>
+            <section className="mazeContainer" ref={containerRef} style={canvasStyle}>
                 <canvas id={"mazeCanvas"} ref={canvasRef}>
                 </canvas>
             </section>
