@@ -36,8 +36,12 @@ jobs:
       - name: Run the build
         run: npm run build
 
+  deploy:
+    if: github.ref == 'refs/heads/dev'
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Deploy
-        if: github.ref == 'refs/heads/dev'
         run: |
           git config --global user.name $user_name
           git config --global user.email $user_email
