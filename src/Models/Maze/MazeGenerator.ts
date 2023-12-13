@@ -1,4 +1,5 @@
 import piet from "../../Assets/piet.png";
+import shoe from "../../Assets/schoen.webp";
 
 export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, updateLevel: any, containerRef: any) {
     let difficulty: number;
@@ -226,7 +227,8 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
             cellSize = size;
             ctx.lineWidth = cellsize / 40;
             drawMap();
-            drawEndFlag();
+            drawEndSprite();
+            // drawEndFlag();
         };
 
         function drawCell(xCord: number, yCord: number, cell: { n: boolean; s: boolean; e: boolean; w: boolean; }) {
@@ -267,38 +269,45 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
             }
         }
 
-        function drawEndFlag() {
-            let coord = Maze.endCoord();
-            let gridSize = 4;
-            let fraction = cellSize / gridSize - 2;
-            let colorSwap = true;
-            for (let y = 0; y < gridSize; y++) {
-                if (gridSize % 2 === 0) {
-                    colorSwap = !colorSwap;
-                }
-                for (let x = 0; x < gridSize; x++) {
-                    ctx.beginPath();
-                    ctx.rect(
-                        coord.x * cellSize + x * fraction + 4.5,
-                        coord.y * cellSize + y * fraction + 4.5,
-                        fraction,
-                        fraction
-                    );
-                    if (colorSwap) {
-                        ctx.fillStyle = "rgba(0, 0, 0, 0.8)";
-                    } else {
-                        ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
-                    }
-                    ctx.fill();
-                    colorSwap = !colorSwap;
-                }
-            }
-        }
+        // function drawEndFlag() {
+        //     let coord = Maze.endCoord();
+        //     let gridSize = 4;
+        //     let fraction = cellSize / gridSize - 2;
+        //     let colorSwap = true;
+        //     for (let y = 0; y < gridSize; y++) {
+        //         if (gridSize % 2 === 0) {
+        //             colorSwap = !colorSwap;
+        //         }
+        //         for (let x = 0; x < gridSize; x++) {
+        //             ctx.beginPath();
+        //             ctx.rect(
+        //                 coord.x * cellSize + x * fraction + 4.5,
+        //                 coord.y * cellSize + y * fraction + 4.5,
+        //                 fraction,
+        //                 fraction
+        //             );
+        //             if (colorSwap) {
+        //                 ctx.fillStyle = "rgba(0, 0, 0, 0.8)";
+        //             } else {
+        //                 ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+        //             }
+        //             ctx.fill();
+        //             colorSwap = !colorSwap;
+        //         }
+        //     }
+        // }
 
+        //SHOE SPRITE
+         finishSprite.onload = function () {
+            drawEndSprite();
+        };
+        
         function drawEndSprite() {
             let offsetLeft = cellSize / 50;
             let offsetRight = cellSize / 25;
+            
             let coord = Maze.endCoord();
+
             ctx.drawImage(
                 endSprite,
                 2,
@@ -320,7 +329,8 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
         }
 
         clear();
-        drawEndFlag();
+        // drawEndFlag();
+        drawEndSprite();
         drawMap();
     }
 
@@ -347,29 +357,40 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
             drawSpriteImg(cellCoords)
         };
 
+        //PIET SPRITE IMAGE STYLE
         function drawSpriteImg(coord: { x: number; y: number; }) {
             let offsetLeft = cellSize / 50;
             let offsetRight = cellSize / 25;
-            console.log(cellSize)
 
-            sprite.width = cellSize
-            sprite.height = cellSize - 10
-
+            // sprite.width = cellSize            
+            // sprite.height = cellSize - 10
 
             ctx.drawImage(
                 sprite,
-                coord.x * cellSize,
-                (coord.y * cellSize) + cellSize / 10,
+                0,
+                0,
                 // @ts-ignore
                 sprite.width,
                 // // @ts-ignore
                 sprite.height,
+                coord.x * cellSize + offsetLeft,
+                coord.y * cellSize + offsetLeft,
+                cellSize - offsetRight,
+                cellSize - offsetRight
+                // coord.x * cellSize,
+                // (coord.y * cellSize) + cellSize / 10,
             );
+
+            if (coord.x === maze.endCoord().x && coord.y === maze.endCoord().y) {
+                ctx.clearRect(0,0, ctx.canvas.width, ctx.canvas.height);
+                updateLevel(level += 1)
+                player.unbindKeyDown()
+            }
         }
 
         
 
-        function removeSprite(coord: { x: any; y: any; }) {
+        function removeSprite(coord: { x: number; y: number; }) {
             let offsetLeft = cellSize / 50;
             let offsetRight = cellSize / 20;
             ctx.clearRect(
@@ -438,7 +459,6 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
         }
 
         function checkClick(e: any) {
-            // console.log("click: ", e.target.className.includes("button"))
             const dirs = ["Up", "Down", "Left", "Right"]
             dirs.forEach((dir) => {
                 if (e.target.className.includes(dir)) {
@@ -469,34 +489,26 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
         this.bindKeyDown();
     }
 
+    //MAKING THE SPRITES
     function loadSprites() {
-        let complete1 = false;
-        let complete2 = false;
-    
         sprite = new Image();
         sprite.src = piet;
-        // sprite.width = 10;
-        // sprite.height = 10;
         sprite.setAttribute("crossOrigin", " ");
     
         finishSprite = new Image();
-        finishSprite.src = "../../Assets/schoen.webp"
+        finishSprite.src = shoe;
         finishSprite.setAttribute("crossOrigin", " ");
-        finishSprite.onload = function () {
-            // finishSprite = changeBrightness(1.1, finishSprite);
-            complete2 = true;
-            // console.log("complete2", complete2);
-        };
-        return complete1 && complete2;
     }
+
 
     function makeMaze() {
         if (player !== undefined) {
             player.unbindKeyDown();
             player = null;
         }
-        let spritesLoaded = loadSprites();
-        console.log(spritesLoaded);
+        
+        
+        loadSprites();
         // @ts-ignore
         maze = new Maze(difficulty, difficulty);
         // @ts-ignore
