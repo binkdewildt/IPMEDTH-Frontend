@@ -1,3 +1,5 @@
+import piet from "../../Assets/piet.png";
+
 export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, updateLevel: any, containerRef: any) {
     let difficulty: number;
     switch (level) {
@@ -325,11 +327,8 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
     function Player(this: any, maze: any, ctx: any, _cellsize: any, sprite: any, draw: any) {
         // let ctx = c.getContext("2d");
         let drawSprite: (coord: { x: number; y: number; }) => void;
-        drawSprite = drawSpriteCircle;
-        if (sprite != null) {
-            console.log(sprite);
-            drawSprite = drawSpriteImg;
-        }
+        drawSprite = drawSpriteImg;
+
         let player = this;
         let map = maze.mapGen();
         let cellCoords = {
@@ -341,54 +340,31 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
 
         this.redrawPlayer = function (_cellsize: any) {
             cellSize = _cellsize;
-            // drawSpriteImg(cellCoords);
+            drawSpriteImg(cellCoords);
         };
 
-        function drawSpriteCircle(coord: { x: number; y: number; }) {
-            ctx.beginPath();
-            ctx.fillStyle = "red";
-            ctx.arc(
-                (coord.x + 1) * cellSize - halfCellSize,
-                (coord.y + 1) * cellSize - halfCellSize,
-                halfCellSize - 2,
-                0,
-                2 * Math.PI
-            );
-            ctx.fill();
-            ctx.closePath();
+        sprite.onload = function () {
+            drawSpriteImg(cellCoords)
+        };
 
-            if (coord.x === maze.endCoord().x && coord.y === maze.endCoord().y) {
-                // level += 1
-                ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-                // player = undefined;
-                updateLevel(level += 1);
-                player.unbindKeyDown();
-            }
-
-        }
-
-        function drawSpriteImg(coord: { x: any; y: any; }) {
+        function drawSpriteImg(coord: { x: number; y: number; }) {
             let offsetLeft = cellSize / 50;
             let offsetRight = cellSize / 25;
+            console.log(cellSize)
+
+            sprite.width = cellSize
+            sprite.height = cellSize - 10
+
+
             ctx.drawImage(
                 sprite,
-                0,
-                0,
+                coord.x * cellSize,
+                (coord.y * cellSize) + cellSize / 10,
                 // @ts-ignore
                 sprite.width,
-                // @ts-ignore
+                // // @ts-ignore
                 sprite.height,
-                coord.x * cellSize + offsetLeft,
-                coord.y * cellSize + offsetLeft,
-                cellSize - offsetRight,
-                cellSize - offsetRight
             );
-            // if (coord.x === maze.endCoord().x && coord.y === maze.endCoord().y) {
-            //     onComplete(moves);
-            //     player.unbindKeyDown();
-            // }
-            console.log(sprite.height);
-            console.log(sprite.width);
         }
 
         
@@ -498,14 +474,10 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
         let complete2 = false;
     
         sprite = new Image();
-        sprite.src = "../../Assets/piet.png"
-        sprite.width = 10;
-        sprite.height = 10;
+        sprite.src = piet;
+        // sprite.width = 10;
+        // sprite.height = 10;
         sprite.setAttribute("crossOrigin", " ");
-        sprite.onload = function () {
-            complete1 = true;
-            // console.log("complete1: ", complete1);
-        };
     
         finishSprite = new Image();
         finishSprite.src = "../../Assets/schoen.webp"
@@ -524,6 +496,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
             player = null;
         }
         let spritesLoaded = loadSprites();
+        console.log(spritesLoaded);
         // @ts-ignore
         maze = new Maze(difficulty, difficulty);
         // @ts-ignore
