@@ -324,11 +324,6 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
             console.log(cellSize);
         }
 
-        const randomInt = (min: number, max: number) =>
-            Math.floor(Math.random() * (max - min + 1)) + min;
-            console.log()
-
-
         function clear() {
             let canvasSize = cellSize * map.length;
             ctx.clearRect(0, 0, canvasSize, canvasSize);
