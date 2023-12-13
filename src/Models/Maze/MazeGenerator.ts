@@ -346,7 +346,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
             y: maze.startCoord().y
         };
         let cellSize = _cellsize;
-        let halfCellSize = cellSize / 2;
+        // let halfCellSize = cellSize / 2;
 
         this.redrawPlayer = function (_cellsize: any) {
             cellSize = _cellsize;
