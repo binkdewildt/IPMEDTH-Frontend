@@ -35,7 +35,8 @@ export default function Game() {
     return (
         <div className="game">
             <section className={"stage"}>
-                <h1>level: {level}</h1>
+                <h1 className={"levels"}>Level: {level}</h1>
+                <h1 className={"points"}>Punten: </h1>
             </section>
             <section className="mazeContainer" ref={containerRef}>
                 <canvas id={"mazeCanvas"} ref={canvasRef}>
