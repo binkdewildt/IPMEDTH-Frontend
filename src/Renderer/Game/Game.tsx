@@ -5,7 +5,7 @@ import arrowUp from '../../Assets/Arrows/arrow_up.png';
 import arrowLeft from '../../Assets/Arrows/arrow_left.png';
 import arrowRight from '../../Assets/Arrows/arrow_right.png';
 import MazeGeneration from "../../Models/Maze/MazeGenerator";
-
+import { useLocalStorage } from "../../Hooks/useLocalStorage";
 
 export default function Game() {
 
@@ -32,11 +32,13 @@ export default function Game() {
 
     }, [canvasRef, containerRef, level, navigate])
 
+    const [state, setState] = useLocalStorage('highscorelist', 100);
+
     return (
         <div className="game">
             <section className={"stage"}>
                 <h1 className={"levels"}>Level: {level}</h1>
-                <h1 className={"points"}>Punten: </h1>
+                <h1 className={"points"} onChange={(e) => setState(Math.floor(Math.random() * 100))}>Punten: {state}</h1>
             </section>
             <section className="mazeContainer" ref={containerRef}>
                 <canvas id={"mazeCanvas"} ref={canvasRef}>
