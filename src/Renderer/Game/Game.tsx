@@ -32,11 +32,6 @@ export default function Game() {
 
     }, [canvasRef, containerRef, level, navigate])
 
-    //todo: get the real stuff for cropping and moving
-
-    /* move and resize crop
-    */
-
 
     return (
         <div className="game">
