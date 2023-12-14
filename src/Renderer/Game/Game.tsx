@@ -28,7 +28,12 @@ export default function Game() {
                 const backgroundWidth = containerRef.current.offsetWidth - 2;
                 const backgroundHeight = containerRef.current.offsetHeight - 2;
                 const containerRect = containerRef.current.getBoundingClientRect();
-                setMazeBackgroundStyle({ width: backgroundWidth, height: backgroundHeight, left: containerRect.left + 2, top: containerRect.top + 2 });
+                setMazeBackgroundStyle({ 
+                    width: backgroundWidth, 
+                    height: backgroundHeight, 
+                    left: containerRect.left + 2, 
+                    top: containerRect.top + 2 
+                });
 
                 // @ts-ignore
                 MazeGeneration(ctx, mazeCanvas, level, updateLevel, containerRef.current)
