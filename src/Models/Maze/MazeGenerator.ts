@@ -338,10 +338,23 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
         let cellSize = _cellsize;
         let halfCellSize = cellSize / 2;
 
+        //variables for cropMaze()
+        var container: HTMLElement = document.getElementsByClassName("mazeContainer")[0] as HTMLElement
+        let clipSize = cellSize - 10;
+        let clipLeft =  0.99 * cellSize * cellCoords.x + halfCellSize;
+        let clipTop =  0.99 * cellSize * cellCoords.y + halfCellSize;
+        cropMaze();
+
         this.redrawPlayer = function (_cellsize: any) {
             cellSize = _cellsize;
             // drawSpriteImg(cellCoords);
         };
+
+        function cropMaze() {
+            clipLeft =  0.99 * cellSize * cellCoords.x + halfCellSize;
+            clipTop =  0.99 * cellSize * cellCoords.y + halfCellSize;
+            container.style.clipPath = `circle(${clipSize}px at ${clipLeft}px ${clipTop}px)`;
+        }
 
         function drawSpriteCircle(coord: { x: number; y: number; }) {
             ctx.beginPath();
@@ -453,7 +466,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
                     }
                     break;
             }
-
+            cropMaze();
         }
 
         function checkClick(e: any) {
