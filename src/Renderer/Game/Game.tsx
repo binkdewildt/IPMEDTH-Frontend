@@ -10,6 +10,7 @@ import MazeGeneration from "../../Models/Maze/MazeGenerator";
 export default function Game() {
 
     const [level, setLevel] = useState(1)
+    const [mazeBackgroundStyle, setMazeBackgroundStyle] = useState({ width: 0, height: 0, left: 0, top: 0});
     const canvasRef =useRef<HTMLCanvasElement | null>(null);
     const containerRef =useRef<HTMLElement | null>(null);
     const navigate = useNavigate();
@@ -21,8 +22,14 @@ export default function Game() {
     useEffect(() => {
         if(level<=5){
             if (canvasRef.current != null && containerRef.current != null) {
-                let mazeCanvas = canvasRef.current
+                let mazeCanvas = canvasRef.current;
                 let ctx = mazeCanvas.getContext('2d')
+
+                const backgroundWidth = containerRef.current.offsetWidth - 2;
+                const backgroundHeight = containerRef.current.offsetHeight - 2;
+                const containerRect = containerRef.current.getBoundingClientRect();
+                setMazeBackgroundStyle({ width: backgroundWidth, height: backgroundHeight, left: containerRect.left + 2, top: containerRect.top + 2 });
+
                 // @ts-ignore
                 MazeGeneration(ctx, mazeCanvas, level, updateLevel, containerRef.current)
             }
@@ -38,6 +45,7 @@ export default function Game() {
             <section className={"stage"}>
                 <h1>level: {level}</h1>
             </section>
+            <section className="mazeBackground" style={mazeBackgroundStyle}></section>
             <section className="mazeContainer" ref={containerRef}>
                 <canvas id={"mazeCanvas"} ref={canvasRef}>
                 </canvas>

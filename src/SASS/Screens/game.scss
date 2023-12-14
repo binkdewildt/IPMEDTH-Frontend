@@ -20,6 +20,14 @@ div.game {
 		box-shadow: none;
 	}
 
+	.mazeBackground {
+		height: 100%;
+		width: 100%;
+		background-color: black;
+		position: absolute;
+		border-radius: 20px;
+	}
+
 	.mazeContainer {
 		$border-radius: 20px;
 
