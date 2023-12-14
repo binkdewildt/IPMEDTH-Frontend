@@ -354,6 +354,12 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
             clipLeft =  0.99 * cellSize * cellCoords.x + halfCellSize;
             clipTop =  0.99 * cellSize * cellCoords.y + halfCellSize;
             container.style.clipPath = `circle(${clipSize}px at ${clipLeft}px ${clipTop}px)`;
+            //resizeMaze(); //remove if you want to know the relative position of the player
+        }
+
+        function resizeMaze() {
+            const mazeBackground: HTMLElement = document.getElementsByClassName("mazeBackground")[0] as HTMLElement;
+            mazeBackground.style.visibility = "hidden";
         }
 
         function drawSpriteCircle(coord: { x: number; y: number; }) {
