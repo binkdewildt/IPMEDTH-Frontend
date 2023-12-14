@@ -10,9 +10,5 @@
 html {
 	width: 100vw;
 	min-height: 100vh;
-	overflow: hidden;
-}
-
-body {
-	background-image: url("../Assets/background.jpg");
+	overflow-x: hidden;	
 }

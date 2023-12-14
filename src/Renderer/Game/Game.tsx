@@ -33,7 +33,7 @@ export default function Game() {
     }, [canvasRef, containerRef, level, navigate])
 
     return (
-        <div className="game">
+        <div className={"game"}>
             <section className={"stage"}>
                 <h1>level: {level}</h1>
             </section>
@@ -42,18 +42,18 @@ export default function Game() {
                 </canvas>
             </section>
             <section className={"buttonContainer"}>
-                <button className={"buttonLeft buttonGame"} tabIndex={4}>
+                <button className={"buttonLeft buttonGame"}>
                     <img className={"buttonLeftImg buttonImg"} src={arrowLeft} alt={"Arrow Left"} draggable={false}/>
                 </button>
                 <section className={"arrowUpDown"}>
-                    <button className={"buttonUp buttonGame"} tabIndex={1}>
+                    <button className={"buttonUp buttonGame"}>
                         <img className={"buttonUpImg buttonImg"} src={arrowUp} alt={"Arrow Up"} draggable={false}/>
                     </button>
-                    <button className={"buttonDown buttonGame"} tabIndex={3}>
+                    <button className={"buttonDown buttonGame"}>
                         <img className={"buttonDownImg buttonImg"} src={arrowDown} alt={"Arrow Down"} draggable={false}/>
                     </button>
                 </section>
-                <button className={"buttonRight buttonGame"} tabIndex={2}>
+                <button className={"buttonRight buttonGame"}>
                     <img className={"buttonRightImg buttonImg"} src={arrowRight} alt={"Arrow Right"} draggable={false}/>
                 </button>
             </section>
