@@ -13,23 +13,6 @@ html {
 	overflow: hidden;
 }
 
-
-
 body {
 	background-image: url("../Assets/background.jpg");
-}
-
-main#root {
-	&.blur::before {
-		content: "";
-		z-index: 1;
-		position: fixed;
-		top: 0;
-		left: 0;
-		bottom: 0;
-		right: 0;
-		backdrop-filter: blur(15px);
-		pointer-events: none;
-		user-select: none;
-	}
 }
