@@ -1,19 +1,18 @@
 {
   "files": {
-    "main.css": "/IPMEDTH-Frontend/static/css/main.ad1f352e.css",
-    "main.js": "/IPMEDTH-Frontend/static/js/main.ec7ba3b6.js",
+    "main.css": "/IPMEDTH-Frontend/static/css/main.1e36454d.css",
+    "main.js": "/IPMEDTH-Frontend/static/js/main.a6bb08fa.js",
     "static/media/background.jpg": "/IPMEDTH-Frontend/static/media/background.8d813077b7afbeb7e845.jpg",
-    "static/media/piet.png": "/IPMEDTH-Frontend/static/media/piet.bcfd5978f97b3ddeeb9b.png",
-    "static/media/banner.gif": "/IPMEDTH-Frontend/static/media/banner.07c747fe4425dd4816c3.gif",
-    "static/media/startButtonPink.png": "/IPMEDTH-Frontend/static/media/startButtonPink.5b88d193074ab50654b9.png",
-    "static/media/schoen.webp": "/IPMEDTH-Frontend/static/media/schoen.db7b35d82f4537d3205c.webp",
-    "static/media/mediatrigger-button.png": "/IPMEDTH-Frontend/static/media/mediatrigger-button.71c6e1c367f07d6b0952.png",
+    "static/media/footsteps.mp3": "/IPMEDTH-Frontend/static/media/footsteps.977f404f8bdb60dc3f6d.mp3",
+    "static/media/footsteps_2.mp3": "/IPMEDTH-Frontend/static/media/footsteps_2.6c697bd9efab927d1f78.mp3",
+    "static/media/error.mp3": "/IPMEDTH-Frontend/static/media/error.870c8b58057cc5ee103c.mp3",
+    "static/media/floor_texture.webp": "/IPMEDTH-Frontend/static/media/floor_texture.48f42da0ed870840809e.webp",
     "index.html": "/IPMEDTH-Frontend/index.html",
-    "main.ad1f352e.css.map": "/IPMEDTH-Frontend/static/css/main.ad1f352e.css.map",
-    "main.ec7ba3b6.js.map": "/IPMEDTH-Frontend/static/js/main.ec7ba3b6.js.map"
+    "main.1e36454d.css.map": "/IPMEDTH-Frontend/static/css/main.1e36454d.css.map",
+    "main.a6bb08fa.js.map": "/IPMEDTH-Frontend/static/js/main.a6bb08fa.js.map"
   },
   "entrypoints": [
-    "static/css/main.ad1f352e.css",
-    "static/js/main.ec7ba3b6.js"
+    "static/css/main.1e36454d.css",
+    "static/js/main.a6bb08fa.js"
   ]
 }
