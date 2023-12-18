@@ -9,6 +9,10 @@ import errorSound from "../../Assets/sounds/error.mp3"
 import walkSound from "../../Assets/sounds/footsteps.mp3"
 // @ts-ignore
 import walkSound2 from "../../Assets/sounds/footsteps_2.mp3"
+// @ts-ignore
+import finishSound from "../../Assets/sounds/finish.mp3"
+// @ts-ignore
+import pickupSound from "../../Assets/sounds/pickup.mp3"
 
 
 export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, updateLevel: any, containerRef: any) {
@@ -501,6 +505,8 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
 
     function checkEnd(coord: Coordinate, endCoord: Coordinate) {
         if (coord.x === endCoord.x && coord.y === endCoord.y) {
+            let audio = new Audio(finishSound);
+            audio.play();
             ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
             updateLevel(level += 1)
             player.unbindKeyDown()
@@ -537,6 +543,9 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
         var found: boolean = index !== -1;
 
         if (found) {
+            // spelen pickupSound
+            let audio = new Audio(pickupSound)
+            audio.play();
             // Legen van de cell
             removeSprite(coord);
             presentSprites.splice(index, 1);
