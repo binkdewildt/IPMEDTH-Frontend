@@ -218,8 +218,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
         defineStartEnd();
         defineMaze();
 
-        generatePresents(this.startCoord, this.endCoord);
-
+        generatePresents(this.startCoord(), this.endCoord());
     }
 
     function DrawMaze(this: any, Maze: any, ctx: any, cellsize: any) {
@@ -479,6 +478,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
     //#region Presents
     function generatePresents(start: Coordinate, end: Coordinate) {
         //GENERATE PRESENTS
+        console.log(start)
         let amount: number = 2;
         for (var i: number = 0; i < amount; i++) {
             var s = new Image();
