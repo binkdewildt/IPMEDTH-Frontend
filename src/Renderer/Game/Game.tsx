@@ -35,7 +35,7 @@ export default function Game() {
     const [state, setState] = useLocalStorage('highscorelist', 100);
 
     return (
-        <div className="game">
+        <div className={"game"}>
             <section className={"stage"}>
                 <h1 className={"levels"}>Level: {level}</h1>
                 <h1 className={"points"} /*onChange={(e) => setState(Math.floor(Math.random() * 10))}*/>Punten: </h1>       {/*{state}*/}
@@ -45,18 +45,18 @@ export default function Game() {
                 </canvas>
             </section>
             <section className={"buttonContainer"}>
-                <button className={"buttonLeft buttonGame"} tabIndex={4}>
+                <button className={"buttonLeft buttonGame"}>
                     <img className={"buttonLeftImg buttonImg"} src={arrowLeft} alt={"Arrow Left"} draggable={false}/>
                 </button>
                 <section className={"arrowUpDown"}>
-                    <button className={"buttonUp buttonGame"} tabIndex={1}>
+                    <button className={"buttonUp buttonGame"}>
                         <img className={"buttonUpImg buttonImg"} src={arrowUp} alt={"Arrow Up"} draggable={false}/>
                     </button>
-                    <button className={"buttonDown buttonGame"} tabIndex={3}>
+                    <button className={"buttonDown buttonGame"}>
                         <img className={"buttonDownImg buttonImg"} src={arrowDown} alt={"Arrow Down"} draggable={false}/>
                     </button>
                 </section>
-                <button className={"buttonRight buttonGame"} tabIndex={2}>
+                <button className={"buttonRight buttonGame"}>
                     <img className={"buttonRightImg buttonImg"} src={arrowRight} alt={"Arrow Right"} draggable={false}/>
                 </button>
             </section>
