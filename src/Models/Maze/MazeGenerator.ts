@@ -31,6 +31,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
     let finishSprite: HTMLImageElement;
     let cellSize: number;
     let clipSize: number;
+    let halfCellSize: number;
     let buttons = document.querySelectorAll('button');
 
     setSizeMaze();
@@ -51,6 +52,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
             mazeCanvas.width = cellSize * difficulty;
             mazeCanvas.height = cellSize * difficulty;
         }
+        halfCellSize = cellSize / 2;
     }
 
     function rand(max: number) {
