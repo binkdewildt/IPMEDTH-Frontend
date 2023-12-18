@@ -1,18 +1,20 @@
 {
   "files": {
     "main.css": "/IPMEDTH-Frontend/static/css/main.1e36454d.css",
-    "main.js": "/IPMEDTH-Frontend/static/js/main.a6bb08fa.js",
+    "main.js": "/IPMEDTH-Frontend/static/js/main.be525241.js",
     "static/media/background.jpg": "/IPMEDTH-Frontend/static/media/background.8d813077b7afbeb7e845.jpg",
+    "static/media/piet.webp": "/IPMEDTH-Frontend/static/media/piet.51239423c72a9c8a105e.webp",
+    "static/media/schoen.webp": "/IPMEDTH-Frontend/static/media/schoen.db7b35d82f4537d3205c.webp",
     "static/media/footsteps.mp3": "/IPMEDTH-Frontend/static/media/footsteps.977f404f8bdb60dc3f6d.mp3",
     "static/media/footsteps_2.mp3": "/IPMEDTH-Frontend/static/media/footsteps_2.6c697bd9efab927d1f78.mp3",
     "static/media/error.mp3": "/IPMEDTH-Frontend/static/media/error.870c8b58057cc5ee103c.mp3",
     "static/media/floor_texture.webp": "/IPMEDTH-Frontend/static/media/floor_texture.48f42da0ed870840809e.webp",
     "index.html": "/IPMEDTH-Frontend/index.html",
     "main.1e36454d.css.map": "/IPMEDTH-Frontend/static/css/main.1e36454d.css.map",
-    "main.a6bb08fa.js.map": "/IPMEDTH-Frontend/static/js/main.a6bb08fa.js.map"
+    "main.be525241.js.map": "/IPMEDTH-Frontend/static/js/main.be525241.js.map"
   },
   "entrypoints": [
     "static/css/main.1e36454d.css",
-    "static/js/main.a6bb08fa.js"
+    "static/js/main.be525241.js"
   ]
 }
