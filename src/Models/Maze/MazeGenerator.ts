@@ -4,7 +4,7 @@ import { Coordinate, Direction, MazeCell, MoveResult, Present } from "./MazeMode
 
 // Sprite imports
 import playerImg from "../../Assets/piet.webp";
-import finishImg from "../../Assets/schoen.webp";
+import finishImg from "../../Assets/schoenTransparant.webp";
 
 
 export default class MazeGenerator {
@@ -168,20 +168,26 @@ export default class MazeGenerator {
 
     //#region Drawing sprites
     private drawSprite(asset: HTMLImageElement, coord: Coordinate): void {
-        let offsetLeft = this.cellSize / 50;
-        let offsetRight = this.cellSize / 25;
+        let offset: number = (this.cellSize - this.ctx.lineWidth) / 100;         // Ook de lineWidth meenemen in de berekening
+        let maxSize: number = this.cellSize - (2 * offset);
+        let size = this.resizeWithAspectRatio(asset.width, asset.height, maxSize, maxSize);
+
+        let x: number = (coord.x * this.cellSize) + (this.cellSize / 2) - size.width / 2
+        let y: number = (coord.y * this.cellSize) + (this.cellSize / 2) - size.height / 2
 
         this.ctx.drawImage(
             asset,
-            0,
-            0,
-            asset.width,
-            asset.height,
-            coord.x * this.cellSize + offsetLeft,
-            coord.y * this.cellSize + offsetLeft,
-            this.cellSize - offsetRight,
-            this.cellSize - offsetRight
+            x,
+            y,
+            size.width,
+            size.height,
         )
+    }
+
+    private resizeWithAspectRatio(srcWidth: number, srcHeight: number, maxWidth: number, maxHeight: number) {
+        var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
+
+        return { width: srcWidth * ratio, height: srcHeight * ratio };
     }
 
     // Legen van een cell - de linewidth, anders wordt een deel van
