@@ -4,7 +4,7 @@ import arrowDown from "../../Assets/Arrows/arrow_down.png";
 import arrowUp from "../../Assets/Arrows/arrow_up.png";
 import arrowLeft from "../../Assets/Arrows/arrow_left.png";
 import arrowRight from "../../Assets/Arrows/arrow_right.png";
-import MazeGeneration from "../../Models/Maze/MazeGenerator";
+import MazeGeneration from "../../Models/Maze/MazeGenerator_old";
 
 export default function Game() {
 	const [level, setLevel] = useState<number>(1);
