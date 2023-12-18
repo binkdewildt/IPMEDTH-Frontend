@@ -1,23 +1,41 @@
 div.game {
 	display: flex;
 	flex-direction: column;
-  align-items: center;
-  gap: 10px;
+	align-items: center;
+	gap: 10px;
 	width: 100vw;
 	height: 100vh;
 	background-image: url("../../Assets/background.jpg");
 	padding: 20px;
 
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+		overflow: hidden;
+	}
+	
 	.stage {
-		flex-shrink: 0;
-
+		// flex-shrink: 0;
+		gap: 20%;
 		margin: 0 auto;
 		background: none;
+		width: 80%;
 		font-weight: bolder;
 		font-size: 20px;
 		color: white;
 		text-shadow: black 5px 5px 10px;
 		box-shadow: none;
+		display: flex;
+		justify-content: center;
+	  }
+	
+	.levels {
+		color: red;
+	}
+	
+	.points {
+		color: green;
 	}
 
 	.mazeBackground {
@@ -30,8 +48,7 @@ div.game {
 
 	.mazeContainer {
 		$border-radius: 20px;
-
-    height: 1px;      // Moet 1px hebben voor het tekenen van het canvas, width en height worden daarna in de MazeGenerator.ts gezet
+    	height: 1px;      // Moet 1px hebben voor het tekenen van het canvas, width en height worden daarna in de MazeGenerator.ts gezet
 		flex-grow: 1;
 		margin: 0 auto;
 		aspect-ratio: 1 / 1;
