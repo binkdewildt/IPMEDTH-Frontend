@@ -1,11 +1,230 @@
+import Maze from "./Maze";
+import { Coordinate, Direction, MazeCell, MoveResult, Present } from "./MazeModels";
+
+
+// Sprite imports
+import playerImg from "../../Assets/piet.webp";
+import finishImg from "../../Assets/schoen.webp";
+
+
 export default class MazeGenerator {
+    public points: number = 0;
+    public level: number = 1;
 
-    private canvas: HTMLCanvasElement;
-    private ctx: CanvasRenderingContext2D;
+    private cellSize: number = 10;
 
-    // Constructor
-    constructor(canvas: HTMLCanvasElement) {
-        this.canvas = canvas;
-        this.ctx = canvas.getContext("2d");
+    public maze: Maze | null = null;
+
+    private canvas: HTMLCanvasElement = null!;
+    private ctx: CanvasRenderingContext2D = null!;
+
+    //#region Sprites
+    private playerSprite: HTMLImageElement = null!;
+    private finishSprite: HTMLImageElement = null!;
+    //#endregion
+
+    //#region State updaters
+    public setPoints: ((newPoints: number) => void) | null = null;
+    public setLevel: ((newLevel: number) => void) | null = null;
+    //#endregion
+
+    constructor() {
+        this.loadSprites();
     }
+
+
+    public setCanvas(canvas: HTMLCanvasElement) {
+        // Set the correct size
+        canvas.width = canvas.clientWidth;     //todo: dynamisch
+        canvas.height = canvas.clientHeight;    //todo: dynamisch
+
+        this.ctx = canvas.getContext("2d")!;
+        this.cellSize = canvas.width / 5;      //todo: cellsize
+        this.canvas = canvas;
+    }
+
+
+    //#region Moving
+    public move(dir: Direction): void {
+        if (this.maze === null)
+            return;
+
+
+        let oldCoords: Coordinate = { ...this.maze.player.coord };
+        let result: MoveResult = this.maze.move(dir);
+        let newCoords: Coordinate = { ...this.maze.player.coord };
+
+
+        // Clear the cell on the next coords
+        if (result.clearNextCell) {
+            this.removeSprite(newCoords);
+        }
+
+        // Move the player
+        if (result.canMove) {
+            this.removeSprite(oldCoords);
+            this.drawSprite(this.playerSprite, this.maze.player.coord);
+        }
+
+        // If the player got points
+        if (result.gotPoints !== null) {
+            let newPoints = this.points + result.gotPoints;
+            this.setPoints && this.setPoints(newPoints)
+            this.points = newPoints;
+        }
+
+        // Check if finished
+        if (result.finished) {
+            let newLevel = this.level + 1;
+            this.setLevel && this.setLevel(newLevel);
+            this.level = newLevel;
+            this.Generate();
+        }
+    }
+    //#endregion
+
+
+    //#region Generating
+    public Generate(): void {
+        let difficulty: number = this.getDifficulty();
+        var maze = new Maze(difficulty, difficulty);
+        this.drawMaze(maze);
+        this.maze = maze;
+    }
+    //#endregion
+
+
+    //#region Drawing maze
+    private initDrawing(maze: Maze) {
+        this.cellSize = this.canvas.width / maze.map.length;
+        this.ctx.lineWidth = this.cellSize / 40;
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height) // Clear the whole canvas beforehand
+    }
+
+
+    private drawMaze(maze: Maze): void {
+        this.initDrawing(maze);
+
+        // Draw the map
+        for (let x: number = 0; x < maze.map.length; x++) {
+            for (let y: number = 0; y < maze.map[x].length; y++) {
+                let coord: Coordinate = { x: x, y: y };
+                this.drawCell(coord, maze.map[x][y]);
+            }
+        }
+
+        // Draw the presents
+        maze.presents.forEach((s: Present, i: number) => {
+            s.image.onload = (ev: Event) => {
+                this.drawSprite(s.image, s.coord);
+            }
+            // this.drawSprite(s.image, s.coord)
+        })
+
+
+        // Draw the start & end
+        this.playerSprite.onload = () => this.drawSprite(this.playerSprite, maze.player.coord);
+        this.drawSprite(this.playerSprite, maze.player.coord);
+        this.finishSprite.onload = () => this.drawSprite(this.finishSprite, maze.end);
+        this.drawSprite(this.finishSprite, maze.end);
+    }
+
+
+    private drawCell(coord: Coordinate, cell: MazeCell) {
+        let x: number = coord.x * this.cellSize;
+        let y: number = coord.y * this.cellSize;
+
+        if (!cell.n) {
+            this.ctx.beginPath();
+            this.ctx.moveTo(x, y);
+            this.ctx.lineTo(x + this.cellSize, y);
+            this.ctx.stroke();
+        }
+        if (!cell.s) {
+            this.ctx.beginPath();
+            this.ctx.moveTo(x, y + this.cellSize);
+            this.ctx.lineTo(x + this.cellSize, y + this.cellSize);
+            this.ctx.stroke();
+        }
+        if (!cell.e) {
+            this.ctx.beginPath();
+            this.ctx.moveTo(x + this.cellSize, y);
+            this.ctx.lineTo(x + this.cellSize, y + this.cellSize);
+            this.ctx.stroke();
+        }
+        if (!cell.w) {
+            this.ctx.beginPath();
+            this.ctx.moveTo(x, y);
+            this.ctx.lineTo(x, y + this.cellSize);
+            this.ctx.stroke();
+        }
+    }
+    //#endregion
+
+
+    //#region Drawing sprites
+    private drawSprite(asset: HTMLImageElement, coord: Coordinate): void {
+        let offsetLeft = this.cellSize / 50;
+        let offsetRight = this.cellSize / 25;
+
+        this.ctx.drawImage(
+            asset,
+            0,
+            0,
+            asset.width,
+            asset.height,
+            coord.x * this.cellSize + offsetLeft,
+            coord.y * this.cellSize + offsetLeft,
+            this.cellSize - offsetRight,
+            this.cellSize - offsetRight
+        )
+    }
+
+    // Legen van een cell - de linewidth, anders wordt een deel van
+    // de border weggehaald
+    private removeSprite(coord: Coordinate): void {
+        this.ctx.clearRect(
+            coord.x * this.cellSize + this.ctx.lineWidth,
+            coord.y * this.cellSize + this.ctx.lineWidth,
+            this.cellSize - (this.ctx.lineWidth * 2),
+            this.cellSize - (this.ctx.lineWidth * 2),
+        );
+    }
+    //#endregion
+
+
+    //#region Sprites
+    private loadSprites(): void {
+        //CHARACTER PIET 
+        this.playerSprite = new Image();
+        this.playerSprite.src = playerImg;
+        this.playerSprite.setAttribute("crossOrigin", " ");
+
+        //SHOE 
+        this.finishSprite = new Image();
+        this.finishSprite.src = finishImg;
+        this.finishSprite.setAttribute("crossOrigin", " ");
+    }
+    //#endregion
+
+
+    //#region Difficulty
+    private getDifficulty(): number {
+        switch (this.level) {
+            case 1:
+                return 5;
+            case 2:
+                return 5;
+            case 3:
+                return 6;
+            case 4:
+                return 6;
+            case 5:
+                return 7;
+            default:
+                return 5;
+        }
+    }
+    //#endregion
+
 }

@@ -42,18 +42,18 @@ div.game {
 
   .mazeContainer {
     $border-radius: 20px;
-
     height: 1px; // Moet 1px hebben voor het tekenen van het canvas, width en height worden daarna in de MazeGenerator.ts gezet
     flex-grow: 1;
     margin: 0 auto;
     aspect-ratio: 1 / 1;
     border-radius: $border-radius;
     background: white;
-
+    
     #mazeCanvas {
+      width: 100%;
+      height: 100%;
       border-radius: $border-radius;
       border: 2px solid black;
-      width: 100%;
     }
   }
 

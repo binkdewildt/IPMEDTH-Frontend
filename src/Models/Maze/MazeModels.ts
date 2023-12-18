@@ -3,18 +3,35 @@ export type Coordinate = {
     y: number
 }
 
+
+//#region Directions
 export enum Direction {
-    north = 0,
-    east = 1,
-    south = 2,
-    west = 3,
+    up = 0,
+    right = 1,
+    down = 2,
+    left = 3
 }
+
+export type ModifiedDirection = Coordinate & {
+    o: string
+}
+
+export type ModifiedDirections = {
+    n: ModifiedDirection
+    s: ModifiedDirection
+    e: ModifiedDirection
+    w: ModifiedDirection
+}
+//#endregion
+
 
 export type Present = {
     image: HTMLImageElement
     coord: Coordinate
 }
 
+
+//#region Maze
 export type MazeCell = {
     n: boolean
     s: boolean
@@ -25,3 +42,15 @@ export type MazeCell = {
 }
 
 export type MazeMap = MazeCell[][];
+//#endregion
+
+
+//#region Result
+export type MoveResult = {
+    clearNextCell: boolean
+    clearPreviousCell: boolean
+    canMove: boolean
+    finished: boolean,
+    gotPoints: number | null
+}
+//#endregion
