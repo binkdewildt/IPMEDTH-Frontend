@@ -1,7 +1,7 @@
 import piet from "../../Assets/piet.webp";
-import shoe from "../../Assets/schoen.webp";
+import shoe from "../../Assets/schoen.png";
 import present from "../../Assets/cadeau2.png";
-import { Coordinate, Present } from "./MazeModels";
+import {Coordinate, Present} from "./MazeModels";
 
 // @ts-ignore
 import errorSound from "../../Assets/sounds/error.mp3"
@@ -237,12 +237,12 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
 
     function DrawMaze(this: any, Maze: any, ctx: any, cellsize: any) {
         let map = Maze.mapGen();
-        ctx.lineWidth = cellsize / 40;
+        ctx.lineWidth = cellsize / 20;
 
         this.redrawMaze = function (size: number) {
             var end: Coordinate = Maze.endCoord();
             cellSize = size;
-            ctx.lineWidth = cellsize / 40;
+            ctx.lineWidth = cellsize / 20;
             drawMap();
             drawSprite(finishSprite, end);
         };
@@ -452,7 +452,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
     }
 
     function generateRandomCoord(): Coordinate {
-        return { x: rand(difficulty), y: rand(difficulty) };
+        return {x: rand(difficulty), y: rand(difficulty)};
     }
 
     function makeMaze() {
@@ -477,7 +477,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
     // Draw the sprites on the canvas
     function drawSprite(asset: HTMLImageElement, coord: Coordinate) {
         let offsetLeft = cellSize / 50;
-        let offsetRight = cellSize / 25;
+        let offsetRight = cellSize / 10;
 
         ctx.drawImage(
             asset,
@@ -487,8 +487,8 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
             asset.height,
             coord.x * cellSize + offsetLeft,
             coord.y * cellSize + offsetLeft,
-            cellSize - offsetRight,
-            cellSize - offsetRight
+            cellSize,
+            0.75*cellSize
         )
     }
 
@@ -522,7 +522,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
         for (var i: number = 0; i < amount; i++) {
             var s = new Image();
             s.src = present;
-            
+
             // genereren van unieke coordinaten
             let coord: Coordinate = generateRandomCoord();
             var prevCoords = presentSprites.map(x => x.coord);
@@ -532,7 +532,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
             while (checkCoordinateInArray(prevCoords, coord))
                 coord = generateRandomCoord();
 
-            var p: Present = { image: s, coord: coord }
+            var p: Present = {image: s, coord: coord}
             presentSprites.push(p);
         }
     }
@@ -561,6 +561,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
             drawSprite(s.image, s.coord)
         })
     }
+
     //#endregion
 
     return makeMaze()
