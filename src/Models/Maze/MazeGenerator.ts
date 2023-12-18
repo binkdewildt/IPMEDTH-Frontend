@@ -477,6 +477,7 @@ function Player(this: any, maze: any, ctx: any, _cellsize: any, sprite = null, d
     drawSprite(maze.startCoord());
     this.bindKeyDown();
 }
+}
 
 //MAKING THE SPRITES
     function loadSprites() {
