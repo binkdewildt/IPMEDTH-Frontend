@@ -1,6 +1,7 @@
 .startScreen {
   height: 100vh;
   width: 100vw;
+  overflow: hidden;
 
   .startLink {
     background-color: transparent;
@@ -11,10 +12,12 @@
     left: 50%;
     top: 60%;
     transform: translate(-50%, -50%);
-  }
-  .startImg {
-    height: 100%;
-    width: auto;
+    cursor: pointer;
+    
+    .startImg {
+      height: 100%;
+      width: auto;
+    }
   }
 
   .sinterklaasjournaalBanner {
