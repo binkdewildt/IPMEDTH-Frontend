@@ -241,49 +241,49 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
             let x = xCord * cellSize;
             let y = yCord * cellSize;
 
-        if (!cell.n) {
-            ctx.beginPath();
-            ctx.moveTo(x, y);
-            ctx.lineTo(x + cellSize, y);
-            ctx.stroke();
-        }
-        if (!cell.s) {
-            ctx.beginPath();
-            ctx.moveTo(x, y + cellSize);
-            ctx.lineTo(x + cellSize, y + cellSize);
-            ctx.stroke();
-        }
-        if (!cell.e) {
-            ctx.beginPath();
-            ctx.moveTo(x + cellSize, y);
-            ctx.lineTo(x + cellSize, y + cellSize);
-            ctx.stroke();
-        }
-        if (!cell.w) {
-            ctx.beginPath();
-            ctx.moveTo(x, y);
-            ctx.lineTo(x, y + cellSize);
-            ctx.stroke();
-        }
-    }
-
-    function drawMap() {
-        for (let x = 0; x < map.length; x++) {
-            for (let y = 0; y < map[x].length; y++) {
-                drawCell(x, y, map[x][y]);
+            if (!cell.n) {
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                ctx.lineTo(x + cellSize, y);
+                ctx.stroke();
+            }
+            if (!cell.s) {
+                ctx.beginPath();
+                ctx.moveTo(x, y + cellSize);
+                ctx.lineTo(x + cellSize, y + cellSize);
+                ctx.stroke();
+            }
+            if (!cell.e) {
+                ctx.beginPath();
+                ctx.moveTo(x + cellSize, y);
+                ctx.lineTo(x + cellSize, y + cellSize);
+                ctx.stroke();
+            }
+            if (!cell.w) {
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                ctx.lineTo(x, y + cellSize);
+                ctx.stroke();
             }
         }
-    }
+
+        function drawMap() {
+            for (let x = 0; x < map.length; x++) {
+                for (let y = 0; y < map[x].length; y++) {
+                    drawCell(x, y, map[x][y]);
+                }
+            }
+        }
 
         //SHOE SPRITE
-         finishSprite.onload = function () {
+        finishSprite.onload = function () {
             drawEndSprite();
         };
-        
+
         function drawEndSprite() {
             let offsetLeft = cellSize / 50;
             let offsetRight = cellSize / 25;
-            
+
             let coord = Maze.endCoord();
 
             ctx.drawImage(
@@ -301,34 +301,33 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
             );
         }
 
-    function clear() {
-        let canvasSize = cellSize * map.length;
-        ctx.clearRect(0, 0, canvasSize, canvasSize);
+        function clear() {
+            let canvasSize = cellSize * map.length;
+            ctx.clearRect(0, 0, canvasSize, canvasSize);
+        }
+
+        clear();
+        drawEndSprite();
+        drawMap();
     }
 
-    clear();
-    drawEndSprite();
-    drawMap();
-}
+    function Player(this: any, maze: any, ctx: any, _cellsize: any, sprite: any, draw: any) {
+        let drawSprite: (coord: { x: number; y: number; }) => void;
+        drawSprite = drawSpriteImg;
+        let player = this;
+        let map = maze.mapGen();
+        let cellCoords = {
+            x: maze.startCoord().x,
+            y: maze.startCoord().y
+        };
+        let cellSize = _cellsize;
 
-function Player(this: any, maze: any, ctx: any, _cellsize: any, sprite = null, draw: any) {
-    let drawSprite: (coord: { x: number; y: number; }) => void;
-    drawSprite = drawSpriteImg;
-    let player = this;
-    let map = maze.mapGen();
-    let cellCoords = {
-        x: maze.startCoord().x,
-        y: maze.startCoord().y
-    };
-    let cellSize = _cellsize;
-    let halfCellSize = cellSize / 2;
+        this.redrawPlayer = function (_cellsize: any) {
+            cellSize = _cellsize;
+            drawSpriteImg(cellCoords);
+        };
 
-    this.redrawPlayer = function (_cellsize: any) {
-        cellSize = _cellsize;
-        drawSpriteImg(cellCoords);
-    };
-  
-    sprite.onload = function () {
+        sprite.onload = function () {
             drawSpriteImg(cellCoords)
         };
 
@@ -352,12 +351,12 @@ function Player(this: any, maze: any, ctx: any, _cellsize: any, sprite = null, d
             );
 
             if (coord.x === maze.endCoord().x && coord.y === maze.endCoord().y) {
-                ctx.clearRect(0,0, ctx.canvas.width, ctx.canvas.height);
+                ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
                 updateLevel(level += 1)
                 player.unbindKeyDown()
             }
         }
-        
+
         function removeSprite(coord: { x: number; y: number; }) {
             let offsetLeft = cellSize / 50;
             let offsetRight = cellSize / 20;
@@ -367,144 +366,136 @@ function Player(this: any, maze: any, ctx: any, _cellsize: any, sprite = null, d
                 cellSize - offsetRight,
                 cellSize - offsetRight
             );
-
-            //MAKE SOUND
-    function move(dir: string) {
-        let cell = map[cellCoords.x][cellCoords.y];
-        let audio;
-        if(rand(2) === 0){
-            audio = new Audio(walkSound)
-        }else{
-            audio = new Audio(walkSound2)
-        }
-        switch (dir) {
-            case "Up":
-                if (cell.n) {        //PLAYER WALKS
-                    removeSprite(cellCoords);
-                    cellCoords = {
-                        x: cellCoords.x,
-                        y: cellCoords.y - 1
-                    };
-                    // @ts-ignore
-                    new DrawMaze(maze, ctx, cellSize, finishSprite);
-                    drawSprite(cellCoords);
-                    audio.play();
-                }else{        //PLAYER CANT WALK SO ERROR SOUND
-                    let audio = new Audio(errorSound);
-                    audio.play();
-                }
-                break;
-            case "Down":
-                if (cell.s) {
-                    removeSprite(cellCoords);
-                    cellCoords = {
-                        x: cellCoords.x,
-                        y: cellCoords.y + 1
-                    };
-                    // @ts-ignore
-                    new DrawMaze(maze, ctx, cellSize, finishSprite);
-                    drawSprite(cellCoords);
-                    audio.play();
-                }else{
-                    let audio = new Audio(errorSound);
-                    audio.play();
-                }
-                break;
-            case "Left":
-                if (cell.w) {
-                    removeSprite(cellCoords);
-                    cellCoords = {
-                        x: cellCoords.x - 1,
-                        y: cellCoords.y
-                    };
-                    // @ts-ignore
-                    new DrawMaze(maze, ctx, cellSize, finishSprite);
-                    drawSprite(cellCoords);
-                    audio.play();
-                }else{
-                    let audio = new Audio(errorSound);
-                    audio.play();
-                }
-                break;
-            case"Right":
-                if (cell.e) {
-                    removeSprite(cellCoords);
-                    cellCoords = {
-                        x: cellCoords.x + 1,
-                        y: cellCoords.y
-                    };
-                    // @ts-ignore
-                    new DrawMaze(maze, ctx, cellSize, finishSprite);
-                    drawSprite(cellCoords);
-                    audio.play();
-                }else{
-                    let audio = new Audio(errorSound);
-                    audio.play();
-                }
-                break;
         }
 
-    }
-
-    //CHECK DIRECTION
-    function checkClick(e: any) {
-        // console.log("click: ", e.target.className.includes("button"))
-        const dirs = ["Up", "Down", "Left", "Right"]
-        dirs.forEach((dir) => {
-            if (e.target.className.includes(dir)) {
-                move(dir);
+        //MAKE SOUND
+        function move(dir: string) {
+            let cell = map[cellCoords.x][cellCoords.y];
+            let audio;
+            if (rand(2) === 0) {
+                audio = new Audio(walkSound)
+            } else {
+                audio = new Audio(walkSound2)
             }
-        })
+            switch (dir) {
+                case "Up":
+                    if (cell.n) {        //PLAYER WALKS
+                        removeSprite(cellCoords);
+                        cellCoords = {
+                            x: cellCoords.x,
+                            y: cellCoords.y - 1
+                        };
+                        // @ts-ignore
+                        new DrawMaze(maze, ctx, cellSize, finishSprite);
+                        drawSprite(cellCoords);
+                        audio.play();
+                    } else {        //PLAYER CANT WALK SO ERROR SOUND
+                        let audio = new Audio(errorSound);
+                        audio.play();
+                    }
+                    break;
+                case "Down":
+                    if (cell.s) {
+                        removeSprite(cellCoords);
+                        cellCoords = {
+                            x: cellCoords.x,
+                            y: cellCoords.y + 1
+                        };
+                        // @ts-ignore
+                        new DrawMaze(maze, ctx, cellSize, finishSprite);
+                        drawSprite(cellCoords);
+                        audio.play();
+                    } else {
+                        let audio = new Audio(errorSound);
+                        audio.play();
+                    }
+                    break;
+                case "Left":
+                    if (cell.w) {
+                        removeSprite(cellCoords);
+                        cellCoords = {
+                            x: cellCoords.x - 1,
+                            y: cellCoords.y
+                        };
+                        // @ts-ignore
+                        new DrawMaze(maze, ctx, cellSize, finishSprite);
+                        drawSprite(cellCoords);
+                        audio.play();
+                    } else {
+                        let audio = new Audio(errorSound);
+                        audio.play();
+                    }
+                    break;
+                case "Right":
+                    if (cell.e) {
+                        removeSprite(cellCoords);
+                        cellCoords = {
+                            x: cellCoords.x + 1,
+                            y: cellCoords.y
+                        };
+                        // @ts-ignore
+                        new DrawMaze(maze, ctx, cellSize, finishSprite);
+                        drawSprite(cellCoords);
+                        audio.play();
+                    } else {
+                        let audio = new Audio(errorSound);
+                        audio.play();
+                    }
+                    break;
+            }
+
+        }
+
+        //CHECK DIRECTION
+        function checkClick(e: any) {
+            // console.log("click: ", e.target.className.includes("button"))
+            const dirs = ["Up", "Down", "Left", "Right"]
+            dirs.forEach((dir) => {
+                if (e.target.className.includes(dir)) {
+                    move(dir);
+                }
+            })
+        }
+
+        this.bindKeyDown = function () {
+            if (buttons) {
+                buttons.forEach((button) => {
+                    button.addEventListener("click", checkClick, false);
+                })
+            }
+            // console.log("up", up)
+        };
+
+        this.unbindKeyDown = function () {
+            if (buttons) {
+                buttons.forEach((button) => {
+                    button.removeEventListener("click", checkClick, false);
+                })
+            }
+        };
+
+        drawSprite(maze.startCoord());
+        this.bindKeyDown();
+
     }
 
-    this.bindKeyDown = function () {
-        if (buttons) {
-            buttons.forEach((button) => {
-                button.addEventListener("click", checkClick, false);
-            })
-        }
-        // console.log("up", up)
-    };
-
-    this.unbindKeyDown = function () {
-        if (buttons) {
-            buttons.forEach((button) => {
-                button.removeEventListener("click", checkClick, false);
-            })
-        }
-    };
-            
-    drawSprite(maze.startCoord());
-    this.bindKeyDown();
-}
-}
-
-//MAKING THE SPRITES
+    //MAKING THE SPRITES
     function loadSprites() {
         sprite = new Image();
         sprite.src = piet;
         sprite.setAttribute("crossOrigin", " ");
-    
+
         finishSprite = new Image();
         finishSprite.src = shoe;
         finishSprite.setAttribute("crossOrigin", " ");
     }
-
-function makeMaze() {
-    if (player !== undefined) {
-        player.unbindKeyDown();
-        player = null;
-    }
-    // @ts-ignore
-    maze = new Maze(difficulty, difficulty);
-    // @ts-ignore
 
     function makeMaze() {
         if (player !== undefined) {
             player.unbindKeyDown();
             player = null;
         }
-        
+
         loadSprites();
         // @ts-ignore
         maze = new Maze(difficulty, difficulty);
@@ -516,7 +507,7 @@ function makeMaze() {
         player = new Player(maze, ctx, cellSize, sprite, draw);
     }
 
-return makeMaze()
+    return makeMaze()
 }
 
 
