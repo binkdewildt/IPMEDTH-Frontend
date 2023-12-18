@@ -367,7 +367,8 @@ function Player(this: any, maze: any, ctx: any, _cellsize: any, sprite = null, d
                 cellSize - offsetRight,
                 cellSize - offsetRight
             );
-          
+
+            //MAKE SOUND
     function move(dir: string) {
         let cell = map[cellCoords.x][cellCoords.y];
         let audio;
@@ -378,7 +379,7 @@ function Player(this: any, maze: any, ctx: any, _cellsize: any, sprite = null, d
         }
         switch (dir) {
             case "Up":
-                if (cell.n) {
+                if (cell.n) {        //PLAYER WALKS
                     removeSprite(cellCoords);
                     cellCoords = {
                         x: cellCoords.x,
@@ -388,7 +389,7 @@ function Player(this: any, maze: any, ctx: any, _cellsize: any, sprite = null, d
                     new DrawMaze(maze, ctx, cellSize, finishSprite);
                     drawSprite(cellCoords);
                     audio.play();
-                }else{
+                }else{        //PLAYER CANT WALK SO ERROR SOUND
                     let audio = new Audio(errorSound);
                     audio.play();
                 }
@@ -445,6 +446,7 @@ function Player(this: any, maze: any, ctx: any, _cellsize: any, sprite = null, d
 
     }
 
+    //CHECK DIRECTION
     function checkClick(e: any) {
         // console.log("click: ", e.target.className.includes("button"))
         const dirs = ["Up", "Down", "Left", "Right"]
@@ -455,70 +457,37 @@ function Player(this: any, maze: any, ctx: any, _cellsize: any, sprite = null, d
         })
     }
 
-//     this.bindKeyDown = function () {
-//         if (buttons) {
-//             buttons.forEach((button) => {
-//                 button.addEventListener("click", checkClick, false);
-//             })
-//         }
-//         // console.log("up", up)
-//     };
+    this.bindKeyDown = function () {
+        if (buttons) {
+            buttons.forEach((button) => {
+                button.addEventListener("click", checkClick, false);
+            })
+        }
+        // console.log("up", up)
+    };
 
-//     this.unbindKeyDown = function () {
-//         if (buttons) {
-//             buttons.forEach((button) => {
-//                 button.removeEventListener("click", checkClick, false);
-//             })
-//         }
-//     };
+    this.unbindKeyDown = function () {
+        if (buttons) {
+            buttons.forEach((button) => {
+                button.removeEventListener("click", checkClick, false);
+            })
+        }
+    };
+            
+    drawSprite(maze.startCoord());
+    this.bindKeyDown();
+}
 
-
-//         this.bindKeyDown = function () {
-//             if (buttons) {
-//                 buttons.forEach((button) => {
-//                     button.addEventListener("click", checkClick, false);
-//                 })
-//             }
-//         };
-
-//         this.unbindKeyDown = function () {
-//             if (buttons) {
-//                 buttons.forEach((button) => {
-//                     button.removeEventListener("click", checkClick, false);
-//                 })
-//             }
-//         };
-
-//         drawSprite(maze.startCoord());
-//     drawSprite(maze.startCoord());
-
-
-//     this.bindKeyDown();
-// }
-
-// function loadSprites() {
-//     let complete1 = false;
-//     let complete2 = false;
-//
-//     sprite = new Image();
-//     sprite.src =
-//         "../../Assets/Arrows/arrow_down.png"
-//     sprite.setAttribute("crossOrigin", " ");
-//     sprite.onload = function () {
-//         complete1 = true;
-//         // console.log("complete1: ", complete1);
-//     };
-//
-//     finishSprite = new Image();
-//     finishSprite.src = "../../Assets/Arrows/arrow_up.png"
-//     finishSprite.setAttribute("crossOrigin", " ");
-//     finishSprite.onload = function () {
-//         // finishSprite = changeBrightness(1.1, finishSprite);
-//         complete2 = true;
-//         // console.log("complete2", complete2);
-//     };
-//     return complete1 && complete2;
-// }
+//MAKING THE SPRITES
+    function loadSprites() {
+        sprite = new Image();
+        sprite.src = piet;
+        sprite.setAttribute("crossOrigin", " ");
+    
+        finishSprite = new Image();
+        finishSprite.src = shoe;
+        finishSprite.setAttribute("crossOrigin", " ");
+    }
 
 function makeMaze() {
     if (player !== undefined) {
