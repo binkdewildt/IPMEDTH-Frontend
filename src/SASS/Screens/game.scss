@@ -8,27 +8,36 @@ div.game {
   background-image: url("../../Assets/background.jpg");
   padding: 20px;
 
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
   .stage {
     // flex-shrink: 0;
+    gap: 20%;
     margin: 0 auto;
     background: none;
+    width: 80%;
     font-weight: bolder;
     font-size: 20px;
     color: white;
     text-shadow: black 5px 5px 10px;
     box-shadow: none;
+    display: flex;
+    justify-content: center;
   }
 
   .levels {
     color: red;
-    float: left;
-    margin-left: -30%;
+
   }
 
   .points {
     color: green;
-    float: right;
-    margin-right: -28%;
+    
   }
 
   .mazeContainer {
@@ -83,12 +92,5 @@ div.game {
       width: 60px;
       height: 60px;
     }
-  }
-
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    overflow: hidden;
   }
 }

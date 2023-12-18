@@ -38,7 +38,7 @@ export default function Game() {
         <div className={"game"}>
             <section className={"stage"}>
                 <h1 className={"levels"}>Level: {level}</h1>
-                <h1 className={"points"} /*onChange={(e) => setState(Math.floor(Math.random() * 10))}*/>Punten: </h1>       {/*{state}*/}
+                <h1 className={"points"} onChange={(e) => setState(Math.floor(Math.random() * 10))}>Punten: {state}</h1>
             </section>
             <section className="mazeContainer" ref={containerRef}>
                 <canvas id={"mazeCanvas"} ref={canvasRef}>
