@@ -18,6 +18,13 @@ export default function Game() {
 				let mazeCanvas = canvasRef.current;
 				let ctx = mazeCanvas.getContext("2d");
 
+				MazeGeneration(ctx, mazeCanvas, level, setLevel, containerRef.current);
+			}
+		} else {
+			navigate("/end");
+		}
+	}, [canvasRef, containerRef, level, navigate]);
+
 	return (
 		<div className="game">
 			<section className={"stage"}>
