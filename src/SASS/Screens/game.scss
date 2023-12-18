@@ -32,12 +32,18 @@ div.game {
 
   .levels {
     color: red;
-
   }
+  
+	.mazeBackground {
+		height: 100%;
+		width: 100%;
+		background-color: black;
+		position: absolute;
+		border-radius: 20px;
+	}
 
   .points {
     color: green;
-    
   }
 
   .mazeContainer {
@@ -53,7 +59,7 @@ div.game {
     #mazeCanvas {
       border-radius: $border-radius;
       border: 2px solid black;
-      width: 100%;
+      position: relative;
     }
   }
 

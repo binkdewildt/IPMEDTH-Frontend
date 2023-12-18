@@ -3,6 +3,7 @@
   width: 100vw;
 
   .startLink {
+		cursor: pointer;
     background-color: transparent;
     border-color: transparent;
     height: 20vh;
@@ -25,8 +26,6 @@
     top: 35%;
     transform: translate(-50%, -50%);
   }
-
-
 
   .gameName {
     color: red;

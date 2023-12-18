@@ -34,20 +34,37 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
             break;
     }
 
-    mazeCanvas.border = "none";
-    mazeCanvas.width = containerRef.offsetWidth;
-    mazeCanvas.height = containerRef.offsetHeight;
-
-
-    // console.log(mazeCanvas.width, mazeCanvas.height)
-    let cellSize = mazeCanvas.width / difficulty;
+    //set to false if you want your position really big, set to true if you want the black background
+    const relativePositionVisible = true;
+  
     let maze: null | undefined;
     let draw: null | undefined;
     let player: any;
     let playerSprite: HTMLImageElement;
     let finishSprite: HTMLImageElement;
     let presentSprites: Present[] = [];
+    let cellSize: number;
+    let clipSize: number;
     let buttons = document.querySelectorAll('button');
+
+    setSizeMaze();
+    function setSizeMaze() {
+        const magicNumber = 10;
+        if (relativePositionVisible) {
+            const canvas: HTMLElement = document.getElementById("mazeCanvas") as HTMLElement;
+            canvas.style.width = "100%";
+            mazeCanvas.border = "none";
+            mazeCanvas.width = containerRef.offsetWidth;
+            mazeCanvas.height = containerRef.offsetHeight;
+            cellSize = mazeCanvas.width / difficulty;
+            clipSize = cellSize - magicNumber;
+        } else {
+            clipSize = containerRef.offsetHeight / 2;
+            cellSize = clipSize + magicNumber;
+            mazeCanvas.width = cellSize * difficulty;
+            mazeCanvas.height = cellSize * difficulty;
+        }
+    }
 
     function rand(max: number) {
         return Math.floor(Math.random() * max);
@@ -307,7 +324,11 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
         };
         let cellSize = _cellsize;
 
-        this.redrawPlayer = function (_cellsize: number) {
+        //variables for cropMaze()
+        let clipLeft, clipTop: number;
+        cropMaze();
+
+        this.redrawPlayer = function (_cellsize: any) {
             cellSize = _cellsize;
             drawSprite(sprite, cellCoords);
         };
@@ -315,6 +336,21 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
         sprite.onload = function () {
             drawSprite(sprite, cellCoords);
         };
+      
+        function cropMaze() {
+            const container: HTMLElement = document.getElementsByClassName("mazeContainer")[0] as HTMLElement;
+            const canvas: HTMLElement = document.getElementById("mazeCanvas") as HTMLElement;
+            if (relativePositionVisible) {
+                clipLeft = 0.99 * cellSize * cellCoords.x + halfCellSize;
+                clipTop = 0.99 * cellSize * cellCoords.y + halfCellSize;
+            } else {
+                canvas.style.top = `${halfCellSize - cellCoords.y * cellSize}px`;
+                canvas.style.left = `${canvas.offsetWidth / 2 - halfCellSize  - cellCoords.x * cellSize}px`;
+                clipTop = clipSize;
+                clipLeft = canvas.offsetWidth / 2;
+            }
+            container.style.clipPath = `circle(${clipSize}px at ${clipLeft}px ${clipTop}px)`;
+        }
 
         function move(dir: string) {
             let cell = map[cellCoords.x][cellCoords.y];
@@ -397,6 +433,9 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
 
             // checkPresent(cellCoords);
             checkEnd(cellCoords, maze.endCoord())
+
+            cropMaze();
+          
         }
 
         //CHECK DIRECTION
@@ -450,7 +489,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
     function generateRandomCoord(): Coordinate {
         return { x: rand(difficulty), y: rand(difficulty) };
     }
-
+  
     function makeMaze() {
         if (player !== undefined) {
             player.unbindKeyDown();
@@ -556,5 +595,3 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
 
     return makeMaze()
 }
-
-
