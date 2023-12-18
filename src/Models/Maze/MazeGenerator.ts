@@ -335,7 +335,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
                         checkPresent(cellCoords);
                         // @ts-ignore
                         new DrawMaze(maze, ctx, cellSize, finishSprite);
-                        drawSprite(cellCoords);
+                        drawSprite(playerSprite, cellCoords);
                         audio.play();
                     } else {        //PLAYER CANT WALK SO ERROR SOUND
                         let audio = new Audio(errorSound);
@@ -352,7 +352,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
                         checkPresent(cellCoords);
                         // @ts-ignore
                         new DrawMaze(maze, ctx, cellSize, finishSprite);
-                        drawSprite(cellCoords);
+                        drawSprite(playerSprite, cellCoords);
                         audio.play();
                     } else {
                         let audio = new Audio(errorSound);
@@ -369,7 +369,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
                         checkPresent(cellCoords);
                         // @ts-ignore
                         new DrawMaze(maze, ctx, cellSize, finishSprite);
-                        drawSprite(cellCoords);
+                        drawSprite(playerSprite, cellCoords);
                         audio.play();
                     } else {
                         let audio = new Audio(errorSound);
@@ -386,7 +386,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
                         checkPresent(cellCoords);
                         // @ts-ignore
                         new DrawMaze(maze, ctx, cellSize, finishSprite);
-                        drawSprite(cellCoords);
+                        drawSprite(playerSprite, cellCoords);
                         audio.play();
                     } else {
                         let audio = new Audio(errorSound);
