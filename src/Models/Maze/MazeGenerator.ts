@@ -218,8 +218,6 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
 
     function DrawMaze(this: any, Maze: any, ctx: any, cellsize: any, endSprite = null) {
         let map = Maze.mapGen();
-        // let draw = this
-        // let drawEndMethod: () => void;
         ctx.lineWidth = cellsize / 40;
 
 
@@ -228,7 +226,6 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
             ctx.lineWidth = cellsize / 40;
             drawMap();
             drawEndSprite();
-            // drawEndFlag();
         };
 
         function drawCell(xCord: number, yCord: number, cell: { n: boolean; s: boolean; e: boolean; w: boolean; }) {
@@ -269,34 +266,6 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
             }
         }
 
-        // function drawEndFlag() {
-        //     let coord = Maze.endCoord();
-        //     let gridSize = 4;
-        //     let fraction = cellSize / gridSize - 2;
-        //     let colorSwap = true;
-        //     for (let y = 0; y < gridSize; y++) {
-        //         if (gridSize % 2 === 0) {
-        //             colorSwap = !colorSwap;
-        //         }
-        //         for (let x = 0; x < gridSize; x++) {
-        //             ctx.beginPath();
-        //             ctx.rect(
-        //                 coord.x * cellSize + x * fraction + 4.5,
-        //                 coord.y * cellSize + y * fraction + 4.5,
-        //                 fraction,
-        //                 fraction
-        //             );
-        //             if (colorSwap) {
-        //                 ctx.fillStyle = "rgba(0, 0, 0, 0.8)";
-        //             } else {
-        //                 ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
-        //             }
-        //             ctx.fill();
-        //             colorSwap = !colorSwap;
-        //         }
-        //     }
-        // }
-
         //SHOE SPRITE
          finishSprite.onload = function () {
             drawEndSprite();
@@ -329,13 +298,11 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
         }
 
         clear();
-        // drawEndFlag();
         drawEndSprite();
         drawMap();
     }
 
     function Player(this: any, maze: any, ctx: any, _cellsize: any, sprite: any, draw: any) {
-        // let ctx = c.getContext("2d");
         let drawSprite: (coord: { x: number; y: number; }) => void;
         drawSprite = drawSpriteImg;
 
@@ -346,7 +313,6 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
             y: maze.startCoord().y
         };
         let cellSize = _cellsize;
-        // let halfCellSize = cellSize / 2;
 
         this.redrawPlayer = function (_cellsize: any) {
             cellSize = _cellsize;
@@ -362,9 +328,6 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
             let offsetLeft = cellSize / 50;
             let offsetRight = cellSize / 25;
 
-            // sprite.width = cellSize            
-            // sprite.height = cellSize - 10
-
             ctx.drawImage(
                 sprite,
                 0,
@@ -377,8 +340,6 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
                 coord.y * cellSize + offsetLeft,
                 cellSize - offsetRight,
                 cellSize - offsetRight
-                // coord.x * cellSize,
-                // (coord.y * cellSize) + cellSize / 10,
             );
 
             if (coord.x === maze.endCoord().x && coord.y === maze.endCoord().y) {
@@ -387,9 +348,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
                 player.unbindKeyDown()
             }
         }
-
         
-
         function removeSprite(coord: { x: number; y: number; }) {
             let offsetLeft = cellSize / 50;
             let offsetRight = cellSize / 20;
@@ -399,8 +358,6 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
                 cellSize - offsetRight,
                 cellSize - offsetRight
             );
-
-
         }
 
         function move(dir: string) {
@@ -455,7 +412,6 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
                     }
                     break;
             }
-
         }
 
         function checkClick(e: any) {
@@ -473,7 +429,6 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
                     button.addEventListener("click", checkClick, false);
                 })
             }
-            // console.log("up", up)
         };
 
         this.unbindKeyDown = function () {
@@ -500,13 +455,11 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
         finishSprite.setAttribute("crossOrigin", " ");
     }
 
-
     function makeMaze() {
         if (player !== undefined) {
             player.unbindKeyDown();
             player = null;
         }
-        
         
         loadSprites();
         // @ts-ignore
@@ -517,7 +470,6 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
         // @ts-ignore
 
         player = new Player(maze, ctx, cellSize, sprite, draw);
-
     }
 
     return makeMaze()
