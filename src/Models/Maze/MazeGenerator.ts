@@ -35,11 +35,11 @@ export default class MazeGenerator {
 
     public setCanvas(canvas: HTMLCanvasElement) {
         // Set the correct size
-        canvas.width = canvas.clientWidth;     //todo: dynamisch
-        canvas.height = canvas.clientHeight;    //todo: dynamisch
+        canvas.width = canvas.clientWidth;
+        canvas.height = canvas.clientHeight;
 
         this.ctx = canvas.getContext("2d")!;
-        this.cellSize = canvas.width / 5;      //todo: cellsize
+        this.cellSize = canvas.width / (this.maze?.width ?? 5);
         this.canvas = canvas;
     }
 
@@ -54,6 +54,10 @@ export default class MazeGenerator {
         let result: MoveResult = this.maze.move(dir);
         let newCoords: Coordinate = { ...this.maze.player.coord };
 
+        // Clear the previous cell
+        if (result.clearPreviousCell) {
+            this.removeSprite(oldCoords);
+        }
 
         // Clear the cell on the next coords
         if (result.clearNextCell) {
