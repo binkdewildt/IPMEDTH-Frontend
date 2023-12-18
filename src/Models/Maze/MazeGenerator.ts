@@ -1,5 +1,7 @@
 import piet from "../../Assets/piet.webp";
 import shoe from "../../Assets/schoen.webp";
+import present from "../../Assets/cadeau2.png";
+import { Coordinate, Present } from "./MazeModels";
 
 // @ts-ignore
 import errorSound from "../../Assets/sounds/error.mp3"
@@ -42,8 +44,9 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
     let maze: null | undefined;
     let draw: null | undefined;
     let player: any;
-    let sprite: HTMLImageElement;
+    let playerSprite: HTMLImageElement;
     let finishSprite: HTMLImageElement;
+    let presentSprites: Present[] = [];
     let buttons = document.querySelectorAll('button');
 
     function rand(max: number) {
@@ -62,7 +65,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
         let mazeMap: any[];
         let width = Width;
         let height = Height;
-        let startCoord: { x: number; y: number; }, endCoord: { x: number; y: number; };
+        let startCoord: Coordinate, endCoord: Coordinate;
         let dirs = ["n", "s", "e", "w"];
         let modDir = {
             n: {
@@ -224,17 +227,20 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
         genMap();
         defineStartEnd();
         defineMaze();
+
+        generatePresents(this.startCoord(), this.endCoord());
     }
 
-    function DrawMaze(this: any, Maze: any, ctx: any, cellsize: any, endSprite = null) {
+    function DrawMaze(this: any, Maze: any, ctx: any, cellsize: any) {
         let map = Maze.mapGen();
         ctx.lineWidth = cellsize / 40;
 
         this.redrawMaze = function (size: number) {
+            var end: Coordinate = Maze.endCoord();
             cellSize = size;
             ctx.lineWidth = cellsize / 40;
             drawMap();
-            drawEndSprite();
+            drawSprite(finishSprite, end);
         };
 
         function drawCell(xCord: number, yCord: number, cell: { n: boolean; s: boolean; e: boolean; w: boolean; }) {
@@ -275,46 +281,25 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
             }
         }
 
-        //SHOE SPRITE
+        //SHOE SPRITE IMAGE
         finishSprite.onload = function () {
-            drawEndSprite();
+            drawSprite(finishSprite, Maze.endCoord());
         };
-
-        function drawEndSprite() {
-            let offsetLeft = cellSize / 50;
-            let offsetRight = cellSize / 25;
-
-            let coord = Maze.endCoord();
-
-            ctx.drawImage(
-                endSprite,
-                2,
-                2,
-                //@ts-ignore
-                endSprite.width,
-                //@ts-ignore
-                endSprite.height,
-                coord.x * cellSize + offsetLeft,
-                coord.y * cellSize + offsetLeft,
-                cellSize - offsetRight,
-                cellSize - offsetRight
-            );
-        }
 
         function clear() {
             let canvasSize = cellSize * map.length;
             ctx.clearRect(0, 0, canvasSize, canvasSize);
         }
 
+        var end: Coordinate = Maze.endCoord();
         clear();
-        drawEndSprite();
+        drawSprite(finishSprite, end)
+        drawPresents();
         drawMap();
     }
 
-    function Player(this: any, maze: any, ctx: any, _cellsize: any, sprite: any, draw: any) {
-        let drawSprite: (coord: { x: number; y: number; }) => void;
-        drawSprite = drawSpriteImg;
-        let player = this;
+    //COORDINATES FOR CHARACTER
+    function Player(this: any, maze: any, ctx: any, _cellsize: number, sprite: HTMLImageElement, draw: any) {
         let map = maze.mapGen();
         let cellCoords = {
             x: maze.startCoord().x,
@@ -322,53 +307,15 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
         };
         let cellSize = _cellsize;
 
-        this.redrawPlayer = function (_cellsize: any) {
+        this.redrawPlayer = function (_cellsize: number) {
             cellSize = _cellsize;
-            drawSpriteImg(cellCoords);
+            drawSprite(sprite, cellCoords);
         };
 
         sprite.onload = function () {
-            drawSpriteImg(cellCoords)
+            drawSprite(sprite, cellCoords);
         };
 
-        //PIET SPRITE IMAGE STYLE
-        function drawSpriteImg(coord: { x: number; y: number; }) {
-            let offsetLeft = cellSize / 50;
-            let offsetRight = cellSize / 25;
-
-            ctx.drawImage(
-                sprite,
-                0,
-                0,
-                // @ts-ignore
-                sprite.width,
-                // // @ts-ignore
-                sprite.height,
-                coord.x * cellSize + offsetLeft,
-                coord.y * cellSize + offsetLeft,
-                cellSize - offsetRight,
-                cellSize - offsetRight
-            );
-
-            if (coord.x === maze.endCoord().x && coord.y === maze.endCoord().y) {
-                ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-                updateLevel(level += 1)
-                player.unbindKeyDown()
-            }
-        }
-
-        function removeSprite(coord: { x: number; y: number; }) {
-            let offsetLeft = cellSize / 50;
-            let offsetRight = cellSize / 20;
-            ctx.clearRect(
-                coord.x * cellSize + offsetLeft,
-                coord.y * cellSize + offsetLeft,
-                cellSize - offsetRight,
-                cellSize - offsetRight
-            );
-        }
-
-        //MAKE SOUND
         function move(dir: string) {
             let cell = map[cellCoords.x][cellCoords.y];
             let audio;
@@ -385,6 +332,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
                             x: cellCoords.x,
                             y: cellCoords.y - 1
                         };
+                        checkPresent(cellCoords);
                         // @ts-ignore
                         new DrawMaze(maze, ctx, cellSize, finishSprite);
                         drawSprite(cellCoords);
@@ -401,6 +349,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
                             x: cellCoords.x,
                             y: cellCoords.y + 1
                         };
+                        checkPresent(cellCoords);
                         // @ts-ignore
                         new DrawMaze(maze, ctx, cellSize, finishSprite);
                         drawSprite(cellCoords);
@@ -417,6 +366,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
                             x: cellCoords.x - 1,
                             y: cellCoords.y
                         };
+                        checkPresent(cellCoords);
                         // @ts-ignore
                         new DrawMaze(maze, ctx, cellSize, finishSprite);
                         drawSprite(cellCoords);
@@ -433,6 +383,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
                             x: cellCoords.x + 1,
                             y: cellCoords.y
                         };
+                        checkPresent(cellCoords);
                         // @ts-ignore
                         new DrawMaze(maze, ctx, cellSize, finishSprite);
                         drawSprite(cellCoords);
@@ -444,6 +395,8 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
                     break;
             }
 
+            // checkPresent(cellCoords);
+            checkEnd(cellCoords, maze.endCoord())
         }
 
         //CHECK DIRECTION
@@ -462,7 +415,6 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
                     button.addEventListener("click", checkClick, false);
                 })
             }
-            // console.log("up", up)
         };
 
         this.unbindKeyDown = function () {
@@ -473,20 +425,30 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
             }
         };
 
-        drawSprite(maze.startCoord());
+        drawSprite(sprite, maze.startCoord());
         this.bindKeyDown();
 
     }
 
     //MAKING THE SPRITES
     function loadSprites() {
-        sprite = new Image();
-        sprite.src = piet;
-        sprite.setAttribute("crossOrigin", " ");
+        //CHARACTER PIET 
+        playerSprite = new Image();
+        playerSprite.src = piet;
+        playerSprite.setAttribute("crossOrigin", " ");
 
+        //SHOE 
         finishSprite = new Image();
         finishSprite.src = shoe;
         finishSprite.setAttribute("crossOrigin", " ");
+    }
+
+    function checkCoordinateInArray(array: Coordinate[], obj: Coordinate): boolean {
+        return array.filter(o => o.x === obj.x && o.y === obj.y).length !== 0;
+    }
+
+    function generateRandomCoord(): Coordinate {
+        return { x: rand(difficulty), y: rand(difficulty) };
     }
 
     function makeMaze() {
@@ -496,6 +458,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
         }
 
         loadSprites();
+
         // @ts-ignore
         maze = new Maze(difficulty, difficulty);
         // @ts-ignore
@@ -503,8 +466,93 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
         draw = new DrawMaze(maze, ctx, cellSize, finishSprite);
         // @ts-ignore
 
-        player = new Player(maze, ctx, cellSize, sprite, draw);
+        player = new Player(maze, ctx, cellSize, playerSprite, draw);
     }
+
+
+    // Draw the sprites on the canvas
+    function drawSprite(asset: HTMLImageElement, coord: Coordinate) {
+        let offsetLeft = cellSize / 50;
+        let offsetRight = cellSize / 25;
+
+        ctx.drawImage(
+            asset,
+            0,
+            0,
+            asset.width,
+            asset.height,
+            coord.x * cellSize + offsetLeft,
+            coord.y * cellSize + offsetLeft,
+            cellSize - offsetRight,
+            cellSize - offsetRight
+        )
+    }
+
+    function removeSprite(coord: Coordinate) {
+        let offsetLeft = cellSize / 50;
+        let offsetRight = cellSize / 20;
+        ctx.clearRect(
+            coord.x * cellSize + offsetLeft,
+            coord.y * cellSize + offsetLeft,
+            cellSize - offsetRight,
+            cellSize - offsetRight
+        );
+    }
+
+    function checkEnd(coord: Coordinate, endCoord: Coordinate) {
+        if (coord.x === endCoord.x && coord.y === endCoord.y) {
+            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+            updateLevel(level += 1)
+            player.unbindKeyDown()
+        }
+    }
+
+
+    //#region Presents
+    function generatePresents(start: Coordinate, end: Coordinate) {
+        //GENERATE PRESENTS
+        console.log(start)
+        let amount: number = 2;
+        for (var i: number = 0; i < amount; i++) {
+            var s = new Image();
+            s.src = present;
+            
+            // genereren van unieke coordinaten
+            let coord: Coordinate = generateRandomCoord();
+            var prevCoords = presentSprites.map(x => x.coord);
+            prevCoords.push(start);
+            prevCoords.push(end);
+
+            while (checkCoordinateInArray(prevCoords, coord))
+                coord = generateRandomCoord();
+
+            var p: Present = { image: s, coord: coord }
+            presentSprites.push(p);
+        }
+    }
+
+    // Checkt of de speler op een cadeau staat
+    function checkPresent(coord: Coordinate) {
+        var index: number = presentSprites.findIndex(c => c.coord.x === coord.x && c.coord.y === coord.y);
+        var found: boolean = index !== -1;
+
+        if (found) {
+            // Legen van de cell
+            removeSprite(coord);
+            presentSprites.splice(index, 1);
+        }
+    }
+
+    function drawPresents(): void {
+        presentSprites.forEach((s: Present, i: number) => {
+            s.image.onload = (ev: Event) => {
+                drawSprite(s.image, s.coord);
+            }
+
+            drawSprite(s.image, s.coord)
+        })
+    }
+    //#endregion
 
     return makeMaze()
 }
