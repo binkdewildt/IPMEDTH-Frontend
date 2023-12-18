@@ -21,17 +21,37 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
             break;
     }
 
-    mazeCanvas.border = "none";
-    mazeCanvas.width = containerRef.offsetWidth;
-    mazeCanvas.height = containerRef.offsetHeight;
+    //set to false if you want your position really big, set to true if you want the black background
+    const relativePositionVisible = true;
 
-    let cellSize = mazeCanvas.width / difficulty;
     let maze: null | undefined;
     let draw: null | undefined;
     let player: any;
     let sprite: HTMLImageElement;
     let finishSprite: HTMLImageElement;
+    let cellSize: number;
+    let clipSize: number;
     let buttons = document.querySelectorAll('button');
+
+    setSizeMaze();
+
+    function setSizeMaze() {
+        const magicNumber = 10;
+        if (relativePositionVisible) {
+            const canvas: HTMLElement = document.getElementById("mazeCanvas") as HTMLElement;
+            canvas.style.width = "100%";
+            mazeCanvas.border = "none";
+            mazeCanvas.width = containerRef.offsetWidth;
+            mazeCanvas.height = containerRef.offsetHeight;
+            cellSize = mazeCanvas.width / difficulty;
+            clipSize = cellSize - magicNumber;
+        } else {
+            clipSize = containerRef.offsetHeight / 2;
+            cellSize = clipSize + magicNumber;
+            mazeCanvas.width = cellSize * difficulty;
+            mazeCanvas.height = cellSize * difficulty;
+        }
+    }
 
     function rand(max: number) {
         return Math.floor(Math.random() * max);
@@ -213,19 +233,11 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
         defineMaze();
     }
 
-    function DrawMaze(this: any, Maze: any, ctx: any, cellsize: any, endSprite = null) {
+    function DrawMaze(this: any, Maze: any, ctx: any) {
         let map = Maze.mapGen();
         // let draw = this
         // let drawEndMethod: () => void;
-        ctx.lineWidth = cellsize / 40;
-
-
-        this.redrawMaze = function (size: number) {
-            cellSize = size;
-            ctx.lineWidth = cellsize / 40;
-            drawMap();
-            drawEndFlag();
-        };
+        ctx.lineWidth = cellSize / 40;
 
         function drawCell(xCord: number, yCord: number, cell: { n: boolean; s: boolean; e: boolean; w: boolean; }) {
             let x = xCord * cellSize;
@@ -293,25 +305,6 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
             }
         }
 
-        // function drawEndSprite() {
-        //     let offsetLeft = cellSize / 50;
-        //     let offsetRight = cellSize / 25;
-        //     let coord = Maze.endCoord();
-        //     ctx.drawImage(
-        //         endSprite,
-        //         2,
-        //         2,
-        //         //@ts-ignore
-        //         endSprite.width,
-        //         //@ts-ignore
-        //         endSprite.height,
-        //         coord.x * cellSize + offsetLeft,
-        //         coord.y * cellSize + offsetLeft,
-        //         cellSize - offsetRight,
-        //         cellSize - offsetRight
-        //     );
-        // }
-
         function clear() {
             let canvasSize = cellSize * map.length;
             ctx.clearRect(0, 0, canvasSize, canvasSize);
@@ -339,10 +332,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
         let halfCellSize = cellSize / 2;
 
         //variables for cropMaze()
-        var container: HTMLElement = document.getElementsByClassName("mazeContainer")[0] as HTMLElement
-        let clipSize = cellSize - 10;
-        let clipLeft =  0.99 * cellSize * cellCoords.x + halfCellSize;
-        let clipTop =  0.99 * cellSize * cellCoords.y + halfCellSize;
+        let clipLeft, clipTop: number;
         cropMaze();
 
         this.redrawPlayer = function (_cellsize: any) {
@@ -351,15 +341,18 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
         };
 
         function cropMaze() {
-            clipLeft =  0.99 * cellSize * cellCoords.x + halfCellSize;
-            clipTop =  0.99 * cellSize * cellCoords.y + halfCellSize;
+            const container: HTMLElement = document.getElementsByClassName("mazeContainer")[0] as HTMLElement;
+            const canvas: HTMLElement = document.getElementById("mazeCanvas") as HTMLElement;
+            if (relativePositionVisible) {
+                clipLeft = 0.99 * cellSize * cellCoords.x + halfCellSize;
+                clipTop = 0.99 * cellSize * cellCoords.y + halfCellSize;
+            } else {
+                canvas.style.top = `${halfCellSize - cellCoords.y * cellSize}px`;
+                canvas.style.left = `${canvas.offsetWidth / 2 - halfCellSize  - cellCoords.x * cellSize}px`;
+                clipTop = clipSize;
+                clipLeft = canvas.offsetWidth / 2;
+            }
             container.style.clipPath = `circle(${clipSize}px at ${clipLeft}px ${clipTop}px)`;
-            //resizeMaze(); //remove if you want to know the relative position of the player
-        }
-
-        function resizeMaze() {
-            const mazeBackground: HTMLElement = document.getElementsByClassName("mazeBackground")[0] as HTMLElement;
-            mazeBackground.style.visibility = "hidden";
         }
 
         function drawSpriteCircle(coord: { x: number; y: number; }) {
@@ -384,28 +377,6 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
             }
 
         }
-
-        // function drawSpriteImg(coord: { x: any; y: any; }) {
-        //     let offsetLeft = cellSize / 50;
-        //     let offsetRight = cellSize / 25;
-        //     ctx.drawImage(
-        //         sprite,
-        //         0,
-        //         0,
-        //         // @ts-ignore
-        //         sprite.width,
-        //         // @ts-ignore
-        //         sprite.height,
-        //         coord.x * cellSize + offsetLeft,
-        //         coord.y * cellSize + offsetLeft,
-        //         cellSize - offsetRight,
-        //         cellSize - offsetRight
-        //     );
-        //     if (coord.x === maze.endCoord().x && coord.y === maze.endCoord().y) {
-        //         onComplete(moves);
-        //         player.unbindKeyDown();
-        //     }
-        // }
 
         function removeSprite(coord: { x: any; y: any; }) {
             let offsetLeft = cellSize / 50;
@@ -507,30 +478,6 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
         this.bindKeyDown();
     }
 
-    // function loadSprites() {
-    //     let complete1 = false;
-    //     let complete2 = false;
-    //
-    //     sprite = new Image();
-    //     sprite.src =
-    //         "../../Assets/Arrows/arrow_down.png"
-    //     sprite.setAttribute("crossOrigin", " ");
-    //     sprite.onload = function () {
-    //         complete1 = true;
-    //         // console.log("complete1: ", complete1);
-    //     };
-    //
-    //     finishSprite = new Image();
-    //     finishSprite.src = "../../Assets/Arrows/arrow_up.png"
-    //     finishSprite.setAttribute("crossOrigin", " ");
-    //     finishSprite.onload = function () {
-    //         // finishSprite = changeBrightness(1.1, finishSprite);
-    //         complete2 = true;
-    //         // console.log("complete2", complete2);
-    //     };
-    //     return complete1 && complete2;
-    // }
-
     function makeMaze() {
         if (player !== undefined) {
             player.unbindKeyDown();
@@ -551,5 +498,3 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
 
     return makeMaze()
 }
-
-

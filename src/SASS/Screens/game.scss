@@ -41,7 +41,7 @@ div.game {
 		#mazeCanvas {
 			border-radius: $border-radius;
 			border: 2px solid black;
-			width: 100%;
+			position: relative;
 		}
 	}
 
