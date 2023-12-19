@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/IPMEDTH-Frontend/static/css/main.ee734d94.css",
-    "main.js": "/IPMEDTH-Frontend/static/js/main.de070568.js",
+    "main.js": "/IPMEDTH-Frontend/static/js/main.76bcf044.js",
     "static/media/background.jpg": "/IPMEDTH-Frontend/static/media/background.8d813077b7afbeb7e845.jpg",
     "static/media/banner.gif": "/IPMEDTH-Frontend/static/media/banner.07c747fe4425dd4816c3.gif",
     "static/media/cadeau2.png": "/IPMEDTH-Frontend/static/media/cadeau2.16567aa7b04de921c9aa.png",
@@ -17,10 +17,10 @@
     "static/media/floor_texture.webp": "/IPMEDTH-Frontend/static/media/floor_texture.48f42da0ed870840809e.webp",
     "index.html": "/IPMEDTH-Frontend/index.html",
     "main.ee734d94.css.map": "/IPMEDTH-Frontend/static/css/main.ee734d94.css.map",
-    "main.de070568.js.map": "/IPMEDTH-Frontend/static/js/main.de070568.js.map"
+    "main.76bcf044.js.map": "/IPMEDTH-Frontend/static/js/main.76bcf044.js.map"
   },
   "entrypoints": [
     "static/css/main.ee734d94.css",
-    "static/js/main.de070568.js"
+    "static/js/main.76bcf044.js"
   ]
 }
