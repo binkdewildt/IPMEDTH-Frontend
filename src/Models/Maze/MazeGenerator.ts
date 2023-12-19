@@ -441,9 +441,9 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
                 clipTop = magicNumber * cellSize * cellCoords.y + halfCellSize;
             } else {
                 canvas.style.top = `${halfCellSize - cellCoords.y * cellSize}px`;
-                canvas.style.left = `${canvas.offsetWidth / 2 - halfCellSize  - cellCoords.x * cellSize}px`;
+                canvas.style.left = `${halfCellSize  - cellCoords.x * cellSize}px`;
                 clipTop = clipSize;
-                clipLeft = canvas.offsetWidth / 2;
+                clipLeft = clipSize;
             }
             container.style.clipPath = `circle(${clipSize}px at ${clipLeft}px ${clipTop}px)`;
         }
