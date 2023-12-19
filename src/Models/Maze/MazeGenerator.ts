@@ -5,35 +5,38 @@ import { Coordinate, Direction, MazeCell, MoveResult, Present } from "./MazeMode
 // Sprite imports
 import playerImg from "../../Assets/piet.webp";
 import finishImg from "../../Assets/schoenTransparant.webp";
+import { Size } from "../Size";
 
 
 export default class MazeGenerator {
     public points: number = 0;
     public level: number = 1;
 
-    private cellSize: number = 10;
+    private cellSize: number = 0;      // Wordt gezet vlak voor het tekenen
 
     public maze: Maze | null = null;
 
     private canvas: HTMLCanvasElement = null!;
     private ctx: CanvasRenderingContext2D = null!;
 
+    
     //#region Sprites
     private playerSprite: HTMLImageElement = null!;
     private finishSprite: HTMLImageElement = null!;
     //#endregion
+
 
     //#region State updaters
     public setPoints: ((newPoints: number) => void) | null = null;
     public setLevel: ((newLevel: number) => void) | null = null;
     //#endregion
 
+
     constructor() {
         this.loadSprites();
     }
 
-
-    public setCanvas(canvas: HTMLCanvasElement) {
+    public setCanvas(canvas: HTMLCanvasElement): void {
         // Set the correct size
         canvas.width = canvas.clientWidth;
         canvas.height = canvas.clientHeight;
@@ -184,10 +187,10 @@ export default class MazeGenerator {
         )
     }
 
-    private resizeWithAspectRatio(srcWidth: number, srcHeight: number, maxWidth: number, maxHeight: number) {
+    private resizeWithAspectRatio(srcWidth: number, srcHeight: number, maxWidth: number, maxHeight: number): Size {
         var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
 
-        return { width: srcWidth * ratio, height: srcHeight * ratio };
+        return { width: srcWidth * ratio, height: srcHeight * ratio, ratio: ratio };
     }
 
     // Legen van een cell - de linewidth, anders wordt een deel van

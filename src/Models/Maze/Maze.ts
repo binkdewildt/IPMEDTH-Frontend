@@ -16,21 +16,27 @@ import walkSound2 from "../../Assets/sounds/footsteps_2.mp3"
 
 
 export default class Maze {
-    public width: number
-    public height: number;
+    public readonly width: number
+    public readonly height: number;
 
     public map: MazeMap = null!;    // Wordt gezet in constructor --> generate --> genMap
-    public presents: Present[] = [];
+    public readonly presents: Present[] = [];
 
     public start: Coordinate = null!;
     public end: Coordinate = null!;
 
-    public player: Player = null!;
+    public readonly player: Player = null!;
+
+
+    //#region Points
+    private readonly pointsPerPresent = 100;
+    private readonly pointsPerLevel = 10;
+    //#endregion
 
 
     //#region Private constants
-    private directions: string[] = ["n", "e", "s", "w"]
-    private modDir: ModifiedDirections = {
+    private readonly directions: string[] = ["n", "e", "s", "w"]
+    private readonly modDir: ModifiedDirections = {
         n: {
             y: -1,
             x: 0,
@@ -54,6 +60,7 @@ export default class Maze {
     };
     //#endregion
 
+    
     // Constructor
     constructor(width: number, height: number) {
         this.width = width;
@@ -116,7 +123,7 @@ export default class Maze {
             // Check if a present has been collected
             if (this.checkPresent(newCoord)) {
                 //todo: Play sound... --> this.playSound(...);
-                pointsToAdd += 100;
+                pointsToAdd += this.pointsPerPresent;
                 clearNextCell = true;           // clear the next cell if a present has been picked up
             }
 
@@ -128,7 +135,7 @@ export default class Maze {
         this.playSound(sound);
 
         let finished: boolean = this.checkEnd(newCoord);
-        if (finished) pointsToAdd += 10;
+        if (finished) pointsToAdd += this.pointsPerLevel;
 
         return {
             clearNextCell: clearNextCell,
@@ -367,7 +374,7 @@ export default class Maze {
         return s[random(s.length)];
     }
 
-    private playSound(sound: string) {
+    private playSound(sound: string): void {
         var audio = new Audio(sound);
         audio.play();
     }
