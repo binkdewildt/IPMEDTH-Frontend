@@ -6,6 +6,7 @@ import { Coordinate, Direction, MazeCell, MoveResult, Present } from "./MazeMode
 import playerImg from "../../Assets/piet.webp";
 import finishImg from "../../Assets/schoenTransparant.webp";
 import { Size } from "../Size";
+import { pythagoras } from "../../Extensions/NumberExtensions";
 
 
 export default class MazeGenerator {
@@ -13,13 +14,20 @@ export default class MazeGenerator {
     public level: number = 1;
 
     private cellSize: number = 0;      // Wordt gezet vlak voor het tekenen
+    private clipSize: number = 0;      // Wordt gezet vlak voor het tekenen
 
     public maze: Maze | null = null;
 
+    private container: HTMLElement = null!;
     private canvas: HTMLCanvasElement = null!;
     private ctx: CanvasRenderingContext2D = null!;
 
-    
+
+    //#region Settings
+    private readonly darkOverlay: boolean = true;
+    //#endregion
+
+
     //#region Sprites
     private playerSprite: HTMLImageElement = null!;
     private finishSprite: HTMLImageElement = null!;
@@ -42,8 +50,8 @@ export default class MazeGenerator {
         canvas.height = canvas.clientHeight;
 
         this.ctx = canvas.getContext("2d")!;
-        this.cellSize = canvas.width / (this.maze?.width ?? 5);
         this.canvas = canvas;
+        this.container = canvas.parentElement!;
     }
 
 
@@ -71,6 +79,7 @@ export default class MazeGenerator {
         if (result.canMove) {
             this.removeSprite(oldCoords);
             this.drawSprite(this.playerSprite, this.maze.player.coord);
+            this.drawDarkOverlay(this.maze);
         }
 
         // If the player got points
@@ -104,6 +113,8 @@ export default class MazeGenerator {
     //#region Drawing maze
     private initDrawing(maze: Maze) {
         this.cellSize = this.canvas.width / maze.map.length;
+        this.clipSize = this.cellSize / 2 * 1.5;            // Moet de radius zijn, dus halve cell + klein randje voor de volgende stap
+        console.log(this.clipSize)
         this.ctx.lineWidth = this.cellSize / 40;
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height) // Clear the whole canvas beforehand
     }
@@ -111,6 +122,10 @@ export default class MazeGenerator {
 
     private drawMaze(maze: Maze): void {
         this.initDrawing(maze);
+
+        // Draw the dark overlay
+        // must be before the drawing of the maze
+        this.drawDarkOverlay(maze);
 
         // Draw the map
         for (let x: number = 0; x < maze.map.length; x++) {
@@ -167,6 +182,22 @@ export default class MazeGenerator {
         }
     }
     //#endregion
+
+
+    //#region Dark overlay
+    private drawDarkOverlay(maze: Maze): void {
+        if (!this.darkOverlay) return;      // Do nothing when the setting is turned off
+        this.container.classList.add("darkOverlay")
+
+        let coords = maze.player.coord;
+        let x = (this.cellSize * coords.x) + (this.cellSize / 2);
+        let y = (this.cellSize * coords.y) + (this.cellSize / 2);
+
+        let path: string = `circle(${this.clipSize}px at ${x}px ${y}px)`;
+        this.canvas.style.clipPath = path;
+    }
+    //#endregion
+
 
 
     //#region Drawing sprites
