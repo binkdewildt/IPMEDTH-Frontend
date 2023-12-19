@@ -532,7 +532,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
             coord.x * cellSize + offsetLeft,
             coord.y * cellSize + offsetLeft,
             cellSize,
-            0.75*cellSize
+            cellSize
         )
     }
 
