@@ -16,6 +16,7 @@ import walkSound from "../../Assets/sounds/footsteps.mp3"
 import walkSound2 from "../../Assets/sounds/footsteps_2.mp3"
 import pickupSound from "../../Assets/sounds/pickup.mp3"
 import finishSound from "../../Assets/sounds/finish.mp3"
+import ignitionSound from "../../Assets/sounds/ignition.mp3"
 import MazeGenerator from "./MazeGenerator";
 
 
@@ -33,8 +34,8 @@ export default class Maze {
 
 
     //#region Points
-    private readonly pointsPerPresent = 100;
-    private readonly pointsPerLevel = 10;
+    private readonly pointsPerPresent = 10;
+    private readonly pointsPerLevel = 100;
     //#endregion
 
 
@@ -390,6 +391,7 @@ export default class Maze {
 
             case SpriteType.lightPowerUp:
                 MazeGenerator.clipSize *= 2;
+                sound = ignitionSound;
                 break;
         }
 
