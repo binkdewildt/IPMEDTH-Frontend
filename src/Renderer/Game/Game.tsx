@@ -37,7 +37,7 @@ export default function Game() {
 	// Voor het navigeren naar het einde
 	useEffect(() => {
 		// Checken of het spel is beïndigd
-		if (level > 1) {
+		if (level > 5) {
 
 			// Bereken de nieuwe highScores en geef deze mee aan de volgende view
 			// Daar pas opslaan in de localStorage, hier namelijk niet snel genoeg met opslaan
