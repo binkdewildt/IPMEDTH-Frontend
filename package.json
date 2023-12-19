@@ -49,6 +49,7 @@
   "devDependencies": {
     "@jest/globals": "^29.7.0",
     "@types/jest": "^29.5.10",
+    "jest-environment-jsdom": "^29.7.0",
     "ts-jest": "^29.1.1"
   }
 }
