@@ -116,7 +116,7 @@ export default class MazeGenerator {
     private initDrawing(maze: Maze) {
         this.cellSize = this.canvas.width / maze.map.length;
         MazeGenerator.clipSize = this.cellSize;            // Moet de radius zijn, dus halve cell + klein randje voor de volgende stap
-        this.ctx.lineWidth = this.cellSize / 40;
+        this.ctx.lineWidth = this.cellSize / 15;
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height) // Clear the whole canvas beforehand
     }
 
