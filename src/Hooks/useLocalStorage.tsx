@@ -1,38 +1,33 @@
-//LOCAL STORAGE
-//NOW ITS CHANGED WITH THE PLAY BUTTON FOR TEST
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 
 type ReturnType<T> = [
-    T | undefined,
-    React.Dispatch<React.SetStateAction<T | undefined>>
-]
+	T | undefined,
+	React.Dispatch<React.SetStateAction<T | undefined>>
+];
 
 export const useLocalStorage = <T,>(
-    key: string, 
-    initialValue?: T
-    ): ReturnType<T> => {
-    const [state, setState] = useState<T | undefined>(() => {
-        if(!initialValue) return;
-        try{
-            const value = localStorage.getItem(key);
-            return value ? JSON.parse(value) : initialValue;
-        } 
-        catch(err){
-            return initialValue;
-        }
-        }
-    );
+	key: string,
+	initialValue?: T
+): ReturnType<T> => {
+	const [value, setValue] = useState(() => {
+		let currentValue: T | undefined = initialValue;
 
-    useEffect(() => {
-        if(state){
-            try{
-                localStorage.setItem(key, JSON.stringify(state));
-            }
-            catch(err){
-                console.log(err);
-            }
-        }
-    }, [state, key]);
+		try {
+			currentValue = JSON.parse(
+				localStorage.getItem(key) || String(initialValue)
+			);
+		} catch (error) {
+			currentValue = initialValue;
+		}
 
-    return [state, setState];
+		return currentValue;
+	});
+
+	useEffect(() => {
+		localStorage.setItem(key, JSON.stringify(value));
+	}, [value, key]);
+
+	return [value, setValue];
 };
+
+export default useLocalStorage;

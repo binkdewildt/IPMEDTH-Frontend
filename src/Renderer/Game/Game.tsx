@@ -6,10 +6,12 @@ import arrowLeft from "../../Assets/Arrows/arrow_left.png";
 import arrowRight from "../../Assets/Arrows/arrow_right.png";
 import MazeGenerator from "../../Models/Maze/MazeGenerator";
 import { Direction } from "../../Models/Maze/MazeModels";
+import { useLocalStorage } from "../../Hooks/useLocalStorage";
 
 export default function Game() {
 	const [level, setLevel] = useState<number>(1);
 	const [points, setPoints] = useState<number>(0);
+	const [localPoints] = useLocalStorage<number[]>("highscores", []);
 
 	const [generator] = useState(() => new MazeGenerator());
 
@@ -34,12 +36,18 @@ export default function Game() {
 
 	// Voor het navigeren naar het einde
 	useEffect(() => {
-		if (level > 5) {
-			//todo: Updaten van de punten in de localStorage
-			navigate("/end");
-		}
-	}, [navigate, level]);
+		// Checken of het spel is beïndigd
+		if (level > 1) {
 
+			// Bereken de nieuwe highScores en geef deze mee aan de volgende view
+			// Daar pas opslaan in de localStorage, hier namelijk niet snel genoeg met opslaan
+			let newPoints = localPoints ?? [];
+			newPoints.push(points);
+			newPoints = newPoints.sort((a, b) => b - a).slice(0, 3);
+			navigate("/end", { state: newPoints });
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [navigate, level]);
 	//#endregion
 
 	return (
