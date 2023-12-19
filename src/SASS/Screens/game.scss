@@ -1,101 +1,102 @@
 div.game {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 10px;
-	width: 100vw;
-	height: 100vh;
-	background-image: url("../../Assets/background.jpg");
-	padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("../../Assets/background.jpg");
+  padding: 20px;
 
-	* {
-		margin: 0;
-		padding: 0;
-		box-sizing: border-box;
-		overflow: hidden;
-	}
-	
-	.stage {
-		// flex-shrink: 0;
-		gap: 20%;
-		margin: 0 auto;
-		background: none;
-		width: 80%;
-		font-weight: bolder;
-		font-size: 20px;
-		color: white;
-		text-shadow: black 5px 5px 10px;
-		box-shadow: none;
-		display: flex;
-		justify-content: center;
-	  }
-	
-	.levels {
-		color: red;
-	}
-	
-	.points {
-		color: green;
-	}
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
 
-	.mazeBackground {
-		height: 100%;
-		width: 100%;
-		background-color: black;
-		position: absolute;
-		border-radius: 20px;
-	}
+  .stage {
+    // flex-shrink: 0;
+    gap: 20%;
+    margin: 0 auto;
+    background: none;
+    width: 80%;
+    font-weight: bolder;
+    font-size: 20px;
+    color: white;
+    text-shadow: black 5px 5px 10px;
+    box-shadow: none;
+    display: flex;
+    justify-content: center;
+  }
 
-	.mazeContainer {
-		$border-radius: 20px;
-    	height: 1px;      // Moet 1px hebben voor het tekenen van het canvas, width en height worden daarna in de MazeGenerator.ts gezet
-		flex-grow: 1;
-		margin: 0 auto;
-		aspect-ratio: 1 / 1;
-		border-radius: $border-radius;
-		background: white;
+  .levels {
+    color: red;
+  }
 
-		#mazeCanvas {
-			border-radius: $border-radius;
-			border: 2px solid black;
-			position: relative;
-		}
-	}
+  .points {
+    color: green;
+  }
 
-	.buttonContainer {
-   		flex-shrink: 0;
-		margin: 0 auto;
-		width: 50%;
-		background: none;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		box-shadow: none;
-		user-select: none;
+  .mazeBackground {
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    position: absolute;
+    border-radius: 20px;
+  }
 
-		.buttonGame {
-			margin: 0;
-			padding: 0;
-			font-weight: bold;
-			width: 80px;
-			height: 80px;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
+  .mazeContainer {
+    $border-radius: 20px;
+    height: 1px; // Moet 1px hebben voor het tekenen van het canvas, width en height worden daarna in de MazeGenerator.ts gezet
+    flex-grow: 1;
+    margin: 0 auto;
+    aspect-ratio: 1 / 1;
+    border-radius: $border-radius;
+    background: white;
 
-		.arrowUpDown {
-			display: flex;
-			flex-direction: column;
-			gap: 15px;
-			background: none;
-			box-shadow: none;
-			margin: 0;
-		}
+    #mazeCanvas {
+      border-radius: $border-radius;
+      border: 2px solid black;
+      width: 100%;
+      background: url("../../Assets/floor_texture.webp");
+    }
+  }
 
-		.buttonImg {
-			width: 60px;
-			height: 60px;
-		}
-	}
+  .buttonContainer {
+    flex-shrink: 0;
+    margin: 0 auto;
+    width: 50%;
+    background: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: none;
+    user-select: none;
+
+    .buttonGame {
+      margin: 0;
+      padding: 0;
+      font-weight: bold;
+      width: 80px;
+      height: 80px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .arrowUpDown {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      background: none;
+      box-shadow: none;
+      margin: 0;
+    }
+
+    .buttonImg {
+      width: 60px;
+      height: 60px;
+    }
+  }
 }
