@@ -13,6 +13,9 @@ import Player from "./Player";
 import errorSound from "../../Assets/sounds/error.mp3"
 import walkSound from "../../Assets/sounds/footsteps.mp3"
 import walkSound2 from "../../Assets/sounds/footsteps_2.mp3"
+import pickupSound from "../../Assets/sounds/pickup.mp3"
+import finishSound from "../../Assets/sounds/finish.mp3"
+
 
 
 export default class Maze {
@@ -60,7 +63,7 @@ export default class Maze {
     };
     //#endregion
 
-    
+
     // Constructor
     constructor(width: number, height: number) {
         this.width = width;
@@ -122,7 +125,7 @@ export default class Maze {
 
             // Check if a present has been collected
             if (this.checkPresent(newCoord)) {
-                //todo: Play sound... --> this.playSound(...);
+                this.playSound(pickupSound);
                 pointsToAdd += this.pointsPerPresent;
                 clearNextCell = true;           // clear the next cell if a present has been picked up
             }
@@ -135,8 +138,11 @@ export default class Maze {
         this.playSound(sound);
 
         let finished: boolean = this.checkEnd(newCoord);
-        if (finished) pointsToAdd += this.pointsPerLevel;
-
+        if (finished) {
+            this.playSound(finishSound);
+            pointsToAdd += this.pointsPerLevel;
+        }
+        
         return {
             clearNextCell: clearNextCell,
             clearPreviousCell: clearPreviousCell,
