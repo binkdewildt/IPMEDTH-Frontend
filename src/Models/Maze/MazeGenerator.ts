@@ -6,7 +6,7 @@ import { Coordinate, Direction, MazeCell, MoveResult, Present } from "./MazeMode
 import playerImg from "../../Assets/piet.webp";
 import finishImg from "../../Assets/schoenTransparant.webp";
 import { Size } from "../Size";
-import { pythagoras } from "../../Extensions/NumberExtensions";
+// import { pythagoras } from "../../Extensions/NumberExtensions";
 
 
 export default class MazeGenerator {
