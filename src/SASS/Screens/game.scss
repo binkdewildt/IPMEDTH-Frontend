@@ -32,17 +32,22 @@ div.game {
 
   .levels {
     color: red;
-
   }
 
   .points {
     color: green;
-    
+  }
+
+  .mazeBackground {
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    position: absolute;
+    border-radius: 20px;
   }
 
   .mazeContainer {
     $border-radius: 20px;
-
     height: 1px; // Moet 1px hebben voor het tekenen van het canvas, width en height worden daarna in de MazeGenerator.ts gezet
     flex-grow: 1;
     margin: 0 auto;
