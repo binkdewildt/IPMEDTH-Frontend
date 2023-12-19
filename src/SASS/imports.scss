@@ -2,10 +2,11 @@
 // Met uitzondering van variables.scss
 @import "index";
 
+// Screens
 @import "Screens/game";
 @import "Screens/score";
 @import "Screens/start";
 
 
-//Components
-@import "Components/overlay";
+// Components
+@import "Components/overlay"

@@ -1,20 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useLocalStorage } from "../../Hooks/useLocalStorage";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const HighScore: React.FC<{}> = () => {
-	const [state] = useLocalStorage("test", 1000);
+	const { state } = useLocation();
+	const [highscores, setHighscores] = useLocalStorage("highscores", []);
+
+	//#region UseEffects
+	// Voor het eenmalig opslaan van de highscores in de localStorage.
+	// Wanneer dit in de game wordt gedaan is deze niet snel genoeg met opslaan
+	// wat er voor zorgt dat niet alle scores zichtbaar zijn
+	useEffect(() => {
+		if (state !== null) setHighscores(state);
+	}, [state, setHighscores]);
+	//#endregion
+
 	return (
-		<div className="grid-container score-container">
+		<div className="score-container">
 			<h1>Scores</h1>
 			<section>
 				<ol>
-					<li>{state}</li>
-					<li>test score 2</li>
-					<li>test score 3</li>
+					{(state ?? highscores ?? []).map((score: number, index: number) => {
+						return <li key={index}> {score} </li>;
+					})}
 				</ol>
 			</section>
-
 			<Link className="button-highScore button-highScore--play" to={"/game"}>
 				Speel
 			</Link>

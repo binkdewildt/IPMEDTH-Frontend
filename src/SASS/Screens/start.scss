@@ -1,42 +1,47 @@
 .startScreen {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
 
-	.startLink {
-		cursor: pointer;
-		background-color: transparent;
-		border-color: transparent;
-		height: 20vh;
-		width: 20vh;
-		position: absolute;
-		left: 50%;
-		top: 60%;
-		transform: translate(-50%, -50%);
-	}
-	.startImg {
-		height: 100%;
-		width: auto;
-	}
+  .startLink {
+    background-color: transparent;
+    border-color: transparent;
+    height: 20vh;
+    width: 20vh;
+    position: absolute;
+    left: 50%;
+    top: 60%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    
+    .startImg {
+      height: 100%;
+      width: auto;
+    }
+  }
 
-	.sinterklaasjournaalBanner {
-		height: 20vh;
-		width: auto;
-		position: absolute;
-		left: 50%;
-		top: 35%;
-		transform: translate(-50%, -50%);
-	}
+  .sinterklaasjournaalBanner {
+    height: 20vh;
+    width: auto;
+    position: absolute;
+    left: 50%;
+    top: 35%;
+    transform: translate(-50%, -50%);
+  }
 
-	.gameName {
-		color: red;
-		font-size: 5em;
-		position: absolute;
-		left: 50%;
-		top: 25%;
-		transform: translate(-50%, -50%);
-	}
-	
+
+
+  .gameName {
+    color: red;
+    font-size: 5em;
+    position: absolute;
+    left: 50%;
+    top: 25%;
+    transform: translate(-50%, -50%);
+  }
 }
 
 .fullScreen {
-    width: 100vw;
-    height: 100vh;
+  width: 100vw;
+  height: 100vh;
 }
