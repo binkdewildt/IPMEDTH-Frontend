@@ -3,7 +3,8 @@ import { Coordinate, Direction, MazeCell, MoveResult, Sprite } from "./MazeModel
 
 
 // Sprite imports
-import playerImg from "../../Assets/pietWithLight.webp";
+import playerImg from "../../Assets/piet.webp";
+import playerWithLightImg from "../../Assets/pietWithLight.webp";
 import finishImg from "../../Assets/schoenTransparant.webp";
 import { Size } from "../Size";
 
@@ -238,7 +239,7 @@ export default class MazeGenerator {
     private loadSprites(): void {
         //CHARACTER PIET 
         this.playerSprite = new Image();
-        this.playerSprite.src = playerImg;
+        this.playerSprite.src = MazeGenerator.darkOverlay ? playerWithLightImg : playerImg;
         this.playerSprite.setAttribute("crossOrigin", " ");
 
         //SHOE 

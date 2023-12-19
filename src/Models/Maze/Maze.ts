@@ -7,7 +7,7 @@ import Player from "./Player";
 import present1 from "../../Assets/Cadeaus/cadeau.png"
 import present2 from "../../Assets/Cadeaus/cadeau2.png"
 import present3 from "../../Assets/Cadeaus/cadeau.webp"
-import light from "../../Assets/schoen.webp";
+import light from "../../Assets/light.png";
 
 
 // Sounds
