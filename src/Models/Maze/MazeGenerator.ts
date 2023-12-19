@@ -1,12 +1,12 @@
 import Maze from "./Maze";
 import { Coordinate, Direction, MazeCell, MoveResult, Sprite } from "./MazeModels";
+import { Size } from "../Size";
 
 
 // Sprite imports
 import playerImg from "../../Assets/piet.webp";
 import playerWithLightImg from "../../Assets/pietWithLight.webp";
 import finishImg from "../../Assets/schoenTransparant.webp";
-import { Size } from "../Size";
 
 
 export default class MazeGenerator {
@@ -25,6 +25,7 @@ export default class MazeGenerator {
 
     //#region Settings
     public static darkOverlay: boolean = true;
+    public static moveMaze: boolean = true;
     //#endregion
 
 
@@ -80,6 +81,7 @@ export default class MazeGenerator {
             this.removeSprite(oldCoords);
             this.drawSprite(this.playerSprite, this.maze.player.coord);
             this.drawDarkOverlay(this.maze);
+            this.positionMaze(this.maze);
         }
 
         // If the player got points
@@ -125,6 +127,8 @@ export default class MazeGenerator {
         // Draw the dark overlay
         // must be before the drawing of the maze
         this.drawDarkOverlay(maze);
+
+        this.positionMaze(maze);
 
         // Draw the map
         for (let x: number = 0; x < maze.map.length; x++) {
@@ -188,12 +192,27 @@ export default class MazeGenerator {
         if (!MazeGenerator.darkOverlay) return;      // Do nothing when the setting is turned off
         this.container.classList.add("darkOverlay")
 
-        let coords = maze.player.coord;
-        let x = (this.cellSize * coords.x) + (this.cellSize / 2);
-        let y = (this.cellSize * coords.y) + (this.cellSize / 2);
+        let coords: Coordinate = maze.player.coord;
+        let x: number = (this.cellSize * coords.x) + (this.cellSize / 2);
+        let y: number = (this.cellSize * coords.y) + (this.cellSize / 2);
 
         let path: string = `circle(${MazeGenerator.clipSize}px at ${x}px ${y}px)`;
         this.canvas.style.clipPath = path;
+    }
+    //#endregion
+
+
+    //#region Moving maze
+    private positionMaze(maze: Maze): void {
+        if (!MazeGenerator.moveMaze) return;        // Do nothing when the setting is turned off
+
+        let coords: Coordinate = maze.player.coord;
+        let x: number = (this.canvas.width / 2) - (this.cellSize / 2) - (coords.x * this.cellSize);
+        let y: number = (this.canvas.height / 2) - (this.cellSize / 2) - (coords.y * this.cellSize);
+
+        this.canvas.style.position = "absolute";
+        this.canvas.style.left = `${x}px`
+        this.canvas.style.top = `${y}px`
     }
     //#endregion
 
@@ -268,5 +287,4 @@ export default class MazeGenerator {
         }
     }
     //#endregion
-
 }
