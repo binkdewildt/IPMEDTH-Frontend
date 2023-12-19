@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 
 import StartScreen from "./Start/StartScreen";
@@ -6,14 +6,6 @@ import HighScore from "./Score/HighScore";
 import Game from "./Game/Game";
 
 function App() {
-	useEffect(() => {
-		// Watch the 'B' button to be pressed to blur the body
-		document.addEventListener("keydown", (e: KeyboardEvent) => {
-			if (e.key === "b")
-				document.getElementById("root")?.classList.toggle("blur");
-		});
-	}, []);
-
 	return (
 		<Router>
 			<Routes>

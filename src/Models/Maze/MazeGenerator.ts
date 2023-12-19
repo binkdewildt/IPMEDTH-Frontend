@@ -22,36 +22,35 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
             difficulty = 5;
             break;
         case 2:
-            difficulty = 5;
+            difficulty = 6;
             break;
         case 3:
-            difficulty = 6;
-            break;
-        case 4:
-            difficulty = 6;
-            break;
-        case 5:
             difficulty = 7;
             break;
+        case 4:
+            difficulty = 8;
+            break;
+        case 5:
+            difficulty = 9;
+            break;
         default:
-            difficulty = 5;
+            difficulty = 10;
             break;
     }
 
-    mazeCanvas.border = "none";
-    mazeCanvas.width = containerRef.offsetWidth;
-    mazeCanvas.height = containerRef.offsetHeight;
-
-
-    // console.log(mazeCanvas.width, mazeCanvas.height)
-    let cellSize = mazeCanvas.width / difficulty;
+    //set to false if you want your position really big, set to true if you want the black background
+    const relativePositionVisible = true;
     let maze: null | undefined;
     let draw: null | undefined;
     let player: any;
     let playerSprite: HTMLImageElement;
     let finishSprite: HTMLImageElement;
     let presentSprites: Present[] = [];
+    let cellSize: number;
+    let clipSize: number;
     let buttons = document.querySelectorAll('button');
+
+    setSizeMaze();
 
     function rand(max: number) {
         return Math.floor(Math.random() * max);
@@ -64,12 +63,30 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
         }
         return a;
     }
+    
+    function setSizeMaze() {
+        const magicNumber = 10;
+        if (relativePositionVisible) {
+            const canvas: HTMLElement = document.getElementById("mazeCanvas") as HTMLElement;
+            canvas.style.width = "100%";
+            mazeCanvas.border = "none";
+            mazeCanvas.width = containerRef.offsetWidth;
+            mazeCanvas.height = containerRef.offsetHeight;
+            cellSize = mazeCanvas.width / difficulty;
+            clipSize = cellSize - magicNumber;
+        } else {
+            clipSize = containerRef.offsetHeight / 2;
+            cellSize = clipSize + magicNumber;
+            mazeCanvas.width = cellSize * difficulty;
+            mazeCanvas.height = cellSize * difficulty;
+        }
+    }
 
     function Maze(this: any, Width: number, Height: number) {
         let mazeMap: any[];
         let width = Width;
         let height = Height;
-        let startCoord: Coordinate, endCoord: Coordinate;
+        let startCoord: { x: number; y: number; }, endCoord: { x: number; y: number; };
         let dirs = ["n", "s", "e", "w"];
         let modDir = {
             n: {
@@ -233,16 +250,19 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
         defineMaze();
 
         generatePresents(this.startCoord(), this.endCoord());
+
     }
 
-    function DrawMaze(this: any, Maze: any, ctx: any, cellsize: any) {
+    function DrawMaze(this: any, Maze: any, ctx: any) {
         let map = Maze.mapGen();
-        ctx.lineWidth = cellsize / 40;
-
+        // let draw = this
+        // let drawEndMethod: () => void;
+        ctx.lineWidth = cellSize / 40;
+        
         this.redrawMaze = function (size: number) {
             var end: Coordinate = Maze.endCoord();
             cellSize = size;
-            ctx.lineWidth = cellsize / 40;
+            ctx.lineWidth = cellSize / 40;
             drawMap();
             drawSprite(finishSprite, end);
         };
@@ -300,16 +320,21 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
         drawSprite(finishSprite, end)
         drawPresents();
         drawMap();
+        
+
     }
 
     //COORDINATES FOR CHARACTER
-    function Player(this: any, maze: any, ctx: any, _cellsize: number, sprite: HTMLImageElement, draw: any) {
+    function Player(this: any, maze: any, ctx: any, _cellsize: number, sprite: HTMLImageElement , draw: any) {
         let map = maze.mapGen();
         let cellCoords = {
             x: maze.startCoord().x,
             y: maze.startCoord().y
         };
         let cellSize = _cellsize;
+        let halfCellSize = cellSize / 2;
+
+        cropMaze();
 
         this.redrawPlayer = function (_cellsize: number) {
             cellSize = _cellsize;
@@ -323,14 +348,14 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
         function move(dir: string) {
             let cell = map[cellCoords.x][cellCoords.y];
             let audio;
-            if (rand(2) === 0) {
-                audio = new Audio(walkSound)
+            if (rand(2) ===0) {
+                audio = new Audio(walkSound);
             } else {
-                audio = new Audio(walkSound2)
+                audio = new Audio(walkSound2);
             }
             switch (dir) {
                 case "Up":
-                    if (cell.n) {        //PLAYER WALKS
+                    if (cell.n) {
                         removeSprite(cellCoords);
                         cellCoords = {
                             x: cellCoords.x,
@@ -346,63 +371,82 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
                         audio.play();
                     }
                     break;
-                case "Down":
-                    if (cell.s) {
-                        removeSprite(cellCoords);
-                        cellCoords = {
-                            x: cellCoords.x,
-                            y: cellCoords.y + 1
-                        };
-                        checkPresent(cellCoords);
-                        // @ts-ignore
-                        new DrawMaze(maze, ctx, cellSize, finishSprite);
-                        drawSprite(playerSprite, cellCoords);
-                        audio.play();
-                    } else {
-                        let audio = new Audio(errorSound);
-                        audio.play();
-                    }
-                    break;
-                case "Left":
-                    if (cell.w) {
-                        removeSprite(cellCoords);
-                        cellCoords = {
-                            x: cellCoords.x - 1,
-                            y: cellCoords.y
-                        };
-                        checkPresent(cellCoords);
-                        // @ts-ignore
-                        new DrawMaze(maze, ctx, cellSize, finishSprite);
-                        drawSprite(playerSprite, cellCoords);
-                        audio.play();
-                    } else {
-                        let audio = new Audio(errorSound);
-                        audio.play();
-                    }
-                    break;
-                case "Right":
-                    if (cell.e) {
-                        removeSprite(cellCoords);
-                        cellCoords = {
-                            x: cellCoords.x + 1,
-                            y: cellCoords.y
-                        };
-                        checkPresent(cellCoords);
-                        // @ts-ignore
-                        new DrawMaze(maze, ctx, cellSize, finishSprite);
-                        drawSprite(playerSprite, cellCoords);
-                        audio.play();
-                    } else {
-                        let audio = new Audio(errorSound);
-                        audio.play();
-                    }
-                    break;
-            }
+                    case "Down":
+                        if (cell.s) {
+                            removeSprite(cellCoords);
+                            cellCoords = {
+                                x: cellCoords.x,
+                                y: cellCoords.y + 1
+                            };
+                            checkPresent(cellCoords);
+                            // @ts-ignore
+                            new DrawMaze(maze, ctx, cellSize, finishSprite);
+                            drawSprite(playerSprite, cellCoords);
+                            audio.play();
+                        } else {
+                            let audio = new Audio(errorSound);
+                            audio.play();
+                        }
+                        break;
+                    case "Left":
+                        if (cell.w) {
+                            removeSprite(cellCoords);
+                            cellCoords = {
+                                x: cellCoords.x - 1,
+                                y: cellCoords.y
+                            };
+                            checkPresent(cellCoords);
+                            // @ts-ignore
+                            new DrawMaze(maze, ctx, cellSize, finishSprite);
+                            drawSprite(playerSprite, cellCoords);
+                            audio.play();
+                        } else {
+                            let audio = new Audio(errorSound);
+                            audio.play();
+                        }
+                        break;
+                    case "Right":
+                        if (cell.e) {
+                            removeSprite(cellCoords);
+                            cellCoords = {
+                                x: cellCoords.x + 1,
+                                y: cellCoords.y
+                            };
+                            checkPresent(cellCoords);
+                            // @ts-ignore
+                            new DrawMaze(maze, ctx, cellSize, finishSprite);
+                            drawSprite(playerSprite, cellCoords);
+                            audio.play();
+                        } else {
+                            let audio = new Audio(errorSound);
+                            audio.play();
+                        }
+                        break;
+                }
+
+            cropMaze();
 
             // checkPresent(cellCoords);
             checkEnd(cellCoords, maze.endCoord())
         }
-
+        
+        function cropMaze() {
+            const container: HTMLElement = document.getElementsByClassName("mazeContainer")[0] as HTMLElement;
+            const canvas: HTMLElement = document.getElementById("mazeCanvas") as HTMLElement;
+            let clipLeft: number;
+            let clipTop: number;
+            if (relativePositionVisible) {
+                clipLeft = 0.99 * cellSize * cellCoords.x + halfCellSize;
+                clipTop = 0.99 * cellSize * cellCoords.y + halfCellSize;
+            } else {
+                canvas.style.top = `${halfCellSize - cellCoords.y * cellSize}px`;
+                canvas.style.left = `${canvas.offsetWidth / 2 - halfCellSize  - cellCoords.x * cellSize}px`;
+                clipTop = clipSize;
+                clipLeft = canvas.offsetWidth / 2;
+            }
+            container.style.clipPath = `circle(${clipSize}px at ${clipLeft}px ${clipTop}px)`;
+        }
+        
         //CHECK DIRECTION
         function checkClick(e: any) {
             const dirs = ["Up", "Down", "Left", "Right"]
@@ -431,8 +475,8 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
 
         drawSprite(sprite, maze.startCoord());
         this.bindKeyDown();
-
     }
+
 
     //MAKING THE SPRITES
     function loadSprites() {
