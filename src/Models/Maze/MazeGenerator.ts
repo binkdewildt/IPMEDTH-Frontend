@@ -6,7 +6,6 @@ import { Coordinate, Direction, MazeCell, MoveResult, Sprite } from "./MazeModel
 import playerImg from "../../Assets/pietWithLight.webp";
 import finishImg from "../../Assets/schoenTransparant.webp";
 import { Size } from "../Size";
-// import { pythagoras } from "../../Extensions/NumberExtensions";
 
 
 export default class MazeGenerator {
@@ -113,7 +112,7 @@ export default class MazeGenerator {
     //#region Drawing maze
     private initDrawing(maze: Maze) {
         this.cellSize = this.canvas.width / maze.map.length;
-        MazeGenerator.clipSize = this.cellSize / 2 * 1.5;            // Moet de radius zijn, dus halve cell + klein randje voor de volgende stap
+        MazeGenerator.clipSize = this.cellSize;            // Moet de radius zijn, dus halve cell + klein randje voor de volgende stap
         this.ctx.lineWidth = this.cellSize / 40;
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height) // Clear the whole canvas beforehand
     }
