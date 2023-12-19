@@ -24,8 +24,13 @@ export type ModifiedDirections = {
 }
 //#endregion
 
+export enum SpriteType {
+    points = 0,
+    lightPowerUp = 1
+}
 
-export type Present = {
+export interface Sprite {
+    type: SpriteType
     image: HTMLImageElement
     coord: Coordinate
 }
@@ -51,6 +56,7 @@ export type MoveResult = {
     clearPreviousCell: boolean
     canMove: boolean
     finished: boolean,
-    gotPoints: number | null
+    gotPoints: number | null,
+    redrawOverlay: boolean
 }
 //#endregion

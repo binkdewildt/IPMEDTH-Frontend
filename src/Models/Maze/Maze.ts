@@ -1,12 +1,13 @@
 import { random } from "../../Extensions/NumberExtensions";
-import { Coordinate, Direction, MazeCell, MazeMap, ModifiedDirections, MoveResult, Present } from "./MazeModels";
+import { Coordinate, Direction, MazeCell, MazeMap, ModifiedDirections, MoveResult, Sprite, SpriteType } from "./MazeModels";
 import { shuffle } from "../../Extensions/ArrayExtensions";
+import Player from "./Player";
 
 // Sprite
 import present1 from "../../Assets/Cadeaus/cadeau.png"
 import present2 from "../../Assets/Cadeaus/cadeau2.png"
 import present3 from "../../Assets/Cadeaus/cadeau.webp"
-import Player from "./Player";
+import light from "../../Assets/schoen.webp";
 
 
 // Sounds
@@ -15,7 +16,7 @@ import walkSound from "../../Assets/sounds/footsteps.mp3"
 import walkSound2 from "../../Assets/sounds/footsteps_2.mp3"
 import pickupSound from "../../Assets/sounds/pickup.mp3"
 import finishSound from "../../Assets/sounds/finish.mp3"
-
+import MazeGenerator from "./MazeGenerator";
 
 
 export default class Maze {
@@ -23,7 +24,7 @@ export default class Maze {
     public readonly height: number;
 
     public map: MazeMap = null!;    // Wordt gezet in constructor --> generate --> genMap
-    public readonly presents: Present[] = [];
+    public readonly sprites: Sprite[] = [];
 
     public start: Coordinate = null!;
     public end: Coordinate = null!;
@@ -70,7 +71,7 @@ export default class Maze {
         this.height = height;
 
         this.generate();
-        this.generatePresents(this.getAmountPresents(width));
+        this.generateSprites();
         this.player = new Player(this.start);
     }
 
@@ -123,11 +124,14 @@ export default class Maze {
         // Change the position of the player if possible
         if (canMove) {
 
-            // Check if a present has been collected
-            if (this.checkPresent(newCoord)) {
-                this.playSound(pickupSound);
-                pointsToAdd += this.pointsPerPresent;
-                clearNextCell = true;           // clear the next cell if a present has been picked up
+            // Check if the player stepped on an Sprite
+            let sprite: Sprite | null = this.checkSprite(newCoord);
+            if (sprite !== null) {
+                if (sprite.type === SpriteType.points) {
+                    pointsToAdd += this.pointsPerPresent;
+                }
+                this.handleSprite(sprite);
+                clearNextCell = true;
             }
 
             // Update the player pos
@@ -142,13 +146,14 @@ export default class Maze {
             this.playSound(finishSound);
             pointsToAdd += this.pointsPerLevel;
         }
-        
+
         return {
             clearNextCell: clearNextCell,
             clearPreviousCell: clearPreviousCell,
             canMove: canMove,
             finished: finished,
-            gotPoints: pointsToAdd === 0 ? null : pointsToAdd
+            gotPoints: pointsToAdd === 0 ? null : pointsToAdd,
+            redrawOverlay: true
         } as MoveResult;
     }
     //#endregion
@@ -313,33 +318,35 @@ export default class Maze {
     //#endregion
 
 
-    //#region Presents
-    public generatePresents(amount: number) {
-        //GENERATE PRESENTS
-        for (var i: number = 0; i < amount; i++) {
-            var s = new Image();
-            s.src = this.getRandomPresentImg();
+    //#region Sprites
+    private generateSingleSprite(asset: string, type: SpriteType, usedCoords: Coordinate[]): Sprite {
+        var s = new Image();
+        s.src = asset;
 
-            // genereren van unieke coordinaten
-            let coord: Coordinate = this.generateRandomCoord();
-            var prevCoords = this.presents.map(x => x.coord);
-            prevCoords.push(this.start);
-            prevCoords.push(this.end);
+        // genereren van unieke coordinaten
+        let coord: Coordinate = this.generateRandomCoord();
+        while (this.checkCoordinateInArray(usedCoords, coord))
+            coord = this.generateRandomCoord();
 
-            while (this.checkCoordinateInArray(prevCoords, coord))
-                coord = this.generateRandomCoord();
+        var p: Sprite = { image: s, coord: coord, type: type }
+        this.sprites.push(p);
+        usedCoords.push(coord);
+        return p;
+    }
 
-            var p: Present = { image: s, coord: coord }
-            this.presents.push(p);
+    private generateSprites(): void {
+        let usedCoords: Coordinate[] = [this.start, this.end]
+
+        // Generate a powerup if needed
+        if (MazeGenerator.darkOverlay)
+            this.generateSingleSprite(light, SpriteType.lightPowerUp, usedCoords)
+
+
+        // Generate the presents
+        let amountOfPresents: number = this.getAmountPresents(this.width);
+        for (var i: number = 0; i < amountOfPresents; i++) {
+            this.generateSingleSprite(this.getRandomPresentImg(), SpriteType.points, usedCoords)
         }
-    }
-
-    private generateRandomCoord(): Coordinate {
-        return { x: random(this.width), y: random(this.height) };
-    }
-
-    private checkCoordinateInArray(array: Coordinate[], obj: Coordinate): boolean {
-        return array.filter(o => o.x === obj.x && o.y === obj.y).length !== 0;
     }
 
     private getRandomPresentImg(): string {
@@ -361,15 +368,33 @@ export default class Maze {
     }
 
     // Checkt of de speler op een cadeau staat
-    private checkPresent(coord: Coordinate): boolean {
-        let index: number = this.presents.findIndex(p => p.coord.x === coord.x && p.coord.y === coord.y);
+    private checkSprite(coord: Coordinate): Sprite | null {
+        let index: number = this.sprites.findIndex(p => p.coord.x === coord.x && p.coord.y === coord.y);
         let found: boolean = index !== -1;
 
         // If the present exists
         if (found)
-            this.presents.splice(index, 1);
+            return this.sprites.splice(index, 1)[0];
 
-        return found;
+        return null;
+    }
+
+
+    private handleSprite(s: Sprite): void {
+        let sound: string | null = null;
+
+        switch (s.type) {
+            case SpriteType.points:
+                sound = pickupSound;
+                break;
+
+            case SpriteType.lightPowerUp:
+                MazeGenerator.clipSize *= 2;
+                break;
+        }
+
+        if (sound !== null)
+            this.playSound(sound);
     }
     //#endregion
 
@@ -385,4 +410,16 @@ export default class Maze {
         audio.play();
     }
     //#endregion
+
+
+    //#region Coordinates
+    private generateRandomCoord(): Coordinate {
+        return { x: random(this.width), y: random(this.height) };
+    }
+
+    private checkCoordinateInArray(array: Coordinate[], obj: Coordinate): boolean {
+        return array.filter(o => o.x === obj.x && o.y === obj.y).length !== 0;
+    }
+    //#endregion
+
 }

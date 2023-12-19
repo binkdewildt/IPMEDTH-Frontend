@@ -1,7 +1,7 @@
 import piet from "../../Assets/piet.webp";
 import shoe from "../../Assets/schoen.webp";
 import present from "../../Assets/cadeau2.png";
-import { Coordinate, Present } from "./MazeModels";
+import { Coordinate, Sprite, SpriteType } from "./MazeModels";
 
 // @ts-ignore
 import errorSound from "../../Assets/sounds/error.mp3"
@@ -46,7 +46,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
     let player: any;
     let playerSprite: HTMLImageElement;
     let finishSprite: HTMLImageElement;
-    let presentSprites: Present[] = [];
+    let presentSprites: Sprite[] = [];
     let buttons = document.querySelectorAll('button');
 
     function rand(max: number) {
@@ -516,7 +516,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
         for (var i: number = 0; i < amount; i++) {
             var s = new Image();
             s.src = present;
-            
+
             // genereren van unieke coordinaten
             let coord: Coordinate = generateRandomCoord();
             var prevCoords = presentSprites.map(x => x.coord);
@@ -526,7 +526,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
             while (checkCoordinateInArray(prevCoords, coord))
                 coord = generateRandomCoord();
 
-            var p: Present = { image: s, coord: coord }
+            var p: Sprite = { image: s, coord: coord, type: SpriteType.points }
             presentSprites.push(p);
         }
     }
@@ -544,7 +544,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
     }
 
     function drawPresents(): void {
-        presentSprites.forEach((s: Present, i: number) => {
+        presentSprites.forEach((s: Sprite, i: number) => {
             s.image.onload = (ev: Event) => {
                 drawSprite(s.image, s.coord);
             }

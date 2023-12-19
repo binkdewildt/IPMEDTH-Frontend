@@ -1,9 +1,9 @@
 import Maze from "./Maze";
-import { Coordinate, Direction, MazeCell, MoveResult, Present } from "./MazeModels";
+import { Coordinate, Direction, MazeCell, MoveResult, Sprite } from "./MazeModels";
 
 
 // Sprite imports
-import playerImg from "../../Assets/piet.webp";
+import playerImg from "../../Assets/pietWithLight.webp";
 import finishImg from "../../Assets/schoenTransparant.webp";
 import { Size } from "../Size";
 // import { pythagoras } from "../../Extensions/NumberExtensions";
@@ -14,7 +14,7 @@ export default class MazeGenerator {
     public level: number = 1;
 
     private cellSize: number = 0;      // Wordt gezet vlak voor het tekenen
-    private clipSize: number = 0;      // Wordt gezet vlak voor het tekenen
+    public static clipSize: number = 0;      // Wordt gezet vlak voor het tekenen
 
     public maze: Maze | null = null;
 
@@ -24,7 +24,7 @@ export default class MazeGenerator {
 
 
     //#region Settings
-    private readonly darkOverlay: boolean = true;
+    public static darkOverlay: boolean = true;
     //#endregion
 
 
@@ -113,8 +113,7 @@ export default class MazeGenerator {
     //#region Drawing maze
     private initDrawing(maze: Maze) {
         this.cellSize = this.canvas.width / maze.map.length;
-        this.clipSize = this.cellSize / 2 * 1.5;            // Moet de radius zijn, dus halve cell + klein randje voor de volgende stap
-        console.log(this.clipSize)
+        MazeGenerator.clipSize = this.cellSize / 2 * 1.5;            // Moet de radius zijn, dus halve cell + klein randje voor de volgende stap
         this.ctx.lineWidth = this.cellSize / 40;
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height) // Clear the whole canvas beforehand
     }
@@ -136,7 +135,7 @@ export default class MazeGenerator {
         }
 
         // Draw the presents
-        maze.presents.forEach((s: Present, i: number) => {
+        maze.sprites.forEach((s: Sprite, i: number) => {
             s.image.onload = (ev: Event) => {
                 this.drawSprite(s.image, s.coord);
             }
@@ -186,18 +185,17 @@ export default class MazeGenerator {
 
     //#region Dark overlay
     private drawDarkOverlay(maze: Maze): void {
-        if (!this.darkOverlay) return;      // Do nothing when the setting is turned off
+        if (!MazeGenerator.darkOverlay) return;      // Do nothing when the setting is turned off
         this.container.classList.add("darkOverlay")
 
         let coords = maze.player.coord;
         let x = (this.cellSize * coords.x) + (this.cellSize / 2);
         let y = (this.cellSize * coords.y) + (this.cellSize / 2);
 
-        let path: string = `circle(${this.clipSize}px at ${x}px ${y}px)`;
+        let path: string = `circle(${MazeGenerator.clipSize}px at ${x}px ${y}px)`;
         this.canvas.style.clipPath = path;
     }
     //#endregion
-
 
 
     //#region Drawing sprites
