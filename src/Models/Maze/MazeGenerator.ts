@@ -249,7 +249,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
         defineStartEnd();
         defineMaze();
 
-        generatePresents(this.startCoords(), this.endCoord());
+        generatePresents(this.startCoord(), this.endCoord());
 
     }
 
@@ -320,6 +320,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
         drawSprite(finishSprite, end)
         drawPresents();
         drawMap();
+        
 
     }
 
@@ -332,6 +333,8 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
         };
         let cellSize = _cellsize;
         let halfCellSize = cellSize / 2;
+
+        cropMaze();
 
         this.redrawPlayer = function (_cellsize: number) {
             cellSize = _cellsize;
@@ -426,7 +429,7 @@ export default function MazeGeneration(ctx: any, mazeCanvas: any, level: any, up
             // checkPresent(cellCoords);
             checkEnd(cellCoords, maze.endCoord())
         }
-            
+        
         function cropMaze() {
             const container: HTMLElement = document.getElementsByClassName("mazeContainer")[0] as HTMLElement;
             const canvas: HTMLElement = document.getElementById("mazeCanvas") as HTMLElement;
