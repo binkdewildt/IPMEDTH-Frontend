@@ -1,5 +1,4 @@
 //IPAD PRO RESOLUTION
-
 .score-container {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -54,55 +53,92 @@
 	}
 
 
-	//RESPONSIVE RESOLUTIONS (ADD MIN-HEIGHT??)
-	//BETWEEN TABLET AND LAPTOP
-	@media screen and (min-width: 1150px) {
-		h1 {
-			margin-top: 5%;
+	//RESPONSIVE RESOLUTIONS
+	//IPHONE XR
+	@media screen and (max-width: 500px){
+		h1{
+			font-size: 36px;
 		}
-		section {
-			margin: 5%;
-		}
-		li {
+		section{
+			box-shadow: 0 6px 10px 0 rgba(0,0,0,0.4);
 			padding: 10px;
 		}
-		button {
-			margin: 3% 15% 0% 15%;
+		li{
+			font-size: 24px;
+			padding: 15px 5px;
+		}
+		.button-highScore{
+			box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
+			padding: 15px;
+			font-size: 24px;
+			margin: 5% 10% 3% 10%;
 		}
 	}
 
+	//BETWEEN TABLET AND LAPTOP
+	@media screen and (min-width: 1150px) {
+		h1{
+			font-size: 56px;
+		}
+		section{
+			margin: 5% 10%;
+		}
+		li {
+			padding: 10px;
+		}
+		.button-highScore {
+			margin: 3% 15% 0% 15%;
+			font-size: 36px;
+			padding: 20px;
+	
+			&.button-highScore--play {
+				grid-column: 1;
+				justify-self: start;
+				padding: 20px 100px;
+				margin: 10% 30%;
+			}
+		
+			&.button-highScore--prev {
+				grid-row-start: 3;
+				grid-column: 3;
+				justify-self: end;
+				padding: 20px 100px;
+				margin: 10% 30%;
+			}
+		}	
+	}
+
 	//LAPTOP
-	@media screen and (min-width: 1530px) {
+	@media screen and (min-width: 1700px) {
 		h1 {
-			font-size: 48px;
-			margin-top: 5%;
+			margin-top: 20%;
 		}
 		section {
 			grid-row-start: 2;
-			margin: 3% 10%;
+			margin: 5% 20%;
 		}
 		li {
+			font-size: 48px;
+			padding: 30px;
+		}
+		.button-highScore{
+			padding: 25px;
 			font-size: 36px;
-			padding: 10px;
-		}
-		button {
-			padding: 20px;
-			font-size: 24px;
-			border-radius: 8px;
-		}
-		.play-button {
-			grid-column: 1;
-			justify-self: start;
-			padding: 20px 100px;
-			margin: 10% 30%;
-		}
+			
+			&.button-highScore--play{
+				grid-column: 1;
+				justify-self: start;
+				padding: 30px 110px;
+				margin: 10% 58%;
+			}
 
-		.prev-button {
-			grid-row-start: 3;
-			grid-column: 3;
-			justify-self: end;
-			padding: 20px 100px;
-			margin: 10% 30%;
+			&.button-highScore--prev{
+				grid-row-start: 3;
+				grid-column: 3;
+				justify-self: end;
+				padding: 30px 110px;
+				margin: 10% 58%;
+			}
 		}
 	}
 }
