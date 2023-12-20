@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/IPMEDTH-Frontend/static/css/main.2123b6e7.css",
-    "main.js": "/IPMEDTH-Frontend/static/js/main.6909166c.js",
+    "main.css": "/IPMEDTH-Frontend/static/css/main.8abfa3c1.css",
+    "main.js": "/IPMEDTH-Frontend/static/js/main.dfc22846.js",
     "static/media/light.png": "/IPMEDTH-Frontend/static/media/light.0d88d9cc207deb5aa9ec.png",
     "static/media/background.jpg": "/IPMEDTH-Frontend/static/media/background.8d813077b7afbeb7e845.jpg",
     "static/media/banner.gif": "/IPMEDTH-Frontend/static/media/banner.07c747fe4425dd4816c3.gif",
     "static/media/cadeau2.png": "/IPMEDTH-Frontend/static/media/cadeau2.16567aa7b04de921c9aa.png",
     "static/media/cadeau.png": "/IPMEDTH-Frontend/static/media/cadeau.750f5ccb28ab8734ae81.png",
+    "static/media/pietMovingRight.gif": "/IPMEDTH-Frontend/static/media/pietMovingRight.d35637f4db200daaf512.gif",
     "static/media/startButtonPink.png": "/IPMEDTH-Frontend/static/media/startButtonPink.5b88d193074ab50654b9.png",
-    "static/media/pietWithLight.webp": "/IPMEDTH-Frontend/static/media/pietWithLight.83487d3033ff91fdba51.webp",
     "static/media/piet.webp": "/IPMEDTH-Frontend/static/media/piet.51239423c72a9c8a105e.webp",
     "static/media/schoenTransparant.webp": "/IPMEDTH-Frontend/static/media/schoenTransparant.2c5d21d452ff95cc3c21.webp",
     "static/media/finish.mp3": "/IPMEDTH-Frontend/static/media/finish.bb65fcb50b256a3de60e.mp3",
@@ -21,11 +21,11 @@
     "static/media/error.mp3": "/IPMEDTH-Frontend/static/media/error.870c8b58057cc5ee103c.mp3",
     "static/media/floor_texture.webp": "/IPMEDTH-Frontend/static/media/floor_texture.48f42da0ed870840809e.webp",
     "index.html": "/IPMEDTH-Frontend/index.html",
-    "main.2123b6e7.css.map": "/IPMEDTH-Frontend/static/css/main.2123b6e7.css.map",
-    "main.6909166c.js.map": "/IPMEDTH-Frontend/static/js/main.6909166c.js.map"
+    "main.8abfa3c1.css.map": "/IPMEDTH-Frontend/static/css/main.8abfa3c1.css.map",
+    "main.dfc22846.js.map": "/IPMEDTH-Frontend/static/js/main.dfc22846.js.map"
   },
   "entrypoints": [
-    "static/css/main.2123b6e7.css",
-    "static/js/main.6909166c.js"
+    "static/css/main.8abfa3c1.css",
+    "static/js/main.dfc22846.js"
   ]
 }
