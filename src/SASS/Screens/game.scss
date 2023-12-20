@@ -107,4 +107,21 @@ div.game {
 			height: 60px;
 		}
 	}
+
+	//RESPONSIVE RESOLUTIONS
+	//IPAD PRO RESOLUTION
+	@media screen and (max-width: 1024px){
+		.mazeContainer {
+			aspect-ratio: 3/4;
+
+			#mazeCanvas {
+				width: 125%;
+				height: 125%;	
+			}
+		}
+		.stage {
+			gap: 65%;
+			font-size: 26px;
+		}
+	}
 }
