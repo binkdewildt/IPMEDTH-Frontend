@@ -58,6 +58,7 @@ export default function Game() {
 			</section>
 			
 			<section className="mazeContainer">
+				<figure id="player"></figure>
 				<canvas id={"mazeCanvas"} ref={canvasRef}></canvas>
 			</section>
 			<section className={"buttonContainer"}>

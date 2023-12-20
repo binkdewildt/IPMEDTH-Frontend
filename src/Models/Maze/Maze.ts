@@ -23,6 +23,7 @@ import MazeGenerator from "./MazeGenerator";
 export default class Maze {
     public readonly width: number
     public readonly height: number;
+    public disableMoving: boolean = false;
 
     public map: MazeMap = null!;    // Wordt gezet in constructor --> generate --> genMap
     public readonly sprites: Sprite[] = [];
@@ -78,7 +79,9 @@ export default class Maze {
 
 
     //#region Moving
-    public move(direction: Direction): MoveResult {
+    public move(direction: Direction): MoveResult | null {
+        if (this.disableMoving) return null;
+
         let pointsToAdd: number = 0;
         let canMove: boolean = false;
 
@@ -260,9 +263,6 @@ export default class Maze {
                 isCompleted = true;
             }
         }
-
-        // Update the global map
-        // this.map = map;
     }
     //#endregion
 
