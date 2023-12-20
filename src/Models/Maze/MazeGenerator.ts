@@ -4,8 +4,8 @@ import { Size } from "../Size";
 
 
 // Sprite imports
-import playerImg from "../../Assets/piet.webp";
-import playerWithLightImg from "../../Assets/pietWithLight.webp";
+import playerImg from "../../Assets/Player/piet.webp";
+import playerWithLightImg from "../../Assets/Player/pietWithLight.webp";
 import finishImg from "../../Assets/schoenTransparant.webp";
 
 
