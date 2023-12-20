@@ -24,8 +24,8 @@ export default class MazeGenerator {
 
 
     //#region Settings
-    public static darkOverlay: boolean = true;
-    public static moveMaze: boolean = true;
+    public static darkOverlay: boolean = false;
+    public static moveMaze: boolean = false;
     //#endregion
 
 
@@ -158,11 +158,12 @@ export default class MazeGenerator {
     private drawCell(coord: Coordinate, cell: MazeCell) {
         let x: number = coord.x * this.cellSize;
         let y: number = coord.y * this.cellSize;
+        let correction: number = this.ctx.lineWidth / 2;
 
         if (!cell.n) {
             this.ctx.beginPath();
-            this.ctx.moveTo(x, y);
-            this.ctx.lineTo(x + this.cellSize, y);
+            this.ctx.moveTo(x - correction, y);
+            this.ctx.lineTo(x + this.cellSize + correction, y);
             this.ctx.stroke();
         }
         if (!cell.s) {
