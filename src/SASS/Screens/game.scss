@@ -71,12 +71,16 @@ div.game {
 				left $animation-duration ease-out, opacity $animation-duration ease-out;
 
 			&.movingRight {
-				background-image: url("../../Assets/Player/pietMovingRight.gif");
+				background-image: url("../../Assets/Player/pietMovingHorizontal.gif");
 			}
 
 			&.movingLeft {
 				@extend .movingRight;
 				transform: scale(-1, 1);
+			}
+
+			&.movingDown {
+				background-image: url("../../Assets/Player/pietMovingForward.gif");
 			}
 		}
 
