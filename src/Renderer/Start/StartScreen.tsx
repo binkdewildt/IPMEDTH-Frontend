@@ -6,7 +6,7 @@ import startButton from "../../Assets/mediatrigger-button.png";
 import skjBanner from "../../Assets/banner.gif";
 
 export default function StartScreen() {
-	const [isExplanationOpen, setIsExplanationOpen] = useState<boolean>(true);
+	const [isExplanationOpen, setIsExplanationOpen] = useState<boolean>(false);
 
 	//todo: resize-animation startImg
 	//todo: verplaats uitlegOverlay naar spel
