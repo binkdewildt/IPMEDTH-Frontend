@@ -1,12 +1,13 @@
 {
   "files": {
-    "main.css": "/IPMEDTH-Frontend/static/css/main.d667f419.css",
-    "main.js": "/IPMEDTH-Frontend/static/js/main.1074eb0c.js",
+    "main.css": "/IPMEDTH-Frontend/static/css/main.4a4c355f.css",
+    "main.js": "/IPMEDTH-Frontend/static/js/main.91e31fe2.js",
     "static/media/pietMovingHorizontal.gif": "/IPMEDTH-Frontend/static/media/pietMovingHorizontal.a701a6b766ada1840fba.gif",
     "static/media/light.png": "/IPMEDTH-Frontend/static/media/light.0d88d9cc207deb5aa9ec.png",
     "static/media/background.jpg": "/IPMEDTH-Frontend/static/media/background.8d813077b7afbeb7e845.jpg",
     "static/media/banner.gif": "/IPMEDTH-Frontend/static/media/banner.07c747fe4425dd4816c3.gif",
     "static/media/pietMovingForward.gif": "/IPMEDTH-Frontend/static/media/pietMovingForward.34585a9b84b367021d1f.gif",
+    "static/media/pietMovingBackwards.gif": "/IPMEDTH-Frontend/static/media/pietMovingBackwards.e838b2fca390b4dd233a.gif",
     "static/media/cadeau2.png": "/IPMEDTH-Frontend/static/media/cadeau2.16567aa7b04de921c9aa.png",
     "static/media/cadeau.png": "/IPMEDTH-Frontend/static/media/cadeau.750f5ccb28ab8734ae81.png",
     "static/media/startButtonPink.png": "/IPMEDTH-Frontend/static/media/startButtonPink.5b88d193074ab50654b9.png",
@@ -22,11 +23,11 @@
     "static/media/error.mp3": "/IPMEDTH-Frontend/static/media/error.870c8b58057cc5ee103c.mp3",
     "static/media/floor_texture.webp": "/IPMEDTH-Frontend/static/media/floor_texture.48f42da0ed870840809e.webp",
     "index.html": "/IPMEDTH-Frontend/index.html",
-    "main.d667f419.css.map": "/IPMEDTH-Frontend/static/css/main.d667f419.css.map",
-    "main.1074eb0c.js.map": "/IPMEDTH-Frontend/static/js/main.1074eb0c.js.map"
+    "main.4a4c355f.css.map": "/IPMEDTH-Frontend/static/css/main.4a4c355f.css.map",
+    "main.91e31fe2.js.map": "/IPMEDTH-Frontend/static/js/main.91e31fe2.js.map"
   },
   "entrypoints": [
-    "static/css/main.d667f419.css",
-    "static/js/main.1074eb0c.js"
+    "static/css/main.4a4c355f.css",
+    "static/js/main.91e31fe2.js"
   ]
 }
