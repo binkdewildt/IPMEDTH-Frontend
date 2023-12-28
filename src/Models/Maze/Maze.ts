@@ -41,7 +41,7 @@ export default class Maze {
 
 
     //#region Private constants
-    private readonly directions: string[] = ["n", "e", "s", "w"]
+    private directions: string[] = ["n", "e", "s", "w"]
     private readonly modDir: ModifiedDirections = {
         n: {
             y: -1,
@@ -87,8 +87,8 @@ export default class Maze {
 
         let player: Player = this.player;
 
-        let oldCoord: Coordinate = player.coord;
-        let newCoord: Coordinate = player.coord;
+        let oldCoord: Coordinate = { ...player.coord };
+        let newCoord: Coordinate = { ...player.coord };
 
         let cell: MazeCell = this.map[oldCoord.x][oldCoord.y];
 
@@ -215,7 +215,7 @@ export default class Maze {
             map[pos.x][pos.y].visited = true;
 
             if (numLoops >= maxLoops) {
-                shuffle(this.directions);
+                this.directions = shuffle(this.directions);
                 maxLoops = Math.round(random(this.height / 8));
                 numLoops = 0;
             }

@@ -12,8 +12,8 @@ export default class MazeGenerator {
     public level: number = 1;
 
     public static animationDuration: number = 0;
-    public static cellSize: number = 0;      // Wordt gezet vlak voor het tekenen
-    public static clipSize: number = 0;      // Wordt gezet vlak voor het tekenen
+    public static cellSize: number = 1;      // Wordt gezet vlak voor het tekenen
+    public static clipSize: number = 1;      // Wordt gezet vlak voor het tekenen
 
     public maze: Maze | null = null;
 
