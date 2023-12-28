@@ -3,6 +3,7 @@ import React from "react";
 import piet from "../../Assets/Player/piet.webp";
 import pietMovingHorizontal from "../../Assets/Player/pietMovingHorizontal.gif";
 import pietMovingForward from "../../Assets/Player/pietMovingForward.gif";
+import pietMovingBackwards from "../../Assets/Player/pietMovingBackwards.gif";
 
 import schoen from "../../Assets/schoenTransparant.webp";
 import present1 from "../../Assets/Cadeaus/cadeau.png";
@@ -29,6 +30,7 @@ export default function CacheBuster() {
 				alt="Cache buster for Piet moving Horizontal"
 			/>
 			<img src={pietMovingForward} alt="Cache buster for Piet moving Forward" />
+			<img src={pietMovingBackwards} alt="Cache buster for Piet moving Backwards" />
 
 			<img src={schoen} alt="Cache buster for Schoen" />
 			<img src={present1} alt="Cache buster for Present1" />

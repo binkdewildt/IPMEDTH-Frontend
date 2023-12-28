@@ -82,6 +82,10 @@ div.game {
 			&.movingDown {
 				background-image: url("../../Assets/Player/pietMovingForward.gif");
 			}
+
+			&.movingUp {
+				background-image: url("../../Assets/Player/pietMovingBackwards.gif");
+			}
 		}
 
 		&.darkOverlay {
