@@ -1,5 +1,5 @@
 div.game {
-	$animation-duration: .25s;
+	$animation-duration: 0.5s;
 
 	overflow: hidden;
 	display: flex;
@@ -58,7 +58,34 @@ div.game {
 			border: 2px solid black;
 			background: url("../../Assets/floor_texture.webp");
 			transition: all $animation-duration ease-out;
+		}
 
+		#player {
+			position: absolute;
+			z-index: 1;
+			background: url("../../Assets/Player/piet.webp");
+			background-position: center center;
+			background-repeat: no-repeat;
+			background-size: contain;
+			transition: top $animation-duration ease-out,
+				left $animation-duration ease-out, opacity $animation-duration ease-out;
+
+			&.movingRight {
+				background-image: url("../../Assets/Player/pietMovingHorizontal.gif");
+			}
+
+			&.movingLeft {
+				@extend .movingRight;
+				transform: scale(-1, 1);
+			}
+
+			&.movingDown {
+				background-image: url("../../Assets/Player/pietMovingForward.gif");
+			}
+
+			&.movingUp {
+				background-image: url("../../Assets/Player/pietMovingBackwards.gif");
+			}
 		}
 
 		&.darkOverlay {

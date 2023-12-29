@@ -5,6 +5,9 @@ const config: Config = {
     testEnvironment: "jsdom",
     verbose: true,
     collectCoverage: true,
+    setupFiles: [
+        "./test/setup.ts"
+    ],
     collectCoverageFrom: [
         "./src/**/*.{js,jsx,ts,tsx}"
     ],

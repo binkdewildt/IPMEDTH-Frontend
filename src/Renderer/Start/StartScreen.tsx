@@ -1,12 +1,12 @@
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Overlay } from "./ExplanationOverlay";
+import { Overlay } from "../Components/Overlays/ExplanationOverlay";
 import startButton from "../../Assets/mediatrigger-button.png";
 import skjBanner from "../../Assets/banner.gif";
 
 export default function StartScreen() {
-	const [isExplanationOpen, setIsExplanationOpen] = useState<boolean>(true);
+	const [isExplanationOpen, setIsExplanationOpen] = useState<boolean>(false);
 
 	//todo: resize-animation startImg
 	//todo: verplaats uitlegOverlay naar spel

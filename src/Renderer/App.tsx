@@ -4,6 +4,7 @@ import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import StartScreen from "./Start/StartScreen";
 import HighScore from "./Score/HighScore";
 import Game from "./Game/Game";
+import CacheBuster from "./Components/CacheBuster";
 
 export default function App() {
 	useEffect(() => {
@@ -16,6 +17,7 @@ export default function App() {
 
 	return (
 		<Router>
+			<CacheBuster />
 			<Routes>
 				<Route index path="/" element={<StartScreen />} />
 				<Route path="/game" element={<Game />} />

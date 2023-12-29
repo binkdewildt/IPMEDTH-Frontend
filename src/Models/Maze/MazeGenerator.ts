@@ -4,8 +4,6 @@ import { Size } from "../Size";
 
 
 // Sprite imports
-import playerImg from "../../Assets/piet.webp";
-import playerWithLightImg from "../../Assets/pietWithLight.webp";
 import finishImg from "../../Assets/schoenTransparant.webp";
 
 
@@ -13,24 +11,25 @@ export default class MazeGenerator {
     public points: number = 0;
     public level: number = 1;
 
-    private cellSize: number = 0;      // Wordt gezet vlak voor het tekenen
-    public static clipSize: number = 0;      // Wordt gezet vlak voor het tekenen
+    public static animationDuration: number = 0;
+    public static cellSize: number = 1;      // Wordt gezet vlak voor het tekenen
+    public static clipSize: number = 1;      // Wordt gezet vlak voor het tekenen
 
     public maze: Maze | null = null;
 
     private container: HTMLElement = null!;
+    private player: HTMLElement | null = null;
     private canvas: HTMLCanvasElement = null!;
     private ctx: CanvasRenderingContext2D = null!;
 
 
     //#region Settings
     public static darkOverlay: boolean = true;
-    public static moveMaze: boolean = true;
+    public static moveMaze: boolean = false;
     //#endregion
 
 
     //#region Sprites
-    private playerSprite: HTMLImageElement = null!;
     private finishSprite: HTMLImageElement = null!;
     //#endregion
 
@@ -53,6 +52,14 @@ export default class MazeGenerator {
         this.ctx = canvas.getContext("2d")!;
         this.canvas = canvas;
         this.container = canvas.parentElement!;
+        this.player = this.container.querySelector("#player");
+
+        // Getting the transition-duration from the css --> this way the durations are always in sync
+        if (this.player !== null) {
+            let playerStyle: CSSStyleDeclaration = getComputedStyle(this.player);
+            let transitionDuration: string = playerStyle.getPropertyValue("transition-duration");
+            MazeGenerator.animationDuration = parseFloat(transitionDuration);
+        }
     }
 
 
@@ -63,8 +70,10 @@ export default class MazeGenerator {
 
 
         let oldCoords: Coordinate = { ...this.maze.player.coord };
-        let result: MoveResult = this.maze.move(dir);
+        let result: MoveResult | null = this.maze.move(dir);
         let newCoords: Coordinate = { ...this.maze.player.coord };
+
+        if (result === null) return;
 
         // Clear the previous cell
         if (result.clearPreviousCell) {
@@ -79,7 +88,7 @@ export default class MazeGenerator {
         // Move the player
         if (result.canMove) {
             this.removeSprite(oldCoords);
-            this.drawSprite(this.playerSprite, this.maze.player.coord);
+            this.maze.player.move(dir, newCoords)
             this.drawDarkOverlay(this.maze);
             this.positionMaze(this.maze);
         }
@@ -93,10 +102,7 @@ export default class MazeGenerator {
 
         // Check if finished
         if (result.finished) {
-            let newLevel = this.level + 1;
-            this.setLevel && this.setLevel(newLevel);
-            this.level = newLevel;
-            this.Generate();
+            this.handleEnding();
         }
     }
     //#endregion
@@ -114,10 +120,19 @@ export default class MazeGenerator {
 
     //#region Drawing maze
     private initDrawing(maze: Maze) {
-        this.cellSize = this.canvas.width / maze.map.length;
-        MazeGenerator.clipSize = this.cellSize;            // Moet de radius zijn, dus halve cell + klein randje voor de volgende stap
-        this.ctx.lineWidth = this.cellSize / 15;
+        MazeGenerator.cellSize = this.canvas.width / maze.map.length;
+        MazeGenerator.clipSize = MazeGenerator.cellSize;
+        this.ctx.lineWidth = MazeGenerator.cellSize / 15;
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height) // Clear the whole canvas beforehand
+
+        // Set the player to the correct starting position
+        maze.player.setPlayerPosition();
+
+        // Resize the player and set the correct position
+        if (this.player !== null) {
+            this.player.style.width = MazeGenerator.cellSize + "px";
+            this.player.style.height = MazeGenerator.cellSize + "px";
+        }
     }
 
 
@@ -143,44 +158,42 @@ export default class MazeGenerator {
             s.image.onload = (ev: Event) => {
                 this.drawSprite(s.image, s.coord);
             }
-            // this.drawSprite(s.image, s.coord)
         })
 
 
         // Draw the start & end
-        this.playerSprite.onload = () => this.drawSprite(this.playerSprite, maze.player.coord);
-        this.drawSprite(this.playerSprite, maze.player.coord);
         this.finishSprite.onload = () => this.drawSprite(this.finishSprite, maze.end);
         this.drawSprite(this.finishSprite, maze.end);
     }
 
 
     private drawCell(coord: Coordinate, cell: MazeCell) {
-        let x: number = coord.x * this.cellSize;
-        let y: number = coord.y * this.cellSize;
+        let x: number = coord.x * MazeGenerator.cellSize;
+        let y: number = coord.y * MazeGenerator.cellSize;
+        let correction: number = this.ctx.lineWidth / 2;
 
         if (!cell.n) {
             this.ctx.beginPath();
-            this.ctx.moveTo(x, y);
-            this.ctx.lineTo(x + this.cellSize, y);
+            this.ctx.moveTo(x - correction, y);
+            this.ctx.lineTo(x + MazeGenerator.cellSize + correction, y);
             this.ctx.stroke();
         }
         if (!cell.s) {
             this.ctx.beginPath();
-            this.ctx.moveTo(x, y + this.cellSize);
-            this.ctx.lineTo(x + this.cellSize, y + this.cellSize);
+            this.ctx.moveTo(x, y + MazeGenerator.cellSize);
+            this.ctx.lineTo(x + MazeGenerator.cellSize, y + MazeGenerator.cellSize);
             this.ctx.stroke();
         }
         if (!cell.e) {
             this.ctx.beginPath();
-            this.ctx.moveTo(x + this.cellSize, y);
-            this.ctx.lineTo(x + this.cellSize, y + this.cellSize);
+            this.ctx.moveTo(x + MazeGenerator.cellSize, y);
+            this.ctx.lineTo(x + MazeGenerator.cellSize, y + MazeGenerator.cellSize);
             this.ctx.stroke();
         }
         if (!cell.w) {
             this.ctx.beginPath();
             this.ctx.moveTo(x, y);
-            this.ctx.lineTo(x, y + this.cellSize);
+            this.ctx.lineTo(x, y + MazeGenerator.cellSize);
             this.ctx.stroke();
         }
     }
@@ -188,15 +201,15 @@ export default class MazeGenerator {
 
 
     //#region Dark overlay
-    private drawDarkOverlay(maze: Maze): void {
+    private drawDarkOverlay(maze: Maze, coords: Coordinate | null = null, size: number | null = null): void {
         if (!MazeGenerator.darkOverlay) return;      // Do nothing when the setting is turned off
         this.container.classList.add("darkOverlay")
 
-        let coords: Coordinate = maze.player.coord;
-        let x: number = (this.cellSize * coords.x) + (this.cellSize / 2);
-        let y: number = (this.cellSize * coords.y) + (this.cellSize / 2);
+        let c: Coordinate = coords ?? maze.player.coord;
+        let x: number = (MazeGenerator.cellSize * c.x) + (MazeGenerator.cellSize / 2);
+        let y: number = (MazeGenerator.cellSize * c.y) + (MazeGenerator.cellSize / 2);
 
-        let path: string = `circle(${MazeGenerator.clipSize}px at ${x}px ${y}px)`;
+        let path: string = `circle(${size ?? MazeGenerator.clipSize}px at ${x}px ${y}px)`;
         this.canvas.style.clipPath = path;
     }
     //#endregion
@@ -207,24 +220,30 @@ export default class MazeGenerator {
         if (!MazeGenerator.moveMaze) return;        // Do nothing when the setting is turned off
 
         let coords: Coordinate = maze.player.coord;
-        let x: number = (this.canvas.width / 2) - (this.cellSize / 2) - (coords.x * this.cellSize);
-        let y: number = (this.canvas.height / 2) - (this.cellSize / 2) - (coords.y * this.cellSize);
+        let x: number = (this.canvas.width / 2) - (MazeGenerator.cellSize / 2) - (coords.x * MazeGenerator.cellSize);
+        let y: number = (this.canvas.height / 2) - (MazeGenerator.cellSize / 2) - (coords.y * MazeGenerator.cellSize);
 
         this.canvas.style.position = "absolute";
         this.canvas.style.left = `${x}px`
         this.canvas.style.top = `${y}px`
+
+        // Set the absolute center to the player
+        if (this.player !== null) {
+            this.player.style.left = `calc(50% - ${MazeGenerator.cellSize / 2}px)`;
+            this.player.style.top = `calc(50% - ${MazeGenerator.cellSize / 2}px)`;
+        }
     }
     //#endregion
 
 
     //#region Drawing sprites
     private drawSprite(asset: HTMLImageElement, coord: Coordinate): void {
-        let offset: number = (this.cellSize - this.ctx.lineWidth) / 100;         // Ook de lineWidth meenemen in de berekening
-        let maxSize: number = this.cellSize - (2 * offset);
+        let offset: number = (MazeGenerator.cellSize - this.ctx.lineWidth) / 100;         // Ook de lineWidth meenemen in de berekening
+        let maxSize: number = MazeGenerator.cellSize - (2 * offset);
         let size = this.resizeWithAspectRatio(asset.width, asset.height, maxSize, maxSize);
 
-        let x: number = (coord.x * this.cellSize) + (this.cellSize / 2) - size.width / 2
-        let y: number = (coord.y * this.cellSize) + (this.cellSize / 2) - size.height / 2
+        let x: number = (coord.x * MazeGenerator.cellSize) + (MazeGenerator.cellSize / 2) - size.width / 2
+        let y: number = (coord.y * MazeGenerator.cellSize) + (MazeGenerator.cellSize / 2) - size.height / 2
 
         this.ctx.drawImage(
             asset,
@@ -245,26 +264,62 @@ export default class MazeGenerator {
     // de border weggehaald
     private removeSprite(coord: Coordinate): void {
         this.ctx.clearRect(
-            coord.x * this.cellSize + this.ctx.lineWidth,
-            coord.y * this.cellSize + this.ctx.lineWidth,
-            this.cellSize - (this.ctx.lineWidth * 2),
-            this.cellSize - (this.ctx.lineWidth * 2),
+            coord.x * MazeGenerator.cellSize + this.ctx.lineWidth,
+            coord.y * MazeGenerator.cellSize + this.ctx.lineWidth,
+            MazeGenerator.cellSize - (this.ctx.lineWidth * 2),
+            MazeGenerator.cellSize - (this.ctx.lineWidth * 2),
         );
+    }
+    //#endregion
+
+
+    //#region Ending animation
+    private handleEnding(): void {
+
+        if (this.maze !== null && MazeGenerator.darkOverlay) {
+
+            // Disable the moving
+            this.maze.disableMoving = true;
+
+            setTimeout(() => {
+                this.maze && this.drawDarkOverlay(this.maze, this.maze.player.coord, 0);     // Resize the dark overlay to 0
+                if (this.player !== null) this.player.style.opacity = "0";
+            }, MazeGenerator.animationDuration * 1000)
+
+            setTimeout(() => {
+                this.updateLevel();
+                this.Generate();
+                this.maze && this.drawDarkOverlay(this.maze, this.maze.player.coord, 0);     // Move the overlay to the new position (with size 0)
+            }, MazeGenerator.animationDuration * 2000)
+
+            setTimeout(() => {
+
+                this.maze && this.drawDarkOverlay(this.maze, this.maze.player.coord);     // Start the new level
+                if (this.player !== null) this.player.style.opacity = "1";
+            }, MazeGenerator.animationDuration * 3000)
+        } else {
+            this.updateLevel();
+            this.Generate();
+        }
     }
     //#endregion
 
 
     //#region Sprites
     private loadSprites(): void {
-        //CHARACTER PIET 
-        this.playerSprite = new Image();
-        this.playerSprite.src = MazeGenerator.darkOverlay ? playerWithLightImg : playerImg;
-        this.playerSprite.setAttribute("crossOrigin", " ");
-
         //SHOE 
         this.finishSprite = new Image();
         this.finishSprite.src = finishImg;
         this.finishSprite.setAttribute("crossOrigin", " ");
+    }
+    //#endregion
+
+
+    //#region Level
+    private updateLevel(): void {
+        let newLevel = this.level + 1;
+        this.setLevel && this.setLevel(newLevel);
+        this.level = newLevel;
     }
     //#endregion
 

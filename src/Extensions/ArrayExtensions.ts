@@ -1,5 +1,7 @@
-export function shuffle<T>(array: T[]) {
+// Changes the array by reference
+export function shuffle<T>(array: T[]): T[] {
     let currentIndex = array.length, randomIndex;
+    let copiedArray = [...array]
 
     // While there remain elements to shuffle.
     while (currentIndex > 0) {
@@ -9,9 +11,9 @@ export function shuffle<T>(array: T[]) {
         currentIndex--;
 
         // And swap it with the current element.
-        [array[currentIndex], array[randomIndex]] = [
-            array[randomIndex], array[currentIndex]];
+        [copiedArray[currentIndex], copiedArray[randomIndex]] = [
+            copiedArray[randomIndex], copiedArray[currentIndex]];
     }
 
-    return array;
+    return copiedArray;
 }

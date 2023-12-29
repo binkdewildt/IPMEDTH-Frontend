@@ -23,6 +23,7 @@ import MazeGenerator from "./MazeGenerator";
 export default class Maze {
     public readonly width: number
     public readonly height: number;
+    public disableMoving: boolean = false;
 
     public map: MazeMap = null!;    // Wordt gezet in constructor --> generate --> genMap
     public readonly sprites: Sprite[] = [];
@@ -40,7 +41,7 @@ export default class Maze {
 
 
     //#region Private constants
-    private readonly directions: string[] = ["n", "e", "s", "w"]
+    private directions: string[] = ["n", "e", "s", "w"]
     private readonly modDir: ModifiedDirections = {
         n: {
             y: -1,
@@ -78,14 +79,16 @@ export default class Maze {
 
 
     //#region Moving
-    public move(direction: Direction): MoveResult {
+    public move(direction: Direction): MoveResult | null {
+        if (this.disableMoving) return null;
+
         let pointsToAdd: number = 0;
         let canMove: boolean = false;
 
         let player: Player = this.player;
 
-        let oldCoord: Coordinate = player.coord;
-        let newCoord: Coordinate = player.coord;
+        let oldCoord: Coordinate = { ...player.coord };
+        let newCoord: Coordinate = { ...player.coord };
 
         let cell: MazeCell = this.map[oldCoord.x][oldCoord.y];
 
@@ -212,7 +215,7 @@ export default class Maze {
             map[pos.x][pos.y].visited = true;
 
             if (numLoops >= maxLoops) {
-                shuffle(this.directions);
+                this.directions = shuffle(this.directions);
                 maxLoops = Math.round(random(this.height / 8));
                 numLoops = 0;
             }
@@ -260,9 +263,6 @@ export default class Maze {
                 isCompleted = true;
             }
         }
-
-        // Update the global map
-        // this.map = map;
     }
     //#endregion
 

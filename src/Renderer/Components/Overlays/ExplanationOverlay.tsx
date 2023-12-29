@@ -1,5 +1,5 @@
 import React from "react";
-import startImg from "../../Assets/startButtonPink.png";
+import startImg from "../../../Assets/startButtonPink.png";
 
 export function Overlay({
 	isOpen,
