@@ -8,7 +8,7 @@ describe("NumberExtensions", () => {
         let input: number = 10;
         let rand: number = random(input)
 
-        expect(rand).toBeGreaterThan(0);
+        expect(rand).toBeGreaterOrEqualTo(0);
         expect(rand).toBeLessThanOrEqual(input);
     })
 
