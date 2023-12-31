@@ -61,6 +61,7 @@ div.game {
 		}
 
 		#player {
+			opacity: 0; // Wordt gezet in de MazeGenerator.ts
 			position: absolute;
 			z-index: 1;
 			background: url("../../Assets/Player/piet.webp");
@@ -137,13 +138,13 @@ div.game {
 
 	//RESPONSIVE RESOLUTIONS
 	//IPAD PRO RESOLUTION
-	@media screen and (max-width: 1024px){
+	@media screen and (max-width: 1024px) {
 		.mazeContainer {
 			aspect-ratio: 3/4;
 
 			#mazeCanvas {
 				width: 100%;
-				height: 125%;	
+				height: 125%;
 			}
 		}
 		.stage {
@@ -153,13 +154,13 @@ div.game {
 	}
 
 	//IPHONE XR
-	@media screen and (max-width: 500px){
+	@media screen and (max-width: 500px) {
 		.mazeContainer {
 			aspect-ratio: 5/8;
 
 			#mazeCanvas {
 				width: 125%;
-				height: 100%;	
+				height: 100%;
 			}
 		}
 		.stage {
@@ -169,6 +170,5 @@ div.game {
 		.buttonContainer {
 			width: 80%;
 		}
-		
 	}
 }

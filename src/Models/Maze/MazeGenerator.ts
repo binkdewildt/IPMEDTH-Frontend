@@ -5,6 +5,7 @@ import { Size } from "../Size";
 
 // Sprite imports
 import finishImg from "../../Assets/schoenTransparant.webp";
+import { sleep } from "../../Extensions/TimeExtensions";
 
 
 export default class MazeGenerator {
@@ -132,6 +133,13 @@ export default class MazeGenerator {
         if (this.player !== null) {
             this.player.style.width = MazeGenerator.cellSize + "px";
             this.player.style.height = MazeGenerator.cellSize + "px";
+
+            // Het opvagen van de speler bij het starten van een nieuw level
+            // Hoeft alleen maar een delay the hebben wanneer de darkOverlay aangezet is
+            setTimeout(() => {
+                if (this.player !== null)
+                    this.player.style.opacity = "1";
+            }, MazeGenerator.darkOverlay ? MazeGenerator.animationDuration * 1000 : 0)
         }
     }
 
@@ -139,10 +147,15 @@ export default class MazeGenerator {
     private drawMaze(maze: Maze): void {
         this.initDrawing(maze);
 
-        // Draw the dark overlay
-        // must be before the drawing of the maze
-        this.drawDarkOverlay(maze);
+        // Move the dark overlay to the correct position first
+        this.drawDarkOverlay(maze, null, 0);
 
+        // Draw the dark overlay in the correct size
+        if (MazeGenerator.darkOverlay) {
+            setTimeout(() => this.drawDarkOverlay(maze), MazeGenerator.animationDuration * 1000);
+        }
+
+        // Set the maze to the correct position
         this.positionMaze(maze);
 
         // Draw the map
@@ -281,22 +294,18 @@ export default class MazeGenerator {
             // Disable the moving
             this.maze.disableMoving = true;
 
-            setTimeout(() => {
-                this.maze && this.drawDarkOverlay(this.maze, this.maze.player.coord, 0);     // Resize the dark overlay to 0
-                if (this.player !== null) this.player.style.opacity = "0";
-            }, MazeGenerator.animationDuration * 1000)
+            setTimeout(async () => {
+                // Resize the dark overlay to width 0
+                this.maze && this.drawDarkOverlay(this.maze, this.maze.player.coord, 0);    // Resize the dark overlay to 0
+                if (this.player !== null) this.player.style.opacity = "0";                  // Fade out the player
 
-            setTimeout(() => {
+                // Updaten van het level nadat een animatie is voltooid
+                await sleep(MazeGenerator.animationDuration * 1000 * 1.1);
                 this.updateLevel();
                 this.Generate();
-                this.maze && this.drawDarkOverlay(this.maze, this.maze.player.coord, 0);     // Move the overlay to the new position (with size 0)
-            }, MazeGenerator.animationDuration * 2000)
 
-            setTimeout(() => {
+            }, MazeGenerator.animationDuration * 1000 * 1.5)
 
-                this.maze && this.drawDarkOverlay(this.maze, this.maze.player.coord);     // Start the new level
-                if (this.player !== null) this.player.style.opacity = "1";
-            }, MazeGenerator.animationDuration * 3000)
         } else {
             this.updateLevel();
             this.Generate();
