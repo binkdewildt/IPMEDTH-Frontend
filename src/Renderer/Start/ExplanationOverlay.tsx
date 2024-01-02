@@ -12,7 +12,7 @@ export function Overlay({
 	return (
 		<>
 			{isOpen && (
-				<div className="overlay fullScreen">
+				<main className="overlay fullScreen">
 					<div className="overlayBackground"></div>
 					<h1 className="gameName">Doolhof (uitleg)</h1>
 					<button className="startLink" onClick={onClose}>
@@ -21,7 +21,7 @@ export function Overlay({
 							src={startImg}
 							alt="Klik hier om het spel te starten"></img>
 					</button>
-				</div>
+				</main>
 			)}
 		</>
 	);
