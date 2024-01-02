@@ -13,12 +13,14 @@ export default function StartScreen() {
 
 	return (
 		<section className="startScreen fullScreen">
-			<img
-				className="sinterklaasjournaalBanner"
-				src={skjBanner}
-				alt="Het bewegende logo van het Sinterklaasjournaal"
-				height="307"
-				width="642"></img>
+			<h1>
+				<img
+					className="sinterklaasjournaalBanner"
+					src={skjBanner}
+					alt="Het bewegende logo van het Sinterklaasjournaal"
+					height="307"
+					width="642"></img>
+			</h1>
 			<Link className="startLink" to={"game"}>
 				<img
 					className="startImg"
