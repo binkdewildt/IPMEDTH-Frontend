@@ -57,11 +57,11 @@ export default function Game() {
 				<p>points: {points}</p>
 			</section>
 			
-			<section className="mazeContainer">
+			<div className="mazeContainer">
 				<figure id="player"></figure>
 				<canvas id={"mazeCanvas"} ref={canvasRef}></canvas>
-			</section>
-			<section className={"buttonContainer"}>
+			</div>
+			<div className={"buttonContainer"}>
 				<button
 					className={"buttonLeft buttonGame"}
 					tabIndex={4}
@@ -73,7 +73,7 @@ export default function Game() {
 						draggable={false}
 					/>
 				</button>
-				<section className={"arrowUpDown"}>
+				<div className={"arrowUpDown"}>
 					<button
 						className={"buttonUp buttonGame"}
 						tabIndex={1}
@@ -96,7 +96,7 @@ export default function Game() {
 							draggable={false}
 						/>
 					</button>
-				</section>
+				</div>
 				<button
 					className={"buttonRight buttonGame"}
 					tabIndex={2}
@@ -108,7 +108,7 @@ export default function Game() {
 						draggable={false}
 					/>
 				</button>
-			</section>
+			</div>
 		</div>
 	);
 }
