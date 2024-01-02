@@ -18,13 +18,13 @@ const HighScore: React.FC<{}> = () => {
 	return (
 		<div className="score-container">
 			<h1>Scores</h1>
-			<section>
+			<div>
 				<ol>
 					{(state ?? highscores ?? []).map((score: number, index: number) => {
 						return <li key={index}> {score} </li>;
 					})}
 				</ol>
-			</section>
+			</div>
 			<Link className="button-highScore button-highScore--play" to={"/game"}>
 				Speel
 			</Link>
