@@ -125,9 +125,9 @@ div.game {
 			}
 		}
 
-		.buttonGame:focus{
-			outline: 2.5px solid black;
-		}	
+		// .buttonGame:focus{
+		// 	outline: 2.5px solid black;
+		// }	
 		
 		.buttonGame:active{
 			border-radius: 0;
@@ -164,7 +164,7 @@ div.game {
 			font-size: 24px;
 		}
 		.buttonContainer{
-			margin-bottom: 10px;
+			margin-bottom: 20px;
 		}
 	}
 
