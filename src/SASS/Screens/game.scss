@@ -127,7 +127,11 @@ div.game {
 
 		.buttonGame:focus{
 			outline: 2.5px solid black;
-		}		
+		}	
+		
+		.buttonGame:active{
+			border-radius: 0;
+		}
 
 		.arrowUpDown {
 			display: flex;
