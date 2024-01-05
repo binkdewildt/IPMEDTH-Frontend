@@ -18,7 +18,7 @@ const HighScore: React.FC<{}> = () => {
 	return (
 		<div className="score-container">
 			<h1>Scores</h1>
-			<div>
+			<div className="highScoreList">
 				<ol>
 					{(state ?? highscores ?? []).map((score: number, index: number) => {
 						return <li key={index}> {score} </li>;
