@@ -64,7 +64,7 @@ export default function Game() {
 			<div className={"buttonContainer"}>
 				<button
 					className={"buttonLeft buttonGame"}
-					tabIndex={4}
+					// tabIndex={1}
 					onClick={() => generator.move(Direction.left)}>
 					<img
 						className={"buttonLeftImg buttonImg"}
@@ -76,7 +76,7 @@ export default function Game() {
 				<div className={"arrowUpDown"}>
 					<button
 						className={"buttonUp buttonGame"}
-						tabIndex={1}
+						// tabIndex={2}
 						onClick={() => generator.move(Direction.up)}>
 						<img
 							className={"buttonUpImg buttonImg"}
@@ -85,9 +85,20 @@ export default function Game() {
 							draggable={false}
 						/>
 					</button>
+					{/* <button
+					className={"buttonRight buttonGame"}
+					// tabIndex={1}
+					onClick={() => generator.move(Direction.right)}>
+					<img
+						className={"buttonRightImg buttonImg"}
+						src={arrowRight}
+						alt={"Arrow Right"}
+						draggable={false}
+					/>
+				</button> */}
 					<button
 						className={"buttonDown buttonGame"}
-						tabIndex={3}
+						// tabIndex={4}
 						onClick={() => generator.move(Direction.down)}>
 						<img
 							className={"buttonDownImg buttonImg"}
@@ -99,7 +110,7 @@ export default function Game() {
 				</div>
 				<button
 					className={"buttonRight buttonGame"}
-					tabIndex={2}
+					// tabIndex={3}
 					onClick={() => generator.move(Direction.right)}>
 					<img
 						className={"buttonRightImg buttonImg"}
