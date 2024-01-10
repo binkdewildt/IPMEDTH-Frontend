@@ -118,8 +118,9 @@ div.game {
 			justify-content: center;
 			align-items: center;
 			cursor: pointer;
+			-webkit-appearance: none;
 			border-radius: 0 !important;
-			-webkit-border-radius: 0 !important;
+			// -webkit-border-radius: 0 !important;
 
 			img {
 				user-select: none;
@@ -130,9 +131,9 @@ div.game {
 			outline: 2.5px solid black;
 		}	
 		
-		.buttonGame:active{
-			border-radius: 0;
-		}
+		// .buttonGame:active{
+		// 	border-radius: 0;
+		// }
 
 		.arrowUpDown {
 			display: flex;
