@@ -110,7 +110,6 @@ div.game {
 
 		.buttonGame {
 			margin: 5px;
-			background-color: red;
 			padding: 0;
 			font-weight: bold;
 			width: 80px;
@@ -119,8 +118,7 @@ div.game {
 			justify-content: center;
 			align-items: center;
 			cursor: pointer;
-			border-radius: 0 !important; 
-			-webkit-border-radius: 0 !important;
+			border-radius: 0 !important;
 
 			img {
 				user-select: none;
@@ -129,7 +127,11 @@ div.game {
 
 		.buttonGame:focus{
 			outline: 2.5px solid black;
-		}		
+		}	
+		
+		.buttonGame:active{
+			border-radius: 0;
+		}
 
 		.arrowUpDown {
 			display: flex;
@@ -138,7 +140,6 @@ div.game {
 			background: none;
 			box-shadow: none;
 			margin: 0;
-			border-radius: 0 !important; 
 		}
 
 		.buttonImg {
@@ -163,7 +164,7 @@ div.game {
 			font-size: 24px;
 		}
 		.buttonContainer{
-			margin-bottom: 10px;
+			margin-bottom: 20px;
 		}
 	}
 
