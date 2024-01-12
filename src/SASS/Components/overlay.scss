@@ -1,15 +1,127 @@
 @import "../extensions.scss";
 
 div.overlay {
+	$assetSize: 15vh;
+	$bigAsset: calc(15vh * 2);
+	$marginAssets: 20px;
+	$explanationDuration: 1s;
+	$shiftDuration: 1s;
+	$transitionDuration: 400ms;
+
+	width: calc(100% + 41px);
+	height: calc(100% + 41px);
     border: 40px solid black;
     border-radius: 70px;
     @extend .absolute-center;
-
 
 	.overlayBackground {
 		background-color: black;
 		opacity: 0.7;
         width: 100%;
 		height: 100%;
+	}
+
+	.gameName {
+		top: 20%;
+	}
+
+	.subjectContainer {
+		height: calc($bigAsset + 4px);
+		width: calc($bigAsset + 4px);
+		background-color: black;
+		position: absolute;
+		left: 50%;
+		top: calc(50% - 1px);
+		transform: translate(-50%, -50%);
+		overflow: hidden;
+	}
+
+	.subjectBorder {
+		position: inherit;
+		background-color: white;
+		height: calc($bigAsset - 2px);
+		width: calc($bigAsset - 2px);
+		left: 3px;
+		top: 3px;
+		border-radius: 50%;
+	}
+
+	.blinkBorder {
+		position: absolute;
+		height: calc($bigAsset + 2px);
+		width: calc($bigAsset + 2px);
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		border-style: solid;
+		border-radius: 50%;
+		border-width: 0;
+		border-color: black;
+		transition-property: border-width;
+		transition-duration: $transitionDuration;
+		z-index: 100;
+	}
+
+	.assetsContainer {
+		position: absolute;
+		top: 50%;
+		left: calc(50% - $assetSize - $marginAssets);
+		transform: translateY(-50%);
+		transition: left $shiftDuration;
+
+		&_left {
+			left: calc(50% - 5 * $marginAssets - 2.5 * $assetSize);
+		}
+	
+		&_middle {
+			left: calc(50% - 3 * $marginAssets - 1.5 * $assetSize);
+		}
+	
+		&_right {
+			left: calc(50% - $marginAssets - 0.5 * $assetSize);
+		}
+	}
+
+	.assetsContainer >  * {
+		height: $assetSize;
+		width: $assetSize;
+		margin: $marginAssets;
+		position: relative;
+	}
+	
+	.startLink {
+		background-color: transparent;
+		border-color: transparent;
+		height: 10vh;
+		width: 10vh;
+		position: absolute;
+		left: 50%;
+		top: 80%;
+		transform: translate(-50%, -50%);
+		cursor: pointer;
+		animation-name: pulse;
+		animation-duration: 1.3s;
+		animation-iteration-count: infinite;
+		animation-direction: alternate;
+		animation-timing-function: linear;
+		
+		.startImg {
+			height: 100%;
+			width: auto;
+			transform: translateX(-50%);
+		}
+
+		:focus {
+			outline: 2.5px solid black;
+		}
+	}
+
+	@keyframes pulse {
+		from {
+			transform: scale(1.0);
+		}
+		to {
+			transform: scale(1.1);
+		}
 	}
 }

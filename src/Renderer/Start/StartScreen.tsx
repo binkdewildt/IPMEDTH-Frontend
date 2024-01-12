@@ -5,11 +5,11 @@ import { Overlay } from "../Components/Overlays/ExplanationOverlay";
 import startButton from "../../Assets/mediatrigger-button.png";
 import skjBanner from "../../Assets/banner.gif";
 
-export default function StartScreen() {
-	const [isExplanationOpen, setIsExplanationOpen] = useState<boolean>(false);
-
 	//todo: resize-animation startImg
 	//todo: verplaats uitlegOverlay naar spel
+
+export default function StartScreen() {
+	const [explanationOpen, setExplanationOpen] = useState<boolean>(true);
 
 	return (
 		<section className="startScreen fullScreen">
@@ -19,7 +19,8 @@ export default function StartScreen() {
 					src={skjBanner}
 					alt="Het bewegende logo van het Sinterklaasjournaal"
 					height="307"
-					width="642"></img>
+					width="642"
+				></img>
 			</h1>
 			<Link className="startLink" to={"game"}>
 				<img
@@ -27,12 +28,13 @@ export default function StartScreen() {
 					src={startButton}
 					alt="Klik hier om de uitleg te starten"
 					height="354"
-					width="354"></img>
+					width="354"
+				></img>
 			</Link>
 
 			<Overlay
-				isOpen={isExplanationOpen}
-				onClose={() => setIsExplanationOpen(!isExplanationOpen)}
+				isOpen={explanationOpen}
+				onClose={() => setExplanationOpen(false)}
 			/>
 		</section>
 	);
