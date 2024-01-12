@@ -29,6 +29,10 @@
     }
   }
 
+  .startLink:focus{
+		outline: 2.5px solid black;
+	}
+
   .sinterklaasjournaalBanner {
     height: 20vh;
     width: auto;

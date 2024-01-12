@@ -66,6 +66,7 @@ export default function Game() {
 					className={"buttonLeft buttonGame"}
 					aria-label={"Links"}
 					tabIndex={4}
+					// tabIndex={1}
 					onClick={() => generator.move(Direction.left)}>
 					<img
 						className={"buttonLeftImg buttonImg"}
@@ -80,6 +81,7 @@ export default function Game() {
 						className={"buttonUp buttonGame"}
 						aria-label={"Omhoog"}
 						tabIndex={1}
+						// tabIndex={2}
 						onClick={() => generator.move(Direction.up)}>
 						<img
 							className={"buttonUpImg buttonImg"}
@@ -93,6 +95,7 @@ export default function Game() {
 						className={"buttonDown buttonGame"}
 						aria-label={"Omlaag"}
 						tabIndex={3}
+						// tabIndex={4}
 						onClick={() => generator.move(Direction.down)}>
 						<img
 							className={"buttonDownImg buttonImg"}
@@ -107,6 +110,7 @@ export default function Game() {
 					className={"buttonRight buttonGame"}
 					aria-label={"Rechts"}
 					tabIndex={2}
+					// tabIndex={3}
 					onClick={() => generator.move(Direction.right)}>
 					<img
 						className={"buttonRightImg buttonImg"}
