@@ -53,8 +53,8 @@ export default function Game() {
 	return (
 		<div className="game">
 			<section className={"stage"}>
-				<h1>level: {level}</h1>
-				<h2>punten: {points}</h2>
+				<h1  tabIndex={1}>Level: {level}</h1>
+				<h2  tabIndex={2}>Punten: {points}</h2>
 			</section>
 			
 			<div className="mazeContainer" aria-hidden>
@@ -65,7 +65,7 @@ export default function Game() {
 				<button
 					className={"buttonLeft buttonGame"}
 					aria-label={"Links"}
-					tabIndex={4}
+					tabIndex={6}
 					// tabIndex={1}
 					onClick={() => generator.move(Direction.left)}>
 					<img
@@ -80,7 +80,7 @@ export default function Game() {
 					<button
 						className={"buttonUp buttonGame"}
 						aria-label={"Omhoog"}
-						tabIndex={1}
+						tabIndex={3}
 						// tabIndex={2}
 						onClick={() => generator.move(Direction.up)}>
 						<img
@@ -94,7 +94,7 @@ export default function Game() {
 					<button
 						className={"buttonDown buttonGame"}
 						aria-label={"Omlaag"}
-						tabIndex={3}
+						tabIndex={5}
 						// tabIndex={4}
 						onClick={() => generator.move(Direction.down)}>
 						<img
@@ -109,7 +109,7 @@ export default function Game() {
 				<button
 					className={"buttonRight buttonGame"}
 					aria-label={"Rechts"}
-					tabIndex={2}
+					tabIndex={4}
 					// tabIndex={3}
 					onClick={() => generator.move(Direction.right)}>
 					<img
