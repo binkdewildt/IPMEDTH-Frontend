@@ -1,15 +1,12 @@
 import React from "react";
-import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Overlay } from "../Components/Overlays/ExplanationOverlay";
 import startButton from "../../Assets/mediatrigger-button.png";
 import skjBanner from "../../Assets/banner.gif";
 
-export default function StartScreen() {
-	const [isExplanationOpen, setIsExplanationOpen] = useState<boolean>(false);
-
 	//todo: resize-animation startImg
 	//todo: verplaats uitlegOverlay naar spel
+
+export default function StartScreen() {
 
 	return (
 		<section className="startScreen fullScreen">
@@ -29,13 +26,10 @@ export default function StartScreen() {
 					src={startButton}
 					alt="Klik hier om de uitleg te starten"
 					height="354"
-					width="354"></img>
+					width="354"
+				></img>
 			</Link>
 
-			<Overlay
-				isOpen={isExplanationOpen}
-				onClose={() => setIsExplanationOpen(!isExplanationOpen)}
-			/>
 		</section>
 	);
 }
