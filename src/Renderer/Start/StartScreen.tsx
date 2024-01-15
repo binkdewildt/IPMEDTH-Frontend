@@ -1,7 +1,5 @@
 import React from "react";
-import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Overlay } from "../Components/Overlays/ExplanationOverlay";
 import startButton from "../../Assets/mediatrigger-button.png";
 import skjBanner from "../../Assets/banner.gif";
 
@@ -9,7 +7,6 @@ import skjBanner from "../../Assets/banner.gif";
 	//todo: verplaats uitlegOverlay naar spel
 
 export default function StartScreen() {
-	const [explanationOpen, setExplanationOpen] = useState<boolean>(true);
 
 	return (
 		<section className="startScreen fullScreen">
@@ -32,10 +29,6 @@ export default function StartScreen() {
 				></img>
 			</Link>
 
-			<Overlay
-				isOpen={explanationOpen}
-				onClose={() => setExplanationOpen(false)}
-			/>
 		</section>
 	);
 }

@@ -16,7 +16,7 @@ div.overlay {
 
 	.overlayBackground {
 		background-color: black;
-		opacity: 0.7;
+		opacity: 0.8;
         width: 100%;
 		height: 100%;
 	}
@@ -33,7 +33,6 @@ div.overlay {
 		left: 50%;
 		top: calc(50% - 1px);
 		transform: translate(-50%, -50%);
-		overflow: hidden;
 	}
 
 	.subjectBorder {
@@ -51,15 +50,43 @@ div.overlay {
 		height: calc($bigAsset + 2px);
 		width: calc($bigAsset + 2px);
 		left: 50%;
-		top: 50%;
+		top: calc(50% - 1px);
 		transform: translate(-50%, -50%);
 		border-style: solid;
 		border-radius: 50%;
-		border-width: 0;
+		border-width: 3px;
 		border-color: black;
 		transition-property: border-width;
 		transition-duration: $transitionDuration;
 		z-index: 100;
+	}
+
+	.mazeExample {
+		position: relative;
+		width: calc($bigAsset * 4);
+	}
+
+	.buttons {
+		width: 20vw;
+		position: absolute;
+		left: 65vw;
+		top: 40vh;
+	}
+
+	.cursor {
+		height: 70px;
+		position: absolute;
+		transition: 
+			left $transitionDuration,
+			top $transitionDuration;
+	}
+
+	.piet {
+		position: inherit;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		height: $assetSize;
 	}
 
 	.assetsContainer {

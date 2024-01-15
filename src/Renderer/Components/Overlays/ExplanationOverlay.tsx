@@ -9,11 +9,19 @@ import shoeDiewertje from "../../../Assets/sounds/naar_de_schoen.mp3";
 import light from "../../../Assets/light.png";
 import lightSound from "../../../Assets/sounds/ignition.mp3";
 import lightDiewertje from "../../../Assets/sounds/met_de_lamp_kan_piet_verder_zien.mp3";
+import exampleMaze from "../../../Assets/example_maze.png";
+import pietStanding from "../../../Assets/Player/piet.webp";
+import pietDown from "../../../Assets/Player/pietMovingForward.gif";
+import pietHorizontal from "../../../Assets/Player/pietMovingHorizontal.gif";
+import pietLeft from "../../../Assets/Player/pietMovingLeft.gif";
+import wallSound from "../../../Assets/sounds/error.mp3";
+import stepSound from "../../../Assets/sounds/footsteps.mp3";
+import buttons from "../../../Assets/buttonsPicture.png";
+import cursor from "../../../Assets/cursorImage.png";
 
 	//todo: introduce navigation
 
 export function Overlay({ isOpen, onClose } : { isOpen: boolean, onClose: () => void }) {
-	const [navigation, setNavigation] = useState(false);
 	return (
 		<>
 			{isOpen && (
@@ -23,12 +31,7 @@ export function Overlay({ isOpen, onClose } : { isOpen: boolean, onClose: () => 
 					<h1 className="gameName">Doolhof</h1>
 
 					{
-						<Explanation
-							navigation={navigation}
-							onDone={() => {
-								setNavigation(true);
-							}}
-						></Explanation>
+						<Explanation></Explanation>
 					}
 					
 					<button className="startLink" onClick={onClose}>
@@ -44,15 +47,25 @@ export function Overlay({ isOpen, onClose } : { isOpen: boolean, onClose: () => 
 	);
 }
 
-function Explanation({ navigation, onDone} : { navigation: boolean, onDone: () => void}) {
+function Explanation() {
 	const [activeIndex, setActiveIndex] = useState(0);
 	const [positionAssetsContainer, setPositionAssetsContainer] = useState("assetsContainer_right");
-
+	const [maze, setMaze] = useState(false);
 
 	return (
 		<>
+			{ maze === true ? 
+			<>
+				<MazeButtons></MazeButtons>
+			</>
+			: <></>}
 			<div className="subjectContainer">
 				<div className="subjectBorder"></div>
+				{ maze === true ? 
+				<>
+					<MazeExample></MazeExample>
+				</> 
+				: <></> }
 			</div>
 			<div className="blinkBorder"></div>
 			<div className={`assetsContainer ${positionAssetsContainer}`}>
@@ -87,13 +100,130 @@ function Explanation({ navigation, onDone} : { navigation: boolean, onDone: () =
 					onShow={() => {
 						setActiveIndex(3);
 						endAssets();
-						onDone();
+						setMaze(true);;
 					}}
 				></Asset>
 			</div>
 		</>
 	);
 }
+
+function MazeButtons() {
+	return (
+		<>
+			<img className="buttons" src={buttons} alt="Afbeelding van vier knoppen die in het spel gebruikt worden."></img>
+			<img className="cursor" src={cursor} alt="cursor"></img>
+		</>
+	);
+}
+
+function MazeExample() {
+	const errorSoundRef = useRef<HTMLAudioElement | null>(null);
+	const stepSoundRef = useRef<HTMLAudioElement | null>(null);
+	const [mazeExampleStyle, setMazeExampleStyle] = useState({
+		clipPath: "circle(calc(30vh / 2) at 10% 10%)",
+		left: "30%",
+		top: "30%"
+	});
+	const [pietState, setPietState] = useState(`${pietStanding}`)
+	useEffect(() => {
+		setMazeExampleStyle(moveMaze(1,2));
+		moveCursor("");
+		blinkSubjectBorder("3px");
+		const timer0 = setTimeout(() => {
+			setPietState(`${pietHorizontal}`);
+			moveCursor("right");
+		}, 200);
+		const timer1 = setTimeout(() => {
+			setMazeExampleStyle(moveMaze(1.4, 2));
+			if(errorSoundRef.current !== null) {
+				errorSoundRef.current.play();
+			}
+		}, 400)
+		const timer2 = setTimeout(() => {
+			moveCursor("");
+			setPietState(`${pietLeft}`)
+		}, 1000);
+		const timer3 = setTimeout(() => {
+			setMazeExampleStyle(moveMaze(1, 2));
+			setPietState(`${pietStanding}`);
+		}, 1600)
+
+		const timer4 = setTimeout(() => {
+			moveCursor("down");
+			setPietState(`${pietDown}`);
+		}, 2400)
+		const timer5 = setTimeout(() => {
+			setMazeExampleStyle(moveMaze(1, 2.5));
+		}, 3000)
+		const timer6 = setTimeout(() => {
+			setMazeExampleStyle(moveMaze(1, 3));
+			setPietState(`${pietStanding}`);
+			moveCursor("");
+		}, 3400)
+		return () => {
+			clearTimeout(timer0);
+			clearTimeout(timer1);
+			clearTimeout(timer2);
+			clearTimeout(timer3);
+			clearTimeout(timer4);
+			clearTimeout(timer5);
+			clearTimeout(timer6);
+		}
+	}, [])
+
+	return (
+		<>
+			<img className="mazeExample" style={mazeExampleStyle} alt="doolhof" src={exampleMaze}></img>
+			<img className="piet" alt="roetveegpiet" src={pietState}></img>
+			<audio ref={errorSoundRef}>
+				<source src={wallSound} type="audio/mpeg"></source>
+				Your browser does not support the audio element.
+			</audio>
+			<audio ref={stepSoundRef}>
+				<source src={stepSound} type="audio/mpeg"></source>
+				Your browser does not support the audio element.
+			</audio>
+		</>
+	);
+}
+
+function moveCursor(position: string) {
+	const cursor = document.getElementsByClassName("cursor")[0] as HTMLImageElement;
+	console.log("cursor beweegt");
+	switch (position) {
+		case "left":
+			cursor.style.left = "65vw";
+			cursor.style.top = "25vw";
+			break;
+		case "right":
+			cursor.style.left = "80vw";
+			cursor.style.top = "25vw";
+			break;
+		case "down": 
+			cursor.style.left = "72vw";
+			cursor.style.top = "30vw";
+			break;
+		default:
+			cursor.style.left = "72vw";
+			cursor.style.top = "25.3vw";
+	}
+}
+
+function moveMaze(coordinateX: number, coordinateY: number) {
+	const left = 10.5 - 78.5 * coordinateX;
+	const top = 10.5 - 78.5 * coordinateY;
+	const circleLeft = coordinateX * 20 + 10;
+	const circleTop = coordinateY * 20 + 10;
+
+	return ({
+		left: `calc( ${left}%)`,
+		top: `calc( ${top}%)`,
+		clipPath: `circle(calc(30vh / 2) at ${circleLeft}% ${circleTop}%)`
+	})
+
+}
+
 
 function Asset({ isActive, textDiewertje, sound, imgSrc, imgAlt, onShow}: AssetProps) {
 	const assetStyles = useMemo(
@@ -110,7 +240,7 @@ function Asset({ isActive, textDiewertje, sound, imgSrc, imgAlt, onShow}: AssetP
 
 			const timer1 = setTimeout(() => {
 				setAssetStyle(assetStyles.big);
-				blinkSubjectBorder("");
+				blinkSubjectBorder("3px");
 				if(soundRef.current !== null) {
 					soundRef.current.play();
 				}
