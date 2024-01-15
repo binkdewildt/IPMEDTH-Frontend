@@ -7,11 +7,16 @@ div.overlay {
 	$explanationDuration: 1s;
 	$shiftDuration: 1s;
 	$transitionDuration: 400ms;
+	@media only screen and (max-width: 100vh) {
+		$assetSize: 15vh;
+		$bigAsset: 20vh;
+	}
 
 	width: calc(100% + 41px);
 	height: calc(100% + 41px);
     border: 40px solid black;
     border-radius: 70px;
+	overflow: hidden;
     @extend .absolute-center;
 
 	.overlayBackground {
@@ -26,8 +31,8 @@ div.overlay {
 	}
 
 	.subjectContainer {
-		height: calc($bigAsset + 4px);
-		width: calc($bigAsset + 4px);
+		height: calc(1.5 * $bigAsset + 4px);
+		width: calc(1.5 * $bigAsset + 4px);
 		background-color: black;
 		position: absolute;
 		left: 50%;
@@ -38,8 +43,8 @@ div.overlay {
 	.subjectBorder {
 		position: inherit;
 		background-color: white;
-		height: calc($bigAsset - 2px);
-		width: calc($bigAsset - 2px);
+		height: calc(1.5 * $bigAsset - 2px);
+		width: calc(1.5 * $bigAsset - 2px);
 		left: 3px;
 		top: 3px;
 		border-radius: 50%;
@@ -47,14 +52,14 @@ div.overlay {
 
 	.blinkBorder {
 		position: absolute;
-		height: calc($bigAsset + 2px);
-		width: calc($bigAsset + 2px);
+		height: calc(1.5 * $bigAsset + 2px);
+		width: calc(1.5 * $bigAsset + 2px);
 		left: 50%;
 		top: calc(50% - 1px);
 		transform: translate(-50%, -50%);
 		border-style: solid;
 		border-radius: 50%;
-		border-width: 3px;
+		border-width: 0px;
 		border-color: black;
 		transition-property: border-width;
 		transition-duration: $transitionDuration;
@@ -70,11 +75,11 @@ div.overlay {
 		width: 20vw;
 		position: absolute;
 		left: 65vw;
-		top: 40vh;
+		top: 38vh;
 	}
 
 	.cursor {
-		height: 70px;
+		height: 3em;
 		position: absolute;
 		transition: 
 			left $transitionDuration,
@@ -92,7 +97,7 @@ div.overlay {
 	.assetsContainer {
 		position: absolute;
 		top: 50%;
-		left: calc(50% - $assetSize - $marginAssets);
+		width: 100%;
 		transform: translateY(-50%);
 		transition: left $shiftDuration;
 
@@ -149,6 +154,46 @@ div.overlay {
 		}
 		to {
 			transform: scale(1.1);
+		}
+	}
+
+	@media only screen and (max-width: 100vh) {
+		.subjectContainer, .blinkBorder {
+			top: calc(45% - 1px);
+		}
+
+		.assetsContainer {
+			top: 17vh;
+			
+			&_right {
+				left: 0px;
+			}
+		}
+
+		.asset {
+			position: absolute;
+			margin: 0px;
+		}
+
+		.buttons {
+			width: 40vw;
+			left: 27vw;
+			top: 58vh;
+		}
+
+		.subjectContainer {
+			height: calc($bigAsset + 4px);
+			width: calc($bigAsset + 4px);
+		}
+	
+		.subjectBorder {
+			height: calc($bigAsset - 2px);
+			width: calc($bigAsset - 2px);
+		}
+	
+		.blinkBorder {
+			height: calc($bigAsset + 2px);
+			width: calc($bigAsset + 2px);
 		}
 	}
 }
