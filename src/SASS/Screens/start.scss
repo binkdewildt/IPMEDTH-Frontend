@@ -4,13 +4,21 @@
   width: 100vw;
   overflow: hidden;
 
+  .hidden-header{
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    //visibility: hidden;
+  }
+
   .startLink {          //also in explanationOverlay.tsx
     background-color: transparent;
     border-color: transparent;
     height: 20vh;
     width: 20vh;
     position: absolute;
-    left: 50%;
+    left: 50vw;
     top: 60%;
     transform: translate(-50%, -50%);
     cursor: pointer;
