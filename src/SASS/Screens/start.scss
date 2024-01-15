@@ -4,6 +4,14 @@
   width: 100vw;
   overflow: hidden;
 
+  .hidden-header{
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    //visibility: hidden;
+  }
+
   .startLink {          //also in explanationOverlay.tsx
     background-color: transparent;
     border-color: transparent;

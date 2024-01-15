@@ -17,14 +17,14 @@ const HighScore: React.FC<{}> = () => {
 
 	return (
 		<div className="score-container">
-			<h1>Scores</h1>
-			<div className="highScoreList">
-				<ol>
+			<h1 tabIndex={0} aria-label={"Scores"}>Scores</h1>
+			<section className="highScoreList">
+				<ol tabIndex={0} aria-label={"scorelijst"}>
 					{(state ?? highscores ?? []).map((score: number, index: number) => {
-						return <li key={index}> {score} </li>;
+						return <li tabIndex={0} key={index}> {score} </li>;
 					})}
 				</ol>
-			</div>
+			</section>
 			<Link className="button-highScore button-highScore--play" to={"/game"}>
 				Speel
 			</Link>
