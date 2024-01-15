@@ -1,7 +1,8 @@
 {
   "files": {
-    "main.css": "/IPMEDTH-Frontend/static/css/main.bd453501.css",
-    "main.js": "/IPMEDTH-Frontend/static/js/main.f7492fb1.js",
+    "main.css": "/IPMEDTH-Frontend/static/css/main.5a00217b.css",
+    "main.js": "/IPMEDTH-Frontend/static/js/main.4f6b3bb0.js",
+    "static/media/pietMovingLeft.gif": "/IPMEDTH-Frontend/static/media/pietMovingLeft.75759944bea7582ff770.gif",
     "static/media/pietMovingHorizontal.gif": "/IPMEDTH-Frontend/static/media/pietMovingHorizontal.a701a6b766ada1840fba.gif",
     "static/media/light.png": "/IPMEDTH-Frontend/static/media/light.0d88d9cc207deb5aa9ec.png",
     "static/media/background.jpg": "/IPMEDTH-Frontend/static/media/background.8d813077b7afbeb7e845.jpg",
@@ -12,22 +13,28 @@
     "static/media/cadeau.png": "/IPMEDTH-Frontend/static/media/cadeau.750f5ccb28ab8734ae81.png",
     "static/media/startButtonPink.png": "/IPMEDTH-Frontend/static/media/startButtonPink.5b88d193074ab50654b9.png",
     "static/media/piet.webp": "/IPMEDTH-Frontend/static/media/piet.51239423c72a9c8a105e.webp",
+    "static/media/schoen.png": "/IPMEDTH-Frontend/static/media/schoen.f80e3946d65bb930488b.png",
     "static/media/schoenTransparant.webp": "/IPMEDTH-Frontend/static/media/schoenTransparant.2c5d21d452ff95cc3c21.webp",
+    "static/media/buttonsPicture.png": "/IPMEDTH-Frontend/static/media/buttonsPicture.25a19bee8e0e7875ab34.png",
     "static/media/finish.mp3": "/IPMEDTH-Frontend/static/media/finish.bb65fcb50b256a3de60e.mp3",
     "static/media/cadeau.webp": "/IPMEDTH-Frontend/static/media/cadeau.845978030deb628e7ed2.webp",
+    "static/media/cursorImage.png": "/IPMEDTH-Frontend/static/media/cursorImage.0194972aba17a5fdd67e.png",
     "static/media/mediatrigger-button.png": "/IPMEDTH-Frontend/static/media/mediatrigger-button.71c6e1c367f07d6b0952.png",
     "static/media/ignition.mp3": "/IPMEDTH-Frontend/static/media/ignition.97d0b638381a5e3c9c3e.mp3",
     "static/media/pickup.mp3": "/IPMEDTH-Frontend/static/media/pickup.49b22048b0f07efc6ceb.mp3",
+    "static/media/met_de_lamp_kan_piet_verder_zien.mp3": "/IPMEDTH-Frontend/static/media/met_de_lamp_kan_piet_verder_zien.a26841c2915f58246cd8.mp3",
+    "static/media/breng_de_cadeautjes.mp3": "/IPMEDTH-Frontend/static/media/breng_de_cadeautjes.a03055f81b242687fc0d.mp3",
     "static/media/footsteps.mp3": "/IPMEDTH-Frontend/static/media/footsteps.977f404f8bdb60dc3f6d.mp3",
+    "static/media/naar_de_schoen.mp3": "/IPMEDTH-Frontend/static/media/naar_de_schoen.16681e5a947897c7c3e9.mp3",
     "static/media/footsteps_2.mp3": "/IPMEDTH-Frontend/static/media/footsteps_2.6c697bd9efab927d1f78.mp3",
     "static/media/error.mp3": "/IPMEDTH-Frontend/static/media/error.870c8b58057cc5ee103c.mp3",
     "static/media/floor_texture.webp": "/IPMEDTH-Frontend/static/media/floor_texture.48f42da0ed870840809e.webp",
     "index.html": "/IPMEDTH-Frontend/index.html",
-    "main.bd453501.css.map": "/IPMEDTH-Frontend/static/css/main.bd453501.css.map",
-    "main.f7492fb1.js.map": "/IPMEDTH-Frontend/static/js/main.f7492fb1.js.map"
+    "main.5a00217b.css.map": "/IPMEDTH-Frontend/static/css/main.5a00217b.css.map",
+    "main.4f6b3bb0.js.map": "/IPMEDTH-Frontend/static/js/main.4f6b3bb0.js.map"
   },
   "entrypoints": [
-    "static/css/main.bd453501.css",
-    "static/js/main.f7492fb1.js"
+    "static/css/main.5a00217b.css",
+    "static/js/main.4f6b3bb0.js"
   ]
 }
