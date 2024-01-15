@@ -118,6 +118,7 @@ div.game {
 			justify-content: center;
 			align-items: center;
 			cursor: pointer;
+			-webkit-appearance: none;
 			border-radius: 0 !important;
 
 			img {
@@ -128,10 +129,6 @@ div.game {
 		.buttonGame:focus{
 			outline: 2.5px solid black;
 		}	
-		
-		.buttonGame:active{
-			border-radius: 0;
-		}
 
 		.arrowUpDown {
 			display: flex;
