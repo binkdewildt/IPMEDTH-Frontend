@@ -1,12 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import startButton from "../../Assets/mediatrigger-button.png";
 import skjBanner from "../../Assets/banner.gif";
-
-	//todo: resize-animation startImg
-	//todo: verplaats uitlegOverlay naar spel
+import { Overlay } from "../Components/Overlays/ExplanationOverlay";
 
 export default function StartScreen() {
+	const [explanationOpen, setExplanationOpen] = useState<boolean>(false);
 
 	return (
 		<section className="startScreen fullScreen">
@@ -19,7 +18,7 @@ export default function StartScreen() {
 				alt="Het bewegende logo van het Sinterklaasjournaal"
 				height="307"
 				width="642"></img>
-			<Link tabIndex={2} aria-label="Start" className="startLink" to={"game"}>
+			<button tabIndex={2} aria-label="Uitleg" className="startLink" onClick={() => setExplanationOpen(true)}>
 				<img
 					className="startImg"
 					aria-hidden
@@ -28,7 +27,8 @@ export default function StartScreen() {
 					height="354"
 					width="354"
 				></img>
-			</Link>
+			</button>
+			<Overlay isOpen={explanationOpen} />
 
 		</section>
 	);

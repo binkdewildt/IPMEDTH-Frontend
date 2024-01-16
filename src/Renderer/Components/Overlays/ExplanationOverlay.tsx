@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
+import { Link } from "react-router-dom";
 import startImg from "../../../Assets/startButtonPink.png";
 import present from "../../../Assets/Cadeaus/cadeau.png";
 import presentSound from "../../../Assets/sounds/pickup.mp3";
@@ -22,7 +23,7 @@ import cursor from "../../../Assets/cursorImage.png";
 const isPhoneScreen = window.innerWidth < window.innerHeight;
 
 
-export function Overlay({ isOpen, onClose } : { isOpen: boolean, onClose: () => void }) {
+export function Overlay({ isOpen } : { isOpen: boolean}) {
 	return (
 		<>
 			{isOpen && (
@@ -35,13 +36,13 @@ export function Overlay({ isOpen, onClose } : { isOpen: boolean, onClose: () => 
 						<Explanation></Explanation>
 					}
 					
-					<button className="startLink" onClick={onClose}>
+					<Link tabIndex={2} aria-label="Start" className="startLink" to={"game"}>
 						<img
 							className="startImg"
 							src={startImg}
 							alt="Klik hier om het spel te starten"
 						></img>
-					</button>
+					</Link>
 				</div>
 			)}
 		</>
@@ -263,10 +264,12 @@ function moveCursor(position: string) {
 			case "right":
 				cursor.style.left = "60vw";
 				cursor.style.top = "calc(58vh + 15vw)";
+				srSpeak("Rechts");
 				break;
 			case "down": 
 				cursor.style.left = "45vw";
 				cursor.style.top = "calc(58vh + 20vw)";
+				srSpeak("Omlaag");
 				break;
 			default:
 				cursor.style.left = "30vw";
@@ -277,10 +280,12 @@ function moveCursor(position: string) {
 			case "right":
 				cursor.style.left = "82vw";
 				cursor.style.top = "calc(38vh + 5vw)";
+				srSpeak("Rechts");
 				break;
 			case "down": 
 				cursor.style.left = "75vw";
 				cursor.style.top = "calc(38vh + 10vw)";
+				srSpeak("Omlaag");
 				break;
 			default:
 				cursor.style.left = "70vw";
@@ -358,6 +363,22 @@ function calculatePositionAssetsContainer(activeIndex: number) {
 			break;
 	}
 	return text;
+}
+
+function srSpeak(text: string) {
+	const element = document.createElement("div");
+	const id = "speak-" + Date.now();
+	element.setAttribute("id", id);
+	element.setAttribute("aria-live", "assertive");
+	element.classList.add("visually-hidden");
+	document.body.appendChild(element);
+
+	const element2 = document.getElementById(id) as HTMLDivElement;
+	element2.innerHTML = text;
+
+    window.setTimeout(function () {
+        document.body.removeChild(element2);
+    }, 1000);
 }
 
 
