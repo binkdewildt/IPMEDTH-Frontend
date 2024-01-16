@@ -20,7 +20,7 @@ import stepSound from "../../../Assets/sounds/footsteps.mp3";
 import buttons from "../../../Assets/buttonsPicture.png";
 import cursor from "../../../Assets/cursorImage.png";
 
-const isPhoneScreen = window.innerWidth < window.innerHeight;
+const portraitMode = window.innerWidth < window.innerHeight;
 
 
 export function Overlay({ isOpen } : { isOpen: boolean}) {
@@ -79,7 +79,7 @@ function Explanation() {
 					imgAlt="cadeautje"
 					imgSrc={present}
 					onShow={() => {
-						if (!isPhoneScreen) setPositionAssetsContainer(shiftAsset(activeIndex));
+						if (!portraitMode) setPositionAssetsContainer(shiftAsset(activeIndex));
 						setActiveIndex(1);
 					}}
 				></Asset>
@@ -91,7 +91,7 @@ function Explanation() {
 					imgAlt="schoen"
 					imgSrc={shoe}
 					onShow={() => {
-						if (!isPhoneScreen) setPositionAssetsContainer(shiftAsset(activeIndex));
+						if (!portraitMode) setPositionAssetsContainer(shiftAsset(activeIndex));
 						setActiveIndex(2);
 					}}
 				></Asset>
@@ -104,7 +104,7 @@ function Explanation() {
 					imgSrc={light}
 					onShow={() => {
 						setActiveIndex(3);
-						if (!isPhoneScreen) endAssets();
+						if (!portraitMode) endAssets();
 						setMaze(true);
 					}}
 				></Asset>
@@ -198,7 +198,7 @@ function Asset({ umpteenth, isActive, textDiewertje, sound, imgSrc, imgAlt, onSh
 	const soundRef = useRef<HTMLAudioElement | null>(null);
 	const diewertjeRef = useRef<HTMLAudioElement | null>(null);
 	var bigBorder: string;
-	if (isPhoneScreen) {
+	if (portraitMode) {
 		bigBorder = "calc(10vh + 2px)";
 	} else {
 		bigBorder = "calc(15vh + 2px)";
@@ -258,8 +258,7 @@ function Asset({ umpteenth, isActive, textDiewertje, sound, imgSrc, imgAlt, onSh
 
 function moveCursor(position: string) {
 	const cursor = document.getElementsByClassName("cursor")[0] as HTMLImageElement;
-	console.log("cursor beweegt");
-	if (isPhoneScreen) {
+	if (portraitMode) {
 		switch (position) {
 			case "right":
 				cursor.style.left = "60vw";
@@ -295,15 +294,15 @@ function moveCursor(position: string) {
 }
 
 function moveMaze(coordinateX: number, coordinateY: number) {
-	const left = isPhoneScreen ? 11 - 78.5 * coordinateX : 24 - 52.5 * coordinateX;
-	const top = isPhoneScreen ? 11 - 78.5 * coordinateY : 24 - 52.5 * coordinateY;
+	const left = portraitMode ? 11 - 78.5 * coordinateX : 24 - 52.5 * coordinateX;
+	const top = portraitMode ? 11 - 78.5 * coordinateY : 24 - 52.5 * coordinateY;
 	const circleLeft = coordinateX * 20 + 10;
 	const circleTop = coordinateY * 20 + 10;
 
 	return ({
 		left: `calc( ${left}%)`,
 		top: `calc( ${top}%)`,
-		clipPath: isPhoneScreen 
+		clipPath: portraitMode 
 			? `circle(calc(20vh / 2) at ${circleLeft}% ${circleTop}%)`
 			: `circle(calc(30vh / 2) at ${circleLeft}% ${circleTop}%)`
 	})
@@ -314,12 +313,12 @@ function moveMaze(coordinateX: number, coordinateY: number) {
 function setAssetStyles(index: number) {
 
 	const bigAssetStyle = {
-		top: isPhoneScreen ? `calc(0.20 * ${window.innerHeight}px)` : "0px",
-		left: isPhoneScreen ? `calc(50% - 10vw)` : "0px",
-		transform: isPhoneScreen ? "scale(calc(4/3))" : "scale(2)"
+		top: portraitMode ? `calc(0.20 * ${window.innerHeight}px)` : "0px",
+		left: portraitMode ? `calc(50% - 10vw)` : "0px",
+		transform: portraitMode ? "scale(calc(4/3))" : "scale(2)"
 	};
 	const smallAssetStyle = {
-		left: isPhoneScreen 
+		left: portraitMode 
 			? `calc( 0.1 * ${window.innerWidth}px + ${index} * 0.28 * ${window.innerWidth}px)` 
 			: "0px",
 		transform: "scale(1)"
@@ -328,7 +327,6 @@ function setAssetStyles(index: number) {
 }
 
 function shiftAsset (activeIndex: number) {
-	console.log("nu aan het shiften");
 	const classname = calculatePositionAssetsContainer(activeIndex + 1);
 	return classname;
 }
@@ -336,16 +334,12 @@ function shiftAsset (activeIndex: number) {
 function endAssets () {
 	const container = document.getElementsByClassName("assetsContainer")[0] as HTMLDivElement;
 	container.style.display = "inline-grid";
-	console.log("opgeruimd staat netjes");
 }
 
 function blinkSubjectBorder(borderWidth: string) {
 	const border = document.getElementsByClassName("blinkBorder")[0] as HTMLDivElement;
 	if (border) {
 		border.style.borderWidth = borderWidth;
-		console.log("border.style.borderWidth: " + border.style.borderWidth);
-	} else {
-		console.log("huh waar ben ik");
 	}
 }
 

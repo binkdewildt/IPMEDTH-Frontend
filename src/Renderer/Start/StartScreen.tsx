@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import startButton from "../../Assets/mediatrigger-button.png";
 import skjBanner from "../../Assets/banner.gif";
 import { Overlay } from "../Components/Overlays/ExplanationOverlay";
