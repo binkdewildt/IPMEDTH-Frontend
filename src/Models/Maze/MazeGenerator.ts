@@ -26,7 +26,7 @@ export default class MazeGenerator {
 
     //#region Settings
     public static darkOverlay: boolean = true;
-    public static moveMaze: boolean = false;
+    public static moveMaze: boolean = true;
     //#endregion
 
 
