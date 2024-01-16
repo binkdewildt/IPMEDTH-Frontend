@@ -3,9 +3,6 @@ import startButton from "../../Assets/mediatrigger-button.png";
 import skjBanner from "../../Assets/banner.gif";
 import { Overlay } from "../Components/Overlays/ExplanationOverlay";
 
-	//todo: resize-animation startImg
-	//todo: verplaats uitlegOverlay naar spel
-
 export default function StartScreen() {
 	const [explanationOpen, setExplanationOpen] = useState<boolean>(false);
 
@@ -30,10 +27,7 @@ export default function StartScreen() {
 					width="354"
 				></img>
 			</button>
-			<Overlay
-					isOpen={explanationOpen}
-					onClose={() => setExplanationOpen(false)}
-			/>
+			<Overlay isOpen={explanationOpen} />
 
 		</section>
 	);
