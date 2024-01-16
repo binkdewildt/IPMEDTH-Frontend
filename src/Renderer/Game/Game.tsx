@@ -7,13 +7,11 @@ import arrowRight from "../../Assets/Arrows/arrow_right.png";
 import MazeGenerator from "../../Models/Maze/MazeGenerator";
 import { Direction } from "../../Models/Maze/MazeModels";
 import { useLocalStorage } from "../../Hooks/useLocalStorage";
-import { Overlay } from "../Components/Overlays/ExplanationOverlay";
 
 export default function Game() {
 	const [level, setLevel] = useState<number>(1);
 	const [points, setPoints] = useState<number>(0);
 	const [localPoints] = useLocalStorage<number[]>("highscores", []);
-	const [explanationOpen, setExplanationOpen] = useState<boolean>(true);
 
 	const [generator] = useState(() => new MazeGenerator());
 
@@ -125,10 +123,6 @@ export default function Game() {
 				</button>
 			</div>
 		</div>
-		<Overlay
-				isOpen={explanationOpen}
-				onClose={() => setExplanationOpen(false)}
-		/>
 		</>
 	);
 }

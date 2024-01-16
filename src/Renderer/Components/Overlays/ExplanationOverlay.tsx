@@ -18,6 +18,7 @@ import wallSound from "../../../Assets/sounds/error.mp3";
 import stepSound from "../../../Assets/sounds/footsteps.mp3";
 import buttons from "../../../Assets/buttonsPicture.png";
 import cursor from "../../../Assets/cursorImage.png";
+import { Link } from "react-router-dom";
 
 const isPhoneScreen = window.innerWidth < window.innerHeight;
 
@@ -35,13 +36,13 @@ export function Overlay({ isOpen, onClose } : { isOpen: boolean, onClose: () => 
 						<Explanation></Explanation>
 					}
 					
-					<button className="startLink" onClick={onClose}>
+					<Link tabIndex={1} aria-label="Start" className="startLink" to={"game"}>
 						<img
 							className="startImg"
 							src={startImg}
 							alt="Klik hier om het spel te starten"
 						></img>
-					</button>
+					</Link>
 				</div>
 			)}
 		</>
