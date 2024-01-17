@@ -9,7 +9,7 @@ div.game {
 	width: 100vw;
 	height: 100vh;
 	background-image: url("../../Assets/background.jpg");
-	padding: 20px;
+	// padding: 20px;
 
 	* {
 		margin: 0;
@@ -34,8 +34,13 @@ div.game {
 		justify-content: center;
 	}
 
-	.levels .points{
-		width: 50%;
+	.stage > .levels{
+		width: 50% !important;
+		text-align: center;
+	}
+	.stage > .points{
+		width: 50% !important;
+		text-align: center;
 	}
 
 	//MAZE
@@ -147,10 +152,12 @@ div.game {
 		.mazeContainer {
 			flex-grow: 0.9;
 		}
-		
+
 		.stage {
-			gap: 60%;
+			// gap: 60%;
 			font-size: 24px;
+			margin-top: 2%;
+			margin-bottom: 2%;
 		}
 	
 		.buttonContainer{
