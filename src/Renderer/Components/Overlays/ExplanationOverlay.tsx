@@ -262,17 +262,17 @@ function moveCursor(position: string) {
 		switch (position) {
 			case "right":
 				cursor.style.left = "60vw";
-				cursor.style.top = "calc(58vh + 15vw)";
+				cursor.style.top = "calc(55vh + 15vw)";
 				srSpeak("Rechts");
 				break;
 			case "down": 
 				cursor.style.left = "45vw";
-				cursor.style.top = "calc(58vh + 20vw)";
+				cursor.style.top = "calc(55vh + 20vw)";
 				srSpeak("Omlaag");
 				break;
 			default:
 				cursor.style.left = "30vw";
-				cursor.style.top = "calc(58vh + 2vw)";
+				cursor.style.top = "calc(55vh + 2vw)";
 		}
 	} else {
 		switch (position) {
@@ -313,7 +313,7 @@ function moveMaze(coordinateX: number, coordinateY: number) {
 function setAssetStyles(index: number) {
 
 	const bigAssetStyle = {
-		top: portraitMode ? `calc(0.20 * ${window.innerHeight}px)` : "0px",
+		top: portraitMode ? `calc(15vh + ((100vh - (4em + 15vh + 20vh + 4px + 20vh + 10vh)) / 7) + 2vh)` : "0px",
 		left: portraitMode ? `calc(50% - 10vw)` : "0px",
 		transform: portraitMode ? "scale(calc(4/3))" : "scale(2)"
 	};
