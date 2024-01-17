@@ -36,7 +36,7 @@ export function Overlay({ isOpen } : { isOpen: boolean}) {
 						<Explanation></Explanation>
 					}
 					
-					<Link tabIndex={1} aria-label="Start" className="startLink" to={"game"}>
+					<Link aria-label="Start" className="startLink" to={"game"}>
 						<img
 							className="startImg"
 							src={startImg}
