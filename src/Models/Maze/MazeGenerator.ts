@@ -123,7 +123,7 @@ export default class MazeGenerator {
     private initDrawing(maze: Maze) {
         MazeGenerator.cellSize = this.canvas.width / maze.map.length;
         MazeGenerator.clipSize = MazeGenerator.cellSize;
-        this.ctx.lineWidth = MazeGenerator.cellSize / 15;
+        this.ctx.lineWidth = MazeGenerator.cellSize / 8;
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height) // Clear the whole canvas beforehand
 
         // Set the player to the correct starting position
