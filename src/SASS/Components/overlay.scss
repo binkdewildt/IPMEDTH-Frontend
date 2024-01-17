@@ -128,7 +128,7 @@ div.overlay {
 		height: 10vh;
 		width: 10vh;
 		position: absolute;
-		left: 50%;
+		left: calc(50% - 5vh);
 		top: 80%;
 		transform: translate(-50%, -50%);
 		cursor: pointer;
@@ -141,7 +141,6 @@ div.overlay {
 		.startImg {
 			height: 100%;
 			width: auto;
-			transform: translateX(-50%);
 		}
 
 		:focus {

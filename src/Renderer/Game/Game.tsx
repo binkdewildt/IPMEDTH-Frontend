@@ -54,14 +54,14 @@ export default function Game() {
 		<>
 		<div className="game">
 			<section className={"stage"}>
-				<h1  tabIndex={1}>Level: {level}</h1>
-				<h2  tabIndex={2}>Punten: {points}</h2>
+				<h1  tabIndex={1} className="levels">Level: {level}</h1>
+				<h2  tabIndex={2} className="points">Punten: {points}</h2>
 			</section>
 			
-			<div className="mazeContainer" aria-hidden>
+			<section className="mazeContainer" aria-hidden>
 				<figure id="player"></figure>
 				<canvas id={"mazeCanvas"} ref={canvasRef}></canvas>
-			</div>
+			</section>
 			<div className={"buttonContainer"}>
 				<button
 					className={"buttonLeft buttonGame"}
