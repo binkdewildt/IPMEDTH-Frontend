@@ -34,12 +34,8 @@ div.game {
 		justify-content: center;
 	}
 
-	.levels {
-		color: red;
-	}
-
-	.points {
-		color: green;
+	.levels .points{
+		width: 50%;
 	}
 
 	//MAZE
@@ -149,17 +145,13 @@ div.game {
 	//IPAD PRO RESOLUTION
 	@media screen and (max-width: 1024px) {
 		.mazeContainer {
-			aspect-ratio: 3/4;
-
-			#mazeCanvas {
-				width: 100%;
-				height: 150%;
-			}
+			flex-grow: 0.9;
 		}
 		.stage {
-			gap: 65%;
+			gap: 60%;
 			font-size: 24px;
 		}
+	
 		.buttonContainer{
 			margin-bottom: 20px;
 		}
